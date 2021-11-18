@@ -1,0 +1,38 @@
+.flexColumn {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    margin: 2vw 3vw;
+    padding: 2vw 3vw;
+    row-gap: 2vh;
+}
+
+.flexRow {
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+.editButton {
+    width: 25%;
+    align-self: flex-end;
+}
+
+.editing {
+    background: white;
+}
+
+.saveButton {
+
+}
+
+.flexRow label {
+    font-size: 3vh;
+}
+
+.flexRow input {
+    width: 60%;
+    padding: 0;
+    border-width: 1px;
+    padding-left: 2%;
+}

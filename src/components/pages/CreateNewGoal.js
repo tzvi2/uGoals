@@ -34,7 +34,7 @@ function CreateNewGoal() {
                 <input type="text" placeholder="e.g. Increase revenue by $10,000"></input>
             </div>
             <div className={styles.section}>
-                <label>What is the total number you're trying to achieve?</label>
+                <label>Total number of improvement:</label>
                 <input type="number" placeholder="e.g. 10,000"></input>
             </div>
             <div className={styles.section}>

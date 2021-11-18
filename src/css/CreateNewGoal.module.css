@@ -21,7 +21,7 @@
     height: 4.5vh;
 }
 
-input[type="date"] {
+.section input[type="date"] {
     -webkit-appearance: none;
     -moz-appearance: none;
     font-size: 3vh;
@@ -29,6 +29,7 @@ input[type="date"] {
     border: 2px solid rgb(0, 0, 0);
     color: rgb(118, 118, 118);
     box-sizing: content-box;
+    width: auto;
 }
 
 label {
@@ -83,7 +84,7 @@ label {
 
 .icon {
     border: 2px solid black;
-    width: 10%;
+    width: auto;
     height: auto;
     border-radius: 5px;
     box-sizing: border-box;

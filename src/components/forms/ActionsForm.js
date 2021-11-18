@@ -25,26 +25,38 @@ function ActionsForm(props) {
         let newActionState = {...props.actions, [getRandomID()] : actionName}
         props.setActions(newActionState)
         setActionName("")
+        window.scrollTo(0,document.body.scrollHeight);
+    }
+
+    const removeAction = (id) => {
+        console.log('removing')
+        for (let key of Object.keys(props.actions)) {
+            if (key === id) {
+                let newActionState = props.actions
+                delete newActionState[key]
+                props.setActions({...newActionState})
+            }
+        }
     }
 
     useEffect(() => {
-        console.log(props.actions)
+        //console.log('props.action',props.actions)
     }, [props.actions])
 
     return (
         <div className={styles.actions}>
 
-            {/* {props.actions.map(action => (
-                <div key={action.id} className={styles.row}>
-                    <label className={styles.saved}>{action.name}</label>
-                    <input type="button" value="X"></input>
+            {Object.keys(props.actions).map(k => (
+                <div key={k} className={styles.row}>
+                    <label className={styles.saved}>{props.actions[k]}</label>
+                    <input type="button" value="X" onClick={() => removeAction(k)}></input>
                 </div>
-            ))} */}
+            ))}
 
             <div className={styles.section}>
                 {actionError && <label className={styles.warn}>Action already exists</label>}
                 <div className={styles.row}>
-                    <input type="text" value={actionName} onChange={e => handleActionChange(e)} onKeyPress={e => {if (e.key === "Enter") {addAction()}}}></input>
+                    <input autoFocus type="text" value={actionName} onChange={e => handleActionChange(e)} onKeyPress={e => {if (e.key === "Enter") {addAction()}}}></input>
                     <img className={styles.icon} src={check} onClick={addAction}></img>
                 </div>
             </div>

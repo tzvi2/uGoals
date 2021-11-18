@@ -12,8 +12,8 @@ p {
     margin: 4% 0;
 }
 
-input[type=button] {
+input[type=button].fullButton {
     -webkit-appearance: none;
     font-size: 3vh;
-    padding: 3%;
+    padding: 2%;
 }

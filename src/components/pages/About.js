@@ -13,7 +13,7 @@ function About() {
                 <li>Sending progress updates</li>
             </ul>
             <p>uGoals helps you along this process to maximize your chance of success.</p>
-            <input type="button" value="Get Started"></input>
+            <input className={styles.fullButton} type="button" value="Get Started"></input>
         </div>
     )
 }
