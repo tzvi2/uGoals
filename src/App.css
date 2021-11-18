@@ -1,0 +1,32 @@
+.flexColumn {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    margin: 2vw 3vw;
+    padding: 2vw 3vw;
+}
+
+.flexRow {
+    display: flex;
+    justify-content: space-between;
+}
+
+.flexRow input {
+    width: 48%;
+    font-size: 3vh;
+    padding: 2vh 1vh;
+    display: flex;
+    justify-content: center;
+}
+
+.flexRow input[type=button] {
+    -webkit-appearance: none;
+}
+
+h3 {
+    font-weight: 500;
+}
+
+h2 {
+    margin: 2vw 5vw;
+}

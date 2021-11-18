@@ -1,0 +1,19 @@
+.flexColumn {
+    display: flex;
+    flex-direction: column;
+    margin: 2vw 5vw;
+}
+
+p, ul {
+    font-size: 2.5vh;
+}
+
+p {
+    margin: 4% 0;
+}
+
+input[type=button] {
+    -webkit-appearance: none;
+    font-size: 3vh;
+    padding: 3%;
+}

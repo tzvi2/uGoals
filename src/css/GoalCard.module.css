@@ -1,0 +1,46 @@
+.goalCard {
+    display: flex;
+    flex-direction: column;
+    background: cornflowerblue;
+    padding: 1.5vh;
+    row-gap: 2vh;
+    align-items: center;
+    width: 85%;
+    border-radius: 10px;
+}
+
+.goalCard a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60%;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 0;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+label {
+    font-size: 2.75vh;
+    margin: 0;
+}
+
+.row textarea {
+    font-size: 2.75vh;
+    width: 70%;
+    white-space: nowrap;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    resize: none;
+    -moz-text-align-last: center; /* Firefox 12+ */
+    text-align-last: center;
+    padding: 1vh;
+    height: 2.75vh;
+}
+
