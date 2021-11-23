@@ -1,4 +1,4 @@
-nav {
+nav.mobileNav {
     display: flex;
     flex-direction: column;
 }
@@ -6,6 +6,9 @@ nav {
 .topBar {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    background: var(--shade1);
+    padding: 1vw 5vw;
 }
 
 .flexColumn {
@@ -15,17 +18,13 @@ nav {
 }
 
 h1 {
-    margin: 2vw 5vw;
     font-weight: 500;
+    margin: 0;
+    font-size: 4.5vh;
 }
 
 .hamburger {
-    margin: 2vw 5vw;
-    display: flex;
-    align-items: center;
-    position: right;
     z-index: 1;
-    transform: translateY(-10%);
 }
 
 .menu {
@@ -36,7 +35,7 @@ h1 {
     padding-bottom: 95%;
     padding-top: 10%;
     position: absolute;
-    background: rgba(255, 255, 255, .95);
+    background: rgba(234, 224, 213, 1);
     width: 100%;
 }
 
@@ -56,13 +55,12 @@ h1 {
     transition: all 0s linear 0s, opacity 300ms;
 }
 
-a {
+.mobileNav a {
     display: flex;
     align-items: center;
     text-decoration: none;
     color: black;
     font-size: 1.75em;
-    margin-bottom: 3%;
     width: 60%;
 }
 

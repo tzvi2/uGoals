@@ -4,11 +4,18 @@ import {Link, useNavigate} from 'react-router-dom'
 import { useGoalContext } from '../../context/GoalContext'
 
 function GoalConfirmation(props) {
-    const {currentGoal} = useGoalContext()
+    const {currentGoal, setCurrentGoal} = useGoalContext()
+
+    const handleChange = (e) => {
+        let tempGoal = currentGoal
+        tempGoal.summary = e.target.value
+        setCurrentGoal(tempGoal)
+    }
+
     return (
         <div className={styles.flexColumn}>
-            <label>Finally, send your plan to a friend. Feel free to edit first:</label>
-            <textarea className={styles.summary} value={props.summary} onChange={e => currentGoal.summary = e.target.value}></textarea>
+            <label>Your goal has been saved. Now send your plan to a friend. Feel free to edit before sending:</label>
+            <textarea className={styles.summary} value={currentGoal?.summary} onChange={e => handleChange(e)}></textarea>
         </div>
     )
 }

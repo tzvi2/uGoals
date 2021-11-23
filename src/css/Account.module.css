@@ -6,6 +6,10 @@
     row-gap: 3vh;
 }
 
+.flexColumn input {
+    font-size: 2.5vh;
+}
+
 h3 {
     align-self: center;
 }
@@ -21,10 +25,15 @@ h3 {
     width: 60%;
 }
 
+.row input[type=button] {
+    width: 45%;
+}
+
 .row label {
     width: 36%;
 }
 
 input[type=button].warn {
     color: red;
+    font-size: 2.5vh;
 }

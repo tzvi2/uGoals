@@ -1,0 +1,39 @@
+nav.desktopNav {
+    display: flex;
+    justify-content: space-between;
+    padding: 2vh 2vh;
+    background: rgb(239, 239, 239, 1);
+    width: 100%;
+}
+
+.logo h1 {
+    margin: 0;
+    font-size: 1.75rem;
+    color: var(--shade2);
+}
+
+.desktopNav a {
+    text-decoration: none;
+    color: black;
+}
+
+.links {
+
+    display: flex;
+    flex-direction: row;
+}
+
+.links a {
+    font-size: 2.75vh;
+    white-space: nowrap;
+    margin: 0 1vh;
+    padding: .5vh 1vh;
+    background: rgb(239, 239, 239);
+    border-radius: 10px;
+    justify-content: center;
+    border: 2px solid transparent;
+}
+
+.links a:hover {
+    border: 2px solid var(--shade2);
+}

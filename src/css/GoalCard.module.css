@@ -1,7 +1,7 @@
 .goalCard {
     display: flex;
     flex-direction: column;
-    background: cornflowerblue;
+    background: var(--shade1);
     padding: 1.5vh;
     row-gap: 2vh;
     align-items: center;
@@ -38,9 +38,9 @@
     overflow-x: scroll;
     overflow-y: hidden;
     resize: none;
-    -moz-text-align-last: center; /* Firefox 12+ */
+    -moz-text-align-last: center; 
     text-align-last: center;
     padding: 1vh;
-    height: 2.75vh;
+    height: 5.75vh;
 }
 

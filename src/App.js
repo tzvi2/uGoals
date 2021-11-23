@@ -9,27 +9,41 @@ import Account from './components/pages/Account'
 import SigninForm from './components/forms/SigninForm';
 import { useAuthContext } from './context/AuthContext';
 import green from './images/green.png'
+import {Link} from 'react-router-dom'
 
 function App() {
-  const {currentUser} = useAuthContext()
+  const {authUser} = useAuthContext()
   return (
-    <>
-    <div>
-      {currentUser == null ? <SigninForm /> : 
-      <h2>Welcome back.</h2>}
-    </div>
-    <div className="flexColumn">
-        <h3>Achieve your goals via an effective goal setting process.</h3>
-        {currentUser === null ? <div className="flexRow">
-          <input type="button" value="Learn more"></input>
-          <input type="button" value="Start now"></input>
-        </div> : 
+    <div className="homePage">
+      {/* <div id="ball"></div> */}
+      {authUser == null ? 
+      <SigninForm /> : 
+      <div className="flexRow">
+        <form className={`flexColumn`}> 
+            <p className="welcome">Welcome back {authUser.displayName}</p>
+            {/* {authUser?.firstLogin &&<p>Your account has been created.</p>} */}
+        </form>
+      </div>}
+ 
         <div className="flexRow">
-          <input type="button" value="View goals"></input>
-          <input type="button" value="New goal"></input>
-        </div>}
+          <div className="flexColumn">
+            {!authUser && <h2>Achieve your goals with research-backed goal setting.</h2>}
+            <div className="col">
+              {!authUser ? 
+              <>
+              <Link id="learnMore" to="/about">Learn More</Link>
+              <Link id="startNow" to="/signup">Start Now</Link>
+              </>
+              :
+              <>
+              <Link id="learnMore" to="/viewgoals">View your Goals</Link>
+              <Link id="startNow" to="/newgoal">New Goal +</Link>
+              </>
+              }
+            </div>
+          </div>
+        </div>
     </div>
-    </>
   );
 }
 

@@ -5,17 +5,47 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
 }
 
 html, body, #root {
   height: 100%;
-  --green: rgb(129, 178, 154);
-  
+  --shade1: #eae0d5;
+  --shade2: #c6ac8f;
+  --shade3: #5e503f;
+  --shade4: #22333b;
 }
 
+#root {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5vh;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+@media screen and (min-width: 760px) {
+
+  #root {
+    row-gap: 0;
+  }
+
+  .App {
+    padding-top: 2%;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .homePage {
+    margin-top: 8%;
+    display: flex;
+    flex-direction: row-reverse;
+    width: 75%;
+  }
+
+}

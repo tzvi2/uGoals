@@ -1,21 +1,12 @@
-.flexColumn {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    margin: 2vw 3vw;
-    padding: 2vw 3vw;
-}
-
-.flexColumn input {
+/* .flexColumn input {
     margin-bottom: 2%;
     font-size: 2.5vh;
     padding: 1vh;
-}
+} */
 
 input[type="submit"] {
     box-sizing: content-box;
     -webkit-appearance: none;
-
 }
 
 p.subtext {

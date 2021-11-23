@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     margin: 2vw 5vw;
+    max-width: 800px;
 }
 
 p, ul {
@@ -9,11 +10,19 @@ p, ul {
 }
 
 p {
-    margin: 4% 0;
+    margin: 2vh 0;
 }
 
 input[type=button].fullButton {
     -webkit-appearance: none;
     font-size: 3vh;
     padding: 2%;
+}
+
+@media screen and (min-width: 760px) {
+    input[type=button].fullButton {
+        font-size: 3vh;
+        padding: 1vh;
+        width: 35%;
+    }
 }

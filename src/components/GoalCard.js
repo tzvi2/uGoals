@@ -1,21 +1,32 @@
 import React, {useState} from 'react'
 import styles from '../css/GoalCard.module.css'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
+import { useGoalContext } from '../context/GoalContext'
 
-function GoalCard() {
-    
+function GoalCard(props) {
+
+    let navigate = useNavigate()
+
+    const {currentUsersGoals, currentGoal, setCurrentGoal, currentGoalID, setCurrentGoalID} = useGoalContext()
+
+    const handleViewGoal = () => {
+        setCurrentGoal(currentUsersGoals[props.id])
+        //setCurrentGoalID(props.id)
+        navigate("/viewgoal")
+    }
+
     return (
         <div className={styles.goalCard}>
             <div className={styles.row}>
                 <label>Title</label>
-                <textarea readOnly type="text" value="Increase monthly revenue by $10,000"></textarea>
+                <textarea readOnly type="text" value={props.title}></textarea>
             </div>
             <div className={styles.row}>
                 <label>Due</label>
-                <textarea readOnly type="text" value="August 5, 2024"></textarea>
+                <textarea readOnly type="text" value={props.deadline}></textarea>
             </div>
-            <label>in progress</label>
-            <Link to={`/viewgoal`}>View</Link>
+            <label>{props.complete ? "complete" : "in progress"}</label>
+            <input type="button" value="View" onClick={handleViewGoal}></input>
         </div>
     )
 }

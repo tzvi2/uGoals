@@ -11,6 +11,8 @@ import App from '../../App'
 import SigninForm from '../forms/SigninForm'
 import SignupForm from '../forms/SignupForm'
 import GoalConfirmation from '../pages/GoalConfirmation'
+import styles from '../../css/Nav.module.css'
+import AccountDeletionConfirmation from '../pages/AccountDeletionConfirmation'
 
 
 function Nav() {
@@ -25,9 +27,9 @@ function Nav() {
     }, [mql])
 
     return (
-        <div>
+        <>
             {mobile ? <MobileNav /> : <DesktopNav />}
-            
+            <div className="App">
             <Routes>
                 <Route path="/" element={<App />} />
                 <Route path="/account" element={<Account />} />
@@ -40,8 +42,10 @@ function Nav() {
                 <Route path="/about" element={<About />} />
                 <Route path="/signin" element={<SigninForm />} />
                 <Route path="/signup" element={<SignupForm />} />
+                <Route path="/deleteaccount" element={<AccountDeletionConfirmation />} />
             </Routes>
-        </div>
+            </div>
+        </>
     )
 }
 

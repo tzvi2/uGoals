@@ -29,7 +29,6 @@ function ActionsForm(props) {
     }
 
     const removeAction = (id) => {
-        console.log('removing')
         for (let key of Object.keys(props.actions)) {
             if (key === id) {
                 let newActionState = props.actions
@@ -56,7 +55,7 @@ function ActionsForm(props) {
             <div className={styles.section}>
                 {actionError && <label className={styles.warn}>Action already exists</label>}
                 <div className={styles.row}>
-                    <input autoFocus type="text" value={actionName} onChange={e => handleActionChange(e)} onKeyPress={e => {if (e.key === "Enter") {addAction()}}}></input>
+                    <input autoFocus type="text" value={actionName} onChange={e => handleActionChange(e)} onKeyPress={e => {if (e.key === "Enter") {e.preventDefault(); addAction()}}}></input>
                     <img className={styles.icon} src={check} onClick={addAction}></img>
                 </div>
             </div>

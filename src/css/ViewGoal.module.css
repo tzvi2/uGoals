@@ -7,32 +7,81 @@
     row-gap: 2vh;
 }
 
+.flexColumn label {
+    font-size: 3vh;
+}
+
+.flexColumn ul {
+    font-size: 3vh;
+}
+
 .flexRow {
     display: flex;
     justify-content: space-between;
-    
+    align-items: center;
 }
 
 .editButton {
     width: 25%;
     align-self: flex-end;
+    font-size: 2.5vh;
+    border-radius: 5px;
+    padding: 1%;
+    color: black;
+    border: 1px solid black;
 }
 
 .editing {
     background: white;
 }
 
-.saveButton {
-
-}
-
 .flexRow label {
     font-size: 3vh;
+    margin: 0;
 }
 
 .flexRow input {
+    font-size: 3vh;
     width: 60%;
     padding: 0;
     border-width: 1px;
-    padding-left: 2%;
+    margin: 0;
+}
+
+.flexRow textarea {
+    font-size: 3vh;
+    width: 60%;
+    resize: none;
+    display: flex;
+    overflow: scroll;
+    white-space: nowrap;
+    padding: 1% 1%;
+}
+
+.flexRow input[type=date] {
+    -webkit-appearance: none;
+    padding: 1% 1%;
+}
+
+.saveRow {
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid black;
+}
+
+.saveRow label {
+    width: 45%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.saveRow input[type=checkbox] {
+    height: 4.5vh;
+    width: 4.5vh;
+    border-radius: 0;
+}
+
+.saveButton {
+    font-size: 3vh;
 }
