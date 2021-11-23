@@ -6,13 +6,3 @@
     row-gap: 3vh;
     align-items: center;
 }
-
-.flexColumn a.button {
-    display: flex;
-    justify-content: center;
-    border: 1px solid black;
-    width: 60%;
-    border-radius: 10px;
-    margin-bottom: 25%;
-    margin-top: 5%;
-}

@@ -64,7 +64,7 @@ function ViewGoal(props) {
             </div>
 
             
-            <label>{currentGoal.perPeriodSummary}
+            <label>{currentGoal?.perPeriodSummary}
                 <ul>
                     <li>Eating cheetos</li>
                     <li>Eating another bag of cheetos</li>

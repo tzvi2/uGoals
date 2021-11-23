@@ -10,6 +10,7 @@ function ViewGoals() {
 
     const {currentUsersGoals, setCurrentUsersGoals, getGoals} = useGoalContext()
     const {authUser} = useAuthContext()
+    const [animationDelay, setAnimationDelay] = useState(0.5)
 
     const retrieve = async () => {
         try {
@@ -29,15 +30,16 @@ function ViewGoals() {
     return (
         <>
         <div className={styles.flexColumn}>
-        {currentUsersGoals ? Object.keys(currentUsersGoals).map(key => (
+        {currentUsersGoals ? Object.keys(currentUsersGoals).map((key, i) => (
             <GoalCard 
                 title={currentUsersGoals[key].title}
                 deadline={currentUsersGoals[key].deadline}
                 complete={currentUsersGoals[key].complete}
                 id={key}
                 key={key}
+                index={i}
             />
-        )): <p>loading</p>}
+        )): <h2>loading...</h2>}
             
             
         </div>

@@ -1,0 +1,38 @@
+.outer {
+    font-size: 3vh;
+    color: var(--shade4);
+    padding: 0 1vh;
+    border-radius: 5px;
+    align-self: center;
+    width: 85%;
+}
+
+label {
+    font-size: 2.5vh;
+    color: var(--shade3);
+}
+
+.latestGoalCard {
+    padding: 2.5vh 1vh;
+    margin-top: .5vh;
+    border-radius: 5px;
+    background: var(--shade1);
+    border: 1px solid var(--shade3);
+    display: flex;
+    flex-direction: column;
+    max-height: 20vh;
+    overflow: scroll;
+}
+
+.latestGoalCard label {
+    align-self: flex-start;
+    margin: 1vh 0;
+    font-size: 2.5vh;
+    color: black;
+}
+
+.latestGoalCard li {
+    margin: .5vh 0;
+    font-size: 2.5vh;
+    color: black;
+}

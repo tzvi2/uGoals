@@ -4,9 +4,9 @@ import styles from '../../css/About.module.css'
 function About() {
     return (
         <div className="flexRow">
-        <div className={`flexColumn ${styles.flexColumn}`}>
+        <div className="flexColumn">
             <p>uGoals is based on the research of Gail Matthews, a psychology professor at Dominican University.</p>
-            <p><a href="https://www.dominican.edu/sites/default/files/2020-02/gailmatthews-harvard-goals-researchsummary.pdf" target="_blank">She found four ingredients</a> that boost your chances of achieving your goals:</p>
+            <p><a className={styles.link} href="https://www.dominican.edu/sites/default/files/2020-02/gailmatthews-harvard-goals-researchsummary.pdf" target="_blank">She found four factors</a> that boost your chances of achieving your goals:</p>
             <ul>
                 <li>Writing your goals</li>
                 <li>Creating action commitments</li>

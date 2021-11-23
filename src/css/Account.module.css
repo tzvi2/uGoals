@@ -1,14 +1,23 @@
+label {
+    align-self: center;
+}
+
 .flexColumn {
     display: flex;
     flex-direction: column;
-    margin: 2vw 3vw;
-    padding: 2vw 3vw;
-    row-gap: 3vh;
+    margin: 4vw 2vw;
+    padding: 2vw 4vw;
+    border-radius: 5px;
+    width: 80%;
+    align-self: center;
+    background: linear-gradient(180deg, var(--shade1), var(--shade2));
 }
 
 .flexColumn input {
     font-size: 2.5vh;
+    white-space: nowrap;
 }
+
 
 h3 {
     align-self: center;
@@ -18,22 +27,21 @@ h3 {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin: .5vh 0;
 }
 
-.row input {
-    font-size: 2.5vh;
-    width: 60%;
-}
 
 .row input[type=button] {
-    width: 45%;
+    width: 48%;
 }
 
-.row label {
-    width: 36%;
-}
 
 input[type=button].warn {
+    -webkit-appearance: none;
     color: red;
     font-size: 2.5vh;
+    border-radius: 5px;
+    padding: .5vh 0;
+    width: 88%;
+    align-self: center;
 }
