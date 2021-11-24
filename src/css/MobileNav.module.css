@@ -1,8 +1,9 @@
-nav.mobileNav {
+.mobileNav {
     display: flex;
     flex-direction: column;
     overflow: hidden;
     width: 100%;
+    
 }
 
 .topBar {
@@ -10,80 +11,43 @@ nav.mobileNav {
     justify-content: space-between;
     align-items: center;
     background: var(--shade1);
-    padding: 2vw 5vw;
-}
-
-.flexColumn {
-    display: flex;
-    flex-direction: column;
-    margin: 2vw 5vw;
-}
-
-h1 {
-    font-weight: 400;
-    margin: 0;
-    font-size: 4.5vh;
-    color: var(--shade4);
-}
-
-.hamburger {
-    z-index: 2;
-    color: var(--shade3);
+    padding: 1% 5%;
 }
 
 .menu {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 2%;
-    padding-bottom: 100vh;
-    padding-top: 10%;
+    row-gap: 2ch;
+    justify-content: center;
     position: absolute;
-    background: rgba(234, 224, 213, 1);
     width: 100%;
-    row-gap: 2vh;
+    background: var(--shade1);
+    height: 60%;
     z-index: 1;
+    border-bottom: 3px solid var(--shade4);
 }
 
 .menu a {
-    justify-content: center;
+    text-decoration: none;
+}
+
+h1 {
+    color: var(--shade3);
+}
+
+.hamburger {
+    color: var(--shade3);
+    z-index: 2;
 }
 
 .slidein {
-    visibility: hidden;
     opacity: 0;
-    transition: all 0s linear 300ms, opacity 300ms;
+    transition: all 600ms linear 0s;
 }
 
 .slideout {
-    visibility: visible;
     opacity: 1;
-    transition: all 0s linear 0s, opacity 300ms;
+    transition: all 300ms linear 0s;
 }
 
-.mobileNav a {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: black;
-    font-size: 1.75em;
-    width: 60%;
-}
-
-@keyframes slide-in {
-    0% {
-        transform: translateX(100vw);
-    }
-    100%{
-        transform: translateX(0);
-    }
-}
-
-@keyframes slide-out {
-    0% {
-        transform: translateX(0);
-    }
-    100%{
-        transform: translateX(-100vw);
-    }
-}

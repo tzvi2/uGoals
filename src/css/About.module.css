@@ -1,36 +1,33 @@
-.flexColumn {
-    display: flex;
-    flex-direction: column;
-    margin: 2vw 5vw;
-    max-width: 800px;
+p a {
+    
+    text-decoration: underline;
+
 }
 
 p, ul {
-    font-size: 2.5vh;
+    margin: 3% 0;
 }
 
-p {
-    margin: 2vh 0;
+ul {
+    font-size: 1.3rem;
+    list-style-type: "\2713";
+    width: 100%;
+    
 }
 
-a.link {
-    all: unset;
-    text-decoration: underline;
+li {
+    margin: 4% 0;
+    margin-left: 7%;
 }
 
-input[type=button].fullButton {
-    -webkit-appearance: none;
-    font-size: 3vh;
-    padding: 2%;
+.signUp {
+    text-decoration: none;
+    text-align: center;
     background: var(--shade1);
-    width: 50%;
+    padding: 2%;
+    width: 60%;
+    border-radius: 5px;
     color: var(--shade4);
-}
-
-@media screen and (min-width: 760px) {
-    input[type=button].fullButton {
-        font-size: 3vh;
-        padding: 1vh;
-        width: 35%;
-    }
+    font-weight: 500;
+    margin: 2% 0;
 }

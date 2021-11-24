@@ -1,148 +1,85 @@
-.flexRow {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-}
-
 .flexColumn {
-    align-self: center;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    padding: 2vh 2vh;
-    justify-content: flex-start;
-    align-items: center;
-    max-width: 500px;
-}
-
-.col {
     display: flex;
     flex-direction: column;
     align-items: center;
-    row-gap: 3%;
-    margin: 0;
-    width: 100%;
+    padding: 0 3%;
+    margin: 7.5% 0;
 }
 
-.flexRow input {
-    display: flex;
-    justify-content: center;
+.tan {
+    background: var(--shade1);
+    border-radius: 5px;
+    padding: 5% 0;
 }
 
+/* .app {
+    transition: filter 200ms linear 0s;
+} */
 
-
-.flexColumn input {
-    margin-bottom: 2%;
-    padding: 1vh;
+p, input, textarea, a {
+    font-size: 1.3rem;
 }
 
-.flexRow input[type=button] {
+input {
     -webkit-appearance: none;
 }
 
-.col input {
-    padding: 1vh;
-    width: 20vh;
+input {
+    padding: 2% 2%;
 }
 
-.flexColumn a {
-    background: var(--shade1);
-    padding: 1vh;
-    margin: .5vh 0;
-    border-radius: 5px;
+form {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+}
+
+.warn {
+    color: red;
+}
+
+.error {
+    color: red;
+}
+
+.subtext {
+    font-size: 1.1rem;
+}
+
+h2.home {
+    font-size: 1.3rem;
     text-align: center;
-    width: 80%;
-    border: 1px solid var(--shade3);
     color: var(--shade3);
+    margin: 5% 0;
 }
 
-h2 {
-    font-weight: 500;
-    margin: 0;
-    margin-bottom: 2vh;
-    width: 100%;
-}
-
-input[type=button], input[type=submit] {
-    cursor: pointer;
-    
-}
-
-a {
-    color: black;
+a.home {
     text-decoration: none;
-}
-
-.welcome {
-    background: linear-gradient(to right, var(--shade1) , var(--shade2));
-    color: var(--shade3);
-    padding: 2.5vh 1vh;
-    border-radius: 5px;
     text-align: center;
-    width: 80%;
-    align-self: center;
-    border: 1px solid var(--shade1);
+    background: var(--shade1);
+    padding: 2%;
+    width: 60%;
+    border-radius: 5px;
+    color: var(--shade3);
+    font-weight: 500;
+    margin: 2% 0;
 }
 
-/* @media screen and (min-width: 760px) {
-
-    .flexRow form {
-        border: 1px solid black;
-        background: rgb(239, 239, 239);
-        border-radius: 5px;
-        padding: 2vh;
-        box-shadow: 2px 2px 6px var(--shade1);
-    }
-
-    #learnMore:hover {
-      color: var(--shade1);
-      border: 2px solid var(--shade1);
-    }
-
-    #startNow:hover {
-        border: 2px solid var(--shade2);
-        color: var(--shade2);
-    }
-
-    #startNow {
-        border: 2px solid black;
-    }
-
-    #learnMore {
-        border:2px solid black;
-    }
-
-    #ball {
-        height: 4vh;
-        width: 4vh;
-        background: linear-gradient(to right, var(--shade1), var(--shade1), white);
-        position: fixed;
-        z-index: -1;
-        border-radius: 50%;
-        transform: translateX(-45%);
-        opacity: .75;
-        height: 120vh;
-        width: 120vh;
-    }
-
-    .row a {
-        width: 40%;
-    }
-
-} */
-
-@keyframes expand {
-    0% {
-        transform: translateX(-40%);
-        opacity: 0;
-        height: 4vh;
-        width: 4vh;
-    }
-    100%{
-        transform: translateX(-45%);
-        opacity: .75;
-        height: 120vh;
-        width: 120vh;
-    }
+#learnMore {
+    background: var(--shade2);
+    color: white;
 }
 
+#startNow {
+    background: var(--shade2);
+}
+
+.blured {
+    filter: blur(10px);
+    transition: filter 200ms linear 0s;
+}
+
+.clear {
+    filter: blur(none);
+    transition: filter 200ms linear 0s;
+}

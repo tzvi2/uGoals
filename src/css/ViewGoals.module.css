@@ -1,8 +1,0 @@
-.flexColumn {
-    display: flex;
-    flex-direction: column;
-    margin: 2vw 3vw;
-    padding: 2vw 3vw;
-    row-gap: 3vh;
-    align-items: center;
-}

@@ -1,25 +1,17 @@
-/* .flexColumn input {
-    margin-bottom: 2%;
-    font-size: 2.5vh;
-    padding: 1vh;
-} */
-
-input[type="submit"] {
-    box-sizing: content-box;
-    -webkit-appearance: none;
-}
-
-p.subtext {
-    display: flex;
-    font-size: 2.5vh;
+form p {
+    align-self: flex-end;
     margin: 0;
-    justify-content: flex-end;
+    color: var(--shade3);
 }
 
-a.subtext {
-    font-size: 2.5vh;
-    width: auto;
-    margin-left: 1%;
-    margin-right: 1%;
-    text-decoration: underline;
+form input {
+    margin-bottom: 2%;
+}
+
+form input[type=submit] {
+    background: var(--shade2);
+}
+
+a {
+    color: var(--shade3);
 }

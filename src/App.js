@@ -20,32 +20,28 @@ function App() {
       {/* <div id="ball"></div> */}
       {authUser == null ? 
       <SigninForm /> : 
-      <div className="flexRow">
+
         <form className="flexColumn"> 
-            <p className="welcome">Welcome back {authUser.displayName}</p>
+            <p className="welcome home">Welcome back {authUser.displayName}</p>
             <LatestGoalCard />
             {/* {authUser?.firstLogin &&<p>Your account has been created.</p>} */}
-        </form>
-      </div>}
+        </form>}
  
-        <div className="flexRow">
-          <div className="flexColumn">
-            {!authUser && <h2>Achieve your goals with research-backed goal setting.</h2>}
-            
+          <div className="flexColumn tan">
+
               {!authUser ? 
               <>
-              <Link id="learnMore" to="/about">Learn More</Link>
-              <Link id="startNow" to="/signup">Start Now</Link>
+              <h2 className="home">Achieve your goals with research-backed goal setting.</h2>
+              <Link className="home" id="learnMore" to="/about">Learn More</Link>
+              <Link className="home" id="startNow" to="/signup">Start Now</Link>
               </>
               :
               <>
-              <Link id="learnMore" to="/viewgoals">View your Goals</Link>
-              <Link id="startNow" to="/newgoal">New Goal +</Link>
+              <Link className="home" id="learnMore" to="/viewgoals">View your Goals</Link>
+              <Link className="home" id="startNow" to="/newgoal">New Goal +</Link>
               </>
               }
-            
           </div>
-        </div>
     </>
   );
 }

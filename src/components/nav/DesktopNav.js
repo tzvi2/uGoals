@@ -13,7 +13,7 @@ function DesktopNav() {
         }
     }
     return (
-        <div className="flexRow">
+        
         <nav className={styles.desktopNav}>
             <div className={styles.logo}>
                 <Link to="/"><h1>uGoals</h1></Link>
@@ -28,7 +28,7 @@ function DesktopNav() {
                 {authUser && <Link to="/account">Account</Link> }
             </div>
         </nav>
-        </div>
+        
     )
 }
 
