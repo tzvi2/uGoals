@@ -1,0 +1,119 @@
+.newGoalForm {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2vh;
+    width: 94%;
+    /* border: 2px solid var(--shade2); */
+    border-radius: 5px;
+    padding: 3%;
+    /* box-shadow: 5px 10px 18px #888888; */
+    /* background: rgb(255, 255, 255); */
+    margin-top: 2%;
+}
+
+.section label, .section input {
+    font-size: 1.2rem;
+}
+
+.newGoalForm label {
+    margin-bottom: 2%;
+
+}
+
+.section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    column-gap: 1vh;
+}
+
+.row label {
+    display: flex;
+    width: 86%;
+    align-items: center;
+}
+
+.row input[type=text] {
+    margin: 0;
+    border-width: 2px;
+}
+
+.row input[type=button] {
+    border: 1px solid rgb(239, 239, 239);
+}
+
+.row .icon {
+    width: 40px;
+    height: 40px;
+    border: 2px solid black;
+    border-radius: 5px;
+    color: red;
+    box-sizing: border-box;
+    font-weight: 700;
+}
+
+.left {
+    align-self: flex-start;
+    margin: 3% 0;
+}
+
+.centered {
+    text-align: center;
+}
+
+.addingRow {
+    /* margin-top: 5%; */
+}
+
+.summary {
+    resize: none;
+    height: 40vh;
+    width: 100%;
+}
+
+input[type=button].btn {
+    margin-top: 5%;
+    width: 75%;
+}
+
+input[type=button].viewBtn {
+    width: 75%;
+    margin-top: 4%;
+    border-radius: 5px;
+}
+
+@media screen and (min-width: 754px) {
+    .newGoalForm input {
+        padding: 1%;
+    }
+
+    .newGoalForm label {
+        margin-bottom: 1%;
+    }
+
+    .icon {
+        cursor: pointer;
+    }
+
+    .icon:hover {
+        /* background: var(--shade1); */
+    }
+
+    .left {
+        margin: 0;
+        margin-bottom: 1%;
+    }
+
+    input[type=button].viewBtn {
+        padding: 1%;
+        width: 50%;
+    }
+}
+
+

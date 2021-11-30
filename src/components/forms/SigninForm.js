@@ -25,7 +25,7 @@ function SigninForm() {
         }
     }
     return (
-            <form onSubmit={e => handleLogin(e)}>
+            <form className={styles.form} onSubmit={e => handleLogin(e)}>
                 {emailError && <p className={styles.error}>Email not found</p>}
                 <input placeholder="Email..." type="text" onChange={e => setEmail(e.target.value)}></input>
                 {passwordError && <p className={styles.error}>Incorrect password</p>}

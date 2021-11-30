@@ -1,3 +1,4 @@
+import {useEffect} from 'react'
 import './App.css';
 import Nav from './components/nav/Nav';
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
@@ -10,39 +11,48 @@ import GoalCard from './components/GoalCard'
 import LatestGoalCard from './components/LatestGoalCard'
 import SigninForm from './components/forms/SigninForm';
 import { useAuthContext } from './context/AuthContext';
+import { useGoalContext } from './context/GoalContext';
 import green from './images/green.png'
+
 import {Link} from 'react-router-dom'
 
 function App() {
-  const {authUser} = useAuthContext()
+  const {authUser, authLoading, currentUsersGoals, userInfo} = useAuthContext()
+  //const {getMostRecentGoal} = useGoalContext()
+
+
   return (
-    <>
-      {/* <div id="ball"></div> */}
-      {authUser == null ? 
-      <SigninForm /> : 
-
-        <form className="flexColumn"> 
-            <p className="welcome home">Welcome back {authUser.displayName}</p>
-            <LatestGoalCard />
-            {/* {authUser?.firstLogin &&<p>Your account has been created.</p>} */}
-        </form>}
- 
-          <div className="flexColumn tan">
-
-              {!authUser ? 
-              <>
-              <h2 className="home">Achieve your goals with research-backed goal setting.</h2>
-              <Link className="home" id="learnMore" to="/about">Learn More</Link>
-              <Link className="home" id="startNow" to="/signup">Start Now</Link>
-              </>
-              :
-              <>
-              <Link className="home" id="learnMore" to="/viewgoals">View your Goals</Link>
-              <Link className="home" id="startNow" to="/newgoal">New Goal +</Link>
-              </>
-              }
-          </div>
-    </>
+    
+    <div className="homepage">
+    {!authLoading && <>
+      {!authUser ? 
+      <div className="homecard3">
+        <SigninForm />
+      </div> :
+      <>
+      <div className="homecard1">
+        <h2 className="welcome">Welcome {authUser.displayName}</h2>
+        {userInfo && userInfo.goalsCreated > 0 && <LatestGoalCard />}
+      </div>
+      
+      </>}
+      
+      <div className="homecard2">
+          {!authUser ? 
+          <>
+          <h2 className="home">Achieve your goals with research-backed goal setting.</h2>
+          <Link className="home" id="learnMore" to="/about">Learn More</Link>
+          <Link className="home" id="startNow" to="/signup">Start Now</Link>
+          </>
+          :
+          <>
+          {userInfo && userInfo.goalsCreated > 0 && <Link className="home" id="learnMore" to="/viewgoals">View your Goals</Link>}
+          <Link className="home" id="startNow" to="/newgoal">New Goal +</Link>
+          </>
+          }
+      </div>
+      </>}
+    </div>
   );
 }
 

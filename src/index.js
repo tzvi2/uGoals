@@ -5,6 +5,7 @@ import {BrowserRouter} from 'react-router-dom'
 import AuthProvider from './context/AuthContext'
 import GoalProvider from './context/GoalContext'
 import Nav from './components/nav/Nav'
+import Footer from './components/Footer';
 
 ReactDOM.render(
   <AuthProvider>
@@ -17,5 +18,6 @@ ReactDOM.render(
     </GoalProvider>
   </AuthProvider>,
   document.getElementById('root')
+
 );
 

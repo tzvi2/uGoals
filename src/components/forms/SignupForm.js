@@ -26,7 +26,7 @@ function SignupForm() {
     }
     return (
         
-        <form onSubmit={e => handleSubmit(e)}>
+        <form className={styles.form} onSubmit={e => handleSubmit(e)}>
             <input placeholder="First name..." type="text" onChange={e => setFirstName(e.target.value)}></input>
             {emailError && <p className="error">Email already exists</p>}
             <input placeholder="Email..." type="text" onChange={e => setEmail(e.target.value)}></input>

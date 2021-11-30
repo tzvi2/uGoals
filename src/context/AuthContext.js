@@ -1,21 +1,18 @@
 import React, {useState, useEffect, useContext} from 'react'
 import {auth, db} from '../config/firebase'
-import {addDoc, collection, setDoc, doc, getDoc} from 'firebase/firestore'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from '@firebase/auth'
+import {addDoc, collection, setDoc, doc, getDoc, onSnapshot} from 'firebase/firestore'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile, deleteUser } from '@firebase/auth'
 
 const AuthContext = React.createContext()
 
 export const useAuthContext = () => useContext(AuthContext)
 
-// auth user to ref id (for getting and setting goals), displayname, and creation date
-// goals user for goal completion
-
 export function AuthProvider({children}) {
 
-    const [authUser, setAuthUser] = useState(null)
-    //const [currentUsersGoals, setCurrentUsersGoals] = useState({})
-    //const [goalsUser, setGoalsUser] = useState(null)
-
+    const [authUser, setAuthUser] = useState()
+    const [authLoading, setAuthLoading] = useState(true)
+    const [userInfo, setUserInfo] = useState(null) // userInfo is {goalsCreated: x, etc.}
+ 
     const signup = async (name, email, password) => {
         const newUser = await createUserWithEmailAndPassword(auth, email, password)
         await updateProfile(auth.currentUser, {
@@ -25,8 +22,18 @@ export function AuthProvider({children}) {
             goalsCreated: 0,
             goalsCompleted: 0
         })
-        
+    }
 
+    const getUserInfo = async (id) => {
+        console.log('id', id)
+        const docRef = doc(db, "users", id)
+        const docSnap = await getDoc(docRef)
+        if (docSnap.exists()) {
+            return docSnap.data()
+        } else {
+            console.log('error getting user info')
+            return {}
+        }
     }
 
     const signin = async (email, password) => {
@@ -37,22 +44,41 @@ export function AuthProvider({children}) {
         return signOut(auth)
     }
 
+    const deleteAccount = async () => {
+        console.log('deleting')
+        return deleteUser(auth)
+    }
+
     useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged(user => {
+        const unsubAuthChanges = auth.onAuthStateChanged(user => {
             setAuthUser(user)
         })
-        return unsubscribe
+        return unsubAuthChanges
     }, [])
 
     useEffect(() => {
-        console.log('authUser', authUser)
+        if (authUser || authUser === null) {
+            setAuthLoading(false)
+        }
+        if (authUser) {
+            const unsubUserInfoChanges = onSnapshot(doc(db, "users", authUser.uid), (info) => {
+                setUserInfo(info.data())
+            })
+            return unsubUserInfoChanges
+        }
+        
     }, [authUser])
 
     const value = {
         authUser,
         signup,
         signin,
-        signout
+        signout,
+        userInfo,
+        setUserInfo,
+        getUserInfo,
+        authLoading,
+        deleteAccount
     }
 
     return (

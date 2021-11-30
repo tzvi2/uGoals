@@ -1,22 +1,57 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styles from '../css/LatestGoalCard.module.css'
+import { useGoalContext } from '../context/GoalContext'
+import { useEffect } from 'react/cjs/react.development'
+import {dateStringToUS, getDaysBetween, getTimeRemaining} from '../utils/dates'
+
 
 function LatestGoalCard() {
+
+    const {mostRecentKey, currentTitle, currentUsersGoals} = useGoalContext()
+
+
+    useEffect(() => {
+        console.log('most recent key', mostRecentKey)
+        console.log('currnetUsersGoal[mostrecentkeys]', currentUsersGoals[mostRecentKey])
+        console.log('currnetUsersGoal[mostrecentkeys].deadline', currentUsersGoals[mostRecentKey].deadline)
+        console.log('new date', new Date())
+        console.log('new date from deadline', new Date(currentUsersGoals[mostRecentKey].deadline))
+        console.log('getDaysBetween', getDaysBetween(new Date(), new Date(currentUsersGoals[mostRecentKey].deadline)))
+    }, [mostRecentKey])
     return (
-        <div className={styles.outer}>
-            <label>Latest...</label>
-            <div className={styles.latestGoalCard}>
-                <label>Eat 10 hotdogs by May 31st</label>
-                <label>May 31, 2023</label>
-                <ul>
-                    <li>Buy the buns</li>
-                    <li>also the hotdogs</li>
-                    <li>open the grill</li>
-                    <li>make a bunch of hotdogs to achieve this wonderful goal</li>
-                </ul>
-                <label>2.5 months remaining</label>
+        <>
+        {mostRecentKey && currentUsersGoals && Object.keys(currentUsersGoals).length > 0 &&
+        <div className={styles.latestGoalCard}>
+
+            <label className={styles.ribbon}>Latest...</label>
+
+            <div className={styles.row}>
+                <label>Title:</label>
+                <p>{mostRecentKey}</p>
             </div>
-        </div>
+
+            <div className={styles.row}>
+                <label>Due:</label>
+                <p>{dateStringToUS(currentUsersGoals[mostRecentKey]["deadline"])}</p>
+            </div>
+            
+            <div className={styles.row}>
+                <label>Each day:</label>
+            </div>
+                
+            <ul>
+            {Object.values(currentUsersGoals[mostRecentKey]["actions"]).map((action, i) => (
+                <li key={i}>{action}</li>
+            ))}
+            </ul>
+                
+            <div className={styles.row}>
+                <label>Days remaining:</label>
+                {currentUsersGoals[mostRecentKey] && <p className={styles.days}>{getDaysBetween(new Date(), new Date(currentUsersGoals[mostRecentKey]["deadline"]))}</p>}
+            </div>
+            
+        </div>}
+        </>
     )
 }
 

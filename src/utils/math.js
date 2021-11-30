@@ -15,3 +15,10 @@ export const roundToPointFive = (num) => {
     }
     return num
 }
+
+export const getFraction = (dividend, divisor) => {
+    let decimalStr = (dividend / divisor).toFixed(2)
+    let fraction = (Number(decimalStr) * 100).toFixed()
+    return fraction + "%"
+}
+

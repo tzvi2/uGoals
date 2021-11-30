@@ -1,0 +1,76 @@
+
+.latestGoalCard {
+    display: flex;
+    flex-direction: column;
+    /* border: 1px solid var(--shade3); */
+    border-radius: 5px;
+    max-height: 25vh;
+    overflow: scroll;
+    width: 91%;
+    /* background: var(--shade2); */
+    /* background: linear-gradient(180deg, var(--shade1) 50%, var(--shade2)); */
+    padding-top: 3%;
+    padding-bottom: 3%;
+    overflow-x: hidden;
+    row-gap: 2vh;
+}
+
+.latestGoalCard label {
+    margin: 0;
+    margin-top: 1vh;
+    padding-left: 3%;
+}
+
+.latestGoalCard p {
+    padding-right: 3%;
+    text-align: end;
+    width: 60%;
+}
+
+.ribbon {
+    /* background: var(--shade3); */
+    padding-left: 0;
+    /* color: var(--shade1); */
+    width: 100%;
+    margin: 0;
+    text-align: center;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.row p {
+    width: 70%;
+    margin: 0;
+}
+
+.row p.days {
+    width: 10%;
+}
+
+.row label {
+    margin: 0;
+}
+
+.latestGoalCard ul {
+    margin: 0;
+    padding: 0;
+    padding-right: 2%;
+    list-style-type: circle;
+    
+}
+
+.latestGoalCard li {
+    margin-left: 10%;
+    margin-bottom: 5%;
+    text-align: start;
+}
+
+@media screen and (min-width: 754px) {
+    .latestGoalCard {
+      
+    }
+}

@@ -6,11 +6,13 @@ import {useNavigate} from 'react-router-dom'
 import {getDaysBetween} from '../../utils/dates'
 import {roundToPointFive} from '../../utils/math'
 import { useGoalContext } from '../../context/GoalContext'
+import { useAuthContext } from '../../context/AuthContext'
 import {getRandomID} from '../../utils/ids'
 
 function CreateNewGoal() {
 
-    const {saveGoal, setCurrentGoal} = useGoalContext()
+    const {saveGoal, getGoal, setCurrentGoal, setCurrentSummary, currentGoal, setCurrentTitle} = useGoalContext()
+    const {authUser} = useAuthContext()
 
     let navigate = useNavigate()
 
@@ -24,15 +26,18 @@ function CreateNewGoal() {
     const [dateError, setDateError] = useState(false)
     const [actions, setActions] = useState({})
 
-    
+    useEffect(() => [
+        console.log(deadline)
+    ], [deadline])
     
     const perPeriodSummary = `${splitNumber} ${units} each ${splitTime}`
-    const summary = `Hi, I'm using uGoals to set research-backed goals. A key step is to send the goal and action steps to a peer. Here's mine: I will ${title} by ${deadline}. To achieve this I will do ${perPeriodSummary}.`
+    const summary = `Hi, I'm using uGoals to set research-backed goals. A key step is to send my goal and action steps to a peer. Here's my goal: I will ${title} by ${deadline}. To achieve this I will do ${perPeriodSummary}. I'll send you a quick progess update each ${splitTime}.`
 
     const newGoal = {
-        title: title,
+        
         totalNumber: totalNumber,
         deadline: deadline,
+        splitTime: splitTime,
         perPeriodSummary: perPeriodSummary,
         actions: actions,
         summary: summary,
@@ -43,29 +48,25 @@ function CreateNewGoal() {
         e.preventDefault()
         console.log(newGoal)
         try {
-            await saveGoal(newGoal)
-            setCurrentGoal(newGoal)
+            await saveGoal(newGoal, title)
+            setCurrentTitle(title)
+            setCurrentSummary(summary)
             navigate("/goalconfirm")
         } catch (error) {
             console.log('errror', error)
-        }
-        
+        } 
     }
 
     useEffect(() => {
-        //console.log('days till deadline', daysTillDeadline, "setting splitTime")
         if (daysTillDeadline > 21 && daysTillDeadline < 91 ) {
-            //console.log('> 21 && < 91')
             setSplitTime("week")
         } else if (daysTillDeadline > 91) {
-            //console.log('> 91')
             setSplitTime("month")
         } else {
             setSplitTime("day")
         }
     }, [daysTillDeadline])
     
-    // on total number channge, calculte number per split time (split number)
     useEffect(() => {
         let tempNum = 0
         switch (splitTime) {
@@ -82,14 +83,6 @@ function CreateNewGoal() {
         setSplitNumber(roundToPointFive(tempNum))
     }, [totalNumber, splitTime, daysTillDeadline])
 
-    useEffect(() => {
-        //console.log('splitNumber', splitNumber)
-    }, [splitNumber])
-
-    useEffect(() => {
-        //console.log('splitTime was changed', splitTime)
-    }, [splitTime])
-
     const handleDateChange = (e) => {
         setDateError(false)
         let currentDate = new Date()
@@ -102,36 +95,35 @@ function CreateNewGoal() {
     }
 
     return (
-        <div className="flexRow">
-        <form className="flexColumn" onSubmit={e => handleSubmit(e)}>
+        <form className={styles.newGoalForm} onSubmit={e => handleSubmit(e)}>
             <div className={styles.section}>
                 <label>Create a measurable goal.</label>
                 <input type="text" placeholder="e.g. Increase revenue by $10,000" onChange={e => setTitle(e.target.value)}></input>
             </div>
-            <div className={styles.section}>
+            {title && <div className={styles.section}>
                 <label>Total number of improvement:</label>
                 <input type="number" placeholder="e.g. 10,000" onChange={e => setTotalNumber(e.target.value)}></input>
-            </div>
-            <div className={styles.section}>
+            </div>}
+            {totalNumber > 0 && <div className={styles.section}>
                 <label>What is your unit of measurement?</label>
                 <input type="text" placeholder="e.g. dollars, lbs, ..." onChange={e => setUnits(e.target.value)}></input>
-            </div>
-            <div className={styles.section}>
-                <label>When is your deadline? {dateError && <span className={styles.warn}>Invalid date</span>}</label>
+            </div>}
+            {units && <div className={styles.section}>
+                <label>When is your deadline? {dateError && <p className="warn">Invalid date</p>}</label>
                 <input type="date" value={deadline} onChange={e => handleDateChange(e)}></input>
-            </div>
-            <div className={styles.section}>
+            </div>}
+            {deadline != new Date().toLocaleDateString("en-ca") && <div className={styles.section}>
                 <label>Next, create some action commitments. What will I do to achieve {perPeriodSummary}:</label>
                 <ActionsForm actions={actions} setActions={setActions}/>
-            </div>
-            <div className={styles.section}>
+            </div>}
+            {Object.keys(actions).length > 0 && <div className={styles.section}>
                 <label>Finally, save your goal:</label>
                 <input type="submit" value="Save"></input>
-            </div>
+            </div>}
 
             
         </form>
-        </div>
+      
     )
 }
 

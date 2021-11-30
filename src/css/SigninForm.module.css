@@ -1,17 +1,32 @@
+.form {
+    /* border: 1px solid var(--shade3); */
+    padding: 3%;
+    border-radius: 5px;
+    /* box-shadow: 2px 3px 4px var(--shade3); */
+}
+
 form p {
     align-self: flex-end;
     margin: 0;
-    color: var(--shade3);
+    /* color: var(--shade3); */
 }
 
 form input {
     margin-bottom: 2%;
+    border-radius: 5px;
 }
 
 form input[type=submit] {
-    background: var(--shade2);
+    /* background: var(--shade2); */
 }
 
 a {
-    color: var(--shade3);
+    /* color: var(--shade3); */
+}
+
+@media screen and (min-width: 754px) {
+    .form {
+        border: none;
+        box-shadow: none;
+    }
 }

@@ -6,8 +6,21 @@ body {
 }
 
 html, body, #root {
-  --shade1: #eae0d5;
+  /* --shade1: #eae0d5;
   --shade2: #c6ac8f;
   --shade3: #5e503f;
-  --shade4: #186e96;
+  --shade4: #115c80;
+  --shade5: #383d3b; */
+  --shade1: #ebd9c8;
+  --shade2: #fea02f;
+  --shade3: #de6600;
+  --shade4: #007a7a;
+  --shade5: #003f5a;
+  height: 100%;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }

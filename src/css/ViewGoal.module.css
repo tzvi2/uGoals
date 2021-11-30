@@ -1,0 +1,103 @@
+.flexColumn {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1.5vh;
+    width: 94%;
+    flex-grow: 2;
+    padding: 3%;
+    border: 1px solid var(--shade2);
+    border-radius: 5px;
+    box-shadow: 0 0 5px 2px var(--shade3);
+}
+
+.flexColumn input, .flexColumn textarea {
+    padding: 2% 2%;
+    box-sizing: border-box;
+    resize: none;
+    border-radius: 5px;
+    border-width: 1px;
+    width: 65%;
+    display: flex;
+    align-items: center;
+}
+
+.editButton {
+    padding: 1% 0;
+    padding-left: 1%;
+    width: 25%;
+    align-self: flex-end;
+    border: 1px solid var(--shade3);
+    color: var(--shade4);
+    background: var(--shade1);
+    font-size: 1.2rem;
+    border-radius: 5px;
+}
+
+.editButton.editing {
+    color: var(--shade1);
+    background: var(--shade4);
+    animation: flash 1s infinite steps(1);
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+input[type=checkbox] {
+    -webkit-appearance: none;
+    margin: 0;
+    height: 4vh;
+    width: 4vh;
+    border: 1px solid var(--shade4);
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+input[type=checkbox]:checked {
+    background: var(--shade1);
+}
+
+input[type=checkbox]:checked::after {
+    content: '\2713';
+    color: var(--shade4);
+}
+
+input.wide {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    color: var(--shade4);
+    background: var(--shade2);
+}
+
+input.expanded {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    color: var(--shade4);
+    background: var(--shade1);
+}
+
+label ul {
+    padding: 0;
+    list-style-type: '\002d';
+    margin-left: 3%;
+}
+
+.flexColumn .summary {
+    flex-grow: 2;
+    width: 100%;
+}
+
+@keyframes flash {
+    0% {
+        color: var(--shade1);
+    }
+    50% {
+        color: var(--shade4);
+    }
+}

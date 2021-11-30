@@ -48,14 +48,14 @@ function ActionsForm(props) {
             {Object.keys(props.actions).map(k => (
                 <div key={k} className={styles.row}>
                     <label className={styles.saved}>{props.actions[k]}</label>
-                    <input type="button" value="X" onClick={() => removeAction(k)}></input>
+                    <input className={styles.icon} type="button" value="X" onClick={() => removeAction(k)}></input>
                 </div>
             ))}
 
             <div className={styles.section}>
-                {actionError && <label className={styles.warn}>Action already exists</label>}
-                <div className={styles.row}>
-                    <input autoFocus type="text" value={actionName} onChange={e => handleActionChange(e)} onKeyPress={e => {if (e.key === "Enter") {e.preventDefault(); addAction()}}}></input>
+                {actionError && <label className="warn">Action already exists</label>}
+                <div className={`${styles.row} ${styles.addingRow}`}>
+                    <input type="text" value={actionName} onChange={e => handleActionChange(e)} onKeyPress={e => {if (e.key === "Enter") {e.preventDefault(); addAction()}}}></input>
                     <img className={styles.icon} src={check} onClick={addAction}></img>
                 </div>
             </div>

@@ -20,8 +20,7 @@ function DesktopNav() {
             </div>
             <div className={styles.links}>
                 <Link to="/newgoal">New Goal</Link>
-                {authUser && <Link to="viewgoals">View Goals</Link>}
-                {/* {authUser ? <Link to="/signout">Sign out</Link> : <Link to="/signin">Sign In</Link>}             */}
+                {authUser && <Link to="viewgoals">View Goals</Link>}          
                 {authUser && <Link to="/" onClick={() => handleSignOut()}>Sign out</Link>}            
                 {!authUser && <Link to="/signup">Sign up</Link>} 
                 <Link to="/about">About</Link> 

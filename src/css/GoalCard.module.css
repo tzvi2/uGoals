@@ -1,0 +1,96 @@
+.goalCard {
+    width: 80%;
+    /* border: 1px solid var(--shade3); */
+    border-radius: 5px;
+    padding: 3%;
+    /* animation: slidein .75s 0s;
+    animation-fill-mode: forwards; */
+    margin: 3% 0;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1vh;
+    /* background: var(--shade1); */
+    /* box-shadow: 0 0 5px 2px var(--shade3); */
+    justify-content: space-between;
+}
+
+.goalCard input {
+    border-radius: 5px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  
+}
+
+.row p {
+    margin: 3% 0;
+}
+
+.center {
+    justify-content: center;
+}
+
+.center input[type=button] {
+    width: 100%;
+    /* background: var(--shade2); */
+    /* color: var(--shade4); */
+    font-weight: 600;
+}
+
+.complete { 
+    display: flex;
+    justify-content: space-between;
+    align-self: center;
+    align-items: center;
+    width: 100%;
+    /* border-bottom: 1px solid black;
+    border-top: 1px solid black; */
+    margin-bottom: 3%;
+}
+
+.complete input[type=checkbox].customCheckbox {
+    -webkit-appearance: none;
+    height: 4vh;
+    background: white;
+    width: 4vh;
+    /* border: 1px solid var(--shade2); */
+    display: flex;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    font-size: 4vh;
+}
+
+.complete input[type=checkbox]:checked {
+    height: 4vh;
+    color: black;
+    width: 4vh;
+    /* background-color: var(--shade); */
+}
+
+.complete > input:checked::before {
+    color: black;
+}
+
+@keyframes slidein {
+    0% {
+        transform: translateX(-100vw);
+    }
+    100% {
+        transform: translateX(0vw);
+    }
+} 
+
+@media screen and (min-width: 754px) {
+    .goalCard {
+        height: 34vh;
+        width: 90%;
+    }
+
+    .goalCard p {
+        text-align: end;
+    }
+}

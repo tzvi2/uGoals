@@ -1,33 +1,62 @@
+.aboutPage {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 660px;
+    align-items: center;
+    margin-top: 2%;
+    /* border: 1px solid var(--shade3); */
+    border-radius: 5px;
+    padding: 2%;
+}
+
 p a {
-    
+    color: black;
     text-decoration: underline;
 
 }
 
-p, ul {
+a.about {
+    font-size: 1.25rem;
+}
+
+p.about, ul {
     margin: 3% 0;
+    font-size: 1.25rem;
 }
 
-ul {
-    font-size: 1.3rem;
-    list-style-type: "\2713";
+
+ul.wide {
+    list-style-type: unset;
+    font-size: 1.25rem;
     width: 100%;
-    
+    padding: 0;
 }
 
-li {
-    margin: 4% 0;
-    margin-left: 7%;
+.wide li {
+    margin-left: 5%;
+    list-style-type: "\2713";
 }
 
 .signUp {
     text-decoration: none;
     text-align: center;
-    background: var(--shade1);
+    /* background: var(--shade1); */
     padding: 2%;
     width: 60%;
     border-radius: 5px;
-    color: var(--shade4);
+    /* color: var(--shade4); */
     font-weight: 500;
     margin: 2% 0;
+    font-size: 1.4rem;
+}
+
+@media screen and (min-width: 754px) {
+    .aboutPage li {
+        margin-bottom: 1%;
+    }
+
+    .aboutPage p {
+        margin: 1% 0;
+    }
 }

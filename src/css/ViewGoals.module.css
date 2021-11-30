@@ -1,0 +1,23 @@
+.goalsSection {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media screen and (min-width: 754px) {
+    .goalsSection {
+        display: grid;
+        grid-template-columns: 50% 50%;
+        justify-items: center;
+        column-gap: 1vh;
+        place-content: center;
+        max-width: 1000px;
+    }
+}
+
+@media screen and (min-width: 954px) {
+    .goalsSection {
+        grid-template-columns: 32% 32% 32%;
+    }
+}
