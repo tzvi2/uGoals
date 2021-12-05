@@ -5,7 +5,7 @@
     max-width: 660px;
     align-items: center;
     margin-top: 2%;
-    /* border: 1px solid var(--shade3); */
+    border: 2px solid black;
     border-radius: 5px;
     padding: 2%;
 }

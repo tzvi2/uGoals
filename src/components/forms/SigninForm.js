@@ -2,12 +2,14 @@ import React, {useState} from 'react'
 import styles from '../../css/SigninForm.module.css'
 import {Link, useNavigate} from 'react-router-dom'
 import { useAuthContext } from '../../context/AuthContext'
+import { useGoalContext } from '../../context/GoalContext'
 
 function SigninForm() {
 
     const navigate = useNavigate()
 
     const {authUser, signin} = useAuthContext()
+    const {pendingGoal, saveGoal} = useGoalContext()
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -18,7 +20,10 @@ function SigninForm() {
     const handleLogin = async (e) => {
         e.preventDefault()
         try {
-            await signin(email, password)
+            const newUser = await signin(email, password)
+            if (Object.keys(pendingGoal).length > 0) {
+                await saveGoal(newUser.user.uid, pendingGoal, pendingGoal.title)
+            }
             navigate("/")
         } catch (error) {
             return -1

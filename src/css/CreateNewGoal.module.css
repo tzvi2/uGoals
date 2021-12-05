@@ -110,6 +110,7 @@ input[type=button].viewBtn {
 .saveGoal {
     background: var(--shade5);
     color: white;
+    cursor: pointer;
 }
 
 input.saveGoal:focus {
@@ -145,6 +146,15 @@ input.saveGoal:focus {
     input[type=button].viewBtn {
         padding: 1%;
         width: 50%;
+    }
+
+    .saveGoal:hover {
+        box-shadow: 0 0 7px var(--shade5);
+        
+    }
+
+    .saveGoal:active {
+        color: var(--shade2);
     }
 }
 

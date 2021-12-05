@@ -32,7 +32,8 @@ function GoalCard(props) {
     
 
     return (
-        <>{currentUsersGoals &&
+        <>
+        {currentUsersGoals &&
         <div className={styles.goalCard} style={cardStyle}>
             <div className={styles.row}>
                 <label>Title</label>
@@ -50,7 +51,9 @@ function GoalCard(props) {
                 <input type="button" value="View" onClick={handleViewGoal}></input>
             </div>
         </div>
-        }</>
+        }
+        </>
+
     )
 
 }

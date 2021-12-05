@@ -45,7 +45,7 @@ function MobileNav(props) {
             
             {expanded && <div className={`${styles.menu} ${expanded ? `${styles.slideout}` : `${styles.slidein}`}`} onClick={() => setExpanded(false)}>
                 {authUser &&<Link to="/account">Account</Link>}
-                {authUser &&<Link to="/newgoal">New goal</Link>}
+                <Link to="/newgoal">New goal</Link>
                 {authUser &&<Link to="/viewgoals">View goals</Link>}
                 <Link to="/about">About</Link> 
                 {authUser ? <Link to="/signout" onClick={handleSignOut}>Sign out</Link> : <Link to="/signin">Sign In</Link>}            

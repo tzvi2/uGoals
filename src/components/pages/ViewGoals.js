@@ -46,6 +46,8 @@ function ViewGoals() {
                 />
             ))}
         </div>}
+        
+        
         {currentUsersGoals && Object.keys(currentUsersGoals).length === 0 && 
         <div>
             <p>No goals to show.</p>

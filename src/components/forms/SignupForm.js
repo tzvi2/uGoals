@@ -2,12 +2,14 @@ import React, {useState} from 'react'
 import styles from'../../css/SignupForm.module.css'
 import {Link, useNavigate} from 'react-router-dom'
 import { useAuthContext } from '../../context/AuthContext'
+import {useGoalContext} from '../../context/GoalContext'
 
 function SignupForm() {
 
     const navigate = useNavigate()
 
     const {signup} = useAuthContext()
+    const {pendingGoal, saveGoal} = useGoalContext()
 
     const [firstName, setFirstName] = useState("")
     const [email, setEmail] = useState("")
@@ -18,7 +20,10 @@ function SignupForm() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            await signup(firstName, email, password)
+            const newUser = await signup(firstName, email, password)
+            if (Object.keys(pendingGoal).length > 0) {
+                await saveGoal(newUser.user.uid, pendingGoal, pendingGoal.title)
+            }
             navigate("/")
         } catch (error) {
             console.log(error, 'error')

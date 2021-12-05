@@ -15,6 +15,11 @@
     color: var(--shade5);
 }
 
+.desktopNav h1:hover {
+    margin: 0;
+    color: var(--shade2);
+}
+
 .desktopNav a {
     text-decoration: none;
 }
@@ -23,16 +28,17 @@
     display: flex;
     justify-content: space-between;
     column-gap: 4vh;
+    
 }
 
 .links a {
     flex-shrink: 0;
     color: var(--shade5);
-    /* border-bottom: 2px solid var(--shade1); */
+    border-bottom: 2px solid var(--shade1);
     
 }
 
 .links a:hover {
-    /* color: var(--shade4); */
-    /* border-bottom: 2px solid var(--shade4); */
+    /* color: var(--shade3); */
+    border-bottom: 2px solid var(--shade5);
 }

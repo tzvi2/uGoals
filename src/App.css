@@ -61,6 +61,7 @@ a {
     border-radius: 5px;
     /* box-shadow: 0 0 10px var(--shade3); */
     padding: 3% 0;
+    max-height: 280px;
 }
 
 .homecard1 {
@@ -80,6 +81,10 @@ a {
 .homecard2 {
     background:  linear-gradient(to top, white, var(--shade1));
     border: 1px solid var(--shade5);
+}
+
+.homecard3 a {
+    box-shadow: 0 0 8px grey;
 }
 
 
@@ -163,8 +168,8 @@ label.home {
     padding: 3%;
     width: 85%;
     text-align: center;
-    margin-top: 0;
-    margin-bottom: 2.5%;
+    margin: 0;
+ 
 }
 
 

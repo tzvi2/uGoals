@@ -8,10 +8,12 @@ import {roundToPointFive} from '../../utils/math'
 import { useGoalContext } from '../../context/GoalContext'
 import { useAuthContext } from '../../context/AuthContext'
 import {getRandomID} from '../../utils/ids'
+import { auth } from '../../config/firebase'
+import SignupForm from '../forms/SignupForm'
 
 function CreateNewGoal() {
 
-    const {saveGoal, getGoal, setCurrentGoal, setCurrentSummary, currentGoal, setCurrentTitle} = useGoalContext()
+    const {saveGoal, getGoal, setCurrentGoal, setCurrentSummary, currentGoal, setCurrentTitle, setPendingGoal} = useGoalContext()
     const {authUser} = useAuthContext()
 
     let navigate = useNavigate()
@@ -20,6 +22,7 @@ function CreateNewGoal() {
     
     const [currentNumber, setCurrentNumber] = useState(0)
     const [targetNumber, setTargetNumber] = useState(0)
+    const [showSignUp, setShowSignUp] = useState(false)
 
     const [units, setUnits] = useState("")
     const [deadline, setDeadline] = useState(new Date().toLocaleDateString("en-ca"))
@@ -30,7 +33,7 @@ function CreateNewGoal() {
     const [actions, setActions] = useState({})
 
     useEffect(() => [
-        console.log(deadline)
+        //console.log(deadline)
     ], [deadline])
     
     const totalNumber = targetNumber - currentNumber
@@ -39,7 +42,6 @@ function CreateNewGoal() {
 
     const newGoal = {
         title: title,
-        // totalNumber: totalNumber,
         currentNumber: currentNumber,
         targetNumber: targetNumber,
         deadline: deadline,
@@ -52,9 +54,13 @@ function CreateNewGoal() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log(newGoal)
+        if (authUser === null) {
+            setPendingGoal(newGoal)
+            setShowSignUp(true)
+            return 
+        }
         try {
-            await saveGoal(newGoal, title)
+            await saveGoal(authUser.uid, newGoal, title)
             setCurrentTitle(title)
             setCurrentSummary(summary)
             navigate("/goalconfirm")
@@ -62,7 +68,6 @@ function CreateNewGoal() {
             console.log('errror', error)
         } 
     }
-
 
 
     useEffect(() => {
@@ -104,6 +109,8 @@ function CreateNewGoal() {
 
 
     return (
+        <>
+        {!showSignUp ? 
         <form className={styles.newGoalForm} onSubmit={e => handleSubmit(e)}>
             <div className={styles.section}>
                 <label>Create a measurable goal.</label>
@@ -140,8 +147,12 @@ function CreateNewGoal() {
             </div>}
 
             
-        </form>
-      
+        </form> :
+        <>
+        <p>Sign up to save your goal.</p>
+        <SignupForm />
+        </>}
+      </> 
     )
 }
 

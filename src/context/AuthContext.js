@@ -23,10 +23,12 @@ export function AuthProvider({children}) {
             goalsCreated: 0,
             goalsCompleted: 0
         })
+        return newUser
     }
 
     const signin = async (email, password) => {
-        await signInWithEmailAndPassword(auth, email, password)
+        const user = await signInWithEmailAndPassword(auth, email, password)
+        return user
     }
 
     const signout = async () => {
