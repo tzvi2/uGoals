@@ -21,7 +21,7 @@ function Account() {
 
     return (
         <div className={styles.account}>
-        {authUser && !authLoading && <>
+        {userInfo && <>
         <h3>Account info:</h3>
 
         <div className={styles.row}>

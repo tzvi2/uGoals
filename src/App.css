@@ -64,7 +64,7 @@ a {
 }
 
 .homecard1 {
-    /* background: var(--shade1); */
+    background:  linear-gradient(to top, white, var(--shade1));
     border: 1px solid var(--shade5);
 }
 
@@ -74,10 +74,12 @@ a {
 
 .homecard1 h2 {
     /* border: 1px solid var(--shade5); */
+
 }
 
 .homecard2 {
-    
+    background:  linear-gradient(to top, white, var(--shade1));
+    border: 1px solid var(--shade5);
 }
 
 
@@ -95,8 +97,9 @@ input[type=date] {
     /* color: var(--shade4); */
 }
 
-input {
-    padding: 2% 2%;
+input, input[type=date] {
+    padding: .5vh;
+    border: 1px solid black;
 }
 
 form {
@@ -153,11 +156,9 @@ label.home {
 }
 
 .welcome {
-    /* border: solid 1px var(--shade3); */
+
     border-radius: 5px;
-    /* background: var(--shade1); */
-    /* background: linear-gradient(180deg, var(--shade2), var(--shade1) 60%); */
-    /* color: var(--shade3); */
+
     font-size: 1.3rem;
     padding: 3%;
     width: 85%;
@@ -186,6 +187,27 @@ label.home {
     background: var(--shade2);
     color: var(--shade5);
 }
+
+.popup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    color: var(--shade4);
+    padding: 1% 2%;
+    background: rgba(221, 212, 212, .8);
+    border-radius: 5px;
+    align-self: center;
+    position: fixed;
+    top: 50%;
+    z-index: 4;
+    transform: translateY(-50%);
+}
+
+.popup p {
+    margin: 0;
+}
+
 
 .blured {
     filter: blur(10px);
@@ -234,22 +256,22 @@ label.home {
     }
 
     .homecard1, .homecard2, .homecard3 {
-        /* border: 1px solid var(--shade3); */
-        height: 60%;
+
+        height: 50%;
         justify-content: center;
-        /* box-shadow: 0 0 10px var(--shade3); */
-        /* background: linear-gradient(45deg, rgb(240, 230, 217), white); */
+
         width: 38%;
         padding: 3%;
     }
 
     .homecard1 {
-
+        background:  linear-gradient(to top, white, var(--shade1));
     }
 
     .homecard2  {
-        /* background: linear-gradient(225deg, rgb(240, 230, 217), white); */
-        background: var(--shade1);
+
+        background: linear-gradient(to bottom, white, var(--shade1));
+        border: 1px solid var(--shade5);
     }
 
     .homecard2 a {
@@ -258,8 +280,17 @@ label.home {
         
     }
 
+    .homecard3 {
+        border: 1px solid white;
+        box-shadow: 0 0 8px grey;
+    }
+
+   .homecard3 a:hover {
+        box-shadow: 0 0 7px var(--shade5);
+    }
+
     form {
-        max-width: 600px;
+        max-width: 450px;
     }
 
 

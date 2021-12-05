@@ -29,4 +29,9 @@ a {
         border: none;
         box-shadow: none;
     }
+
+    .form input:hover {
+        cursor: pointer;
+        color: var(--shade4);
+    }
 }

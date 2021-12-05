@@ -1,6 +1,6 @@
 .goalCard {
     width: 80%;
-    /* border: 1px solid var(--shade3); */
+    border: 1px solid var(--shade5);
     border-radius: 5px;
     padding: 3%;
     /* animation: slidein .75s 0s;
@@ -9,7 +9,7 @@
     display: flex;
     flex-direction: column;
     row-gap: 1vh;
-    /* background: var(--shade1); */
+    background: var(--shade1);
     /* box-shadow: 0 0 5px 2px var(--shade3); */
     justify-content: space-between;
 }
@@ -26,7 +26,17 @@
 }
 
 .row p {
-    margin: 3% 0;
+    margin: 0;
+    width: 60%;
+    border: 1px solid var(--shade5);
+    border-radius: 5px;
+    padding: 1% 2%;
+    background: linear-gradient(to right, white, var(--shade1));
+}
+
+p.title {
+    white-space: nowrap;
+    overflow: scroll;
 }
 
 .center {
@@ -36,8 +46,8 @@
 .center input[type=button] {
     width: 100%;
     /* background: var(--shade2); */
-    /* color: var(--shade4); */
-    font-weight: 600;
+    color: var(--shade3);
+    font-weight: 500;
 }
 
 .complete { 
@@ -53,21 +63,19 @@
 
 .complete input[type=checkbox].customCheckbox {
     -webkit-appearance: none;
-    height: 4vh;
+    height: 4.5vh;
     background: white;
-    width: 4vh;
+    width: 4.5vh;
     /* border: 1px solid var(--shade2); */
     display: flex;
-    padding: 0;
+    padding-bottom: 2%;
     justify-content: center;
     align-items: center;
     font-size: 4vh;
 }
 
 .complete input[type=checkbox]:checked {
-    height: 4vh;
-    color: black;
-    width: 4vh;
+    
     /* background-color: var(--shade); */
 }
 

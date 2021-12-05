@@ -33,7 +33,7 @@ function ViewGoals() {
 
     return (
        <>
-        {currentUsersGoals && 
+        {currentUsersGoals && Object.keys(currentUsersGoals).length > 0 && 
         <div className={styles.goalsSection}>
             {Object.keys(currentUsersGoals).map((key, i) => (
                 <GoalCard 
@@ -44,8 +44,11 @@ function ViewGoals() {
                     key={Math.random()}
                     index={i}
                 />
-               
             ))}
+        </div>}
+        {currentUsersGoals && Object.keys(currentUsersGoals).length === 0 && 
+        <div>
+            <p>No goals to show.</p>
         </div>}
        </> 
     )

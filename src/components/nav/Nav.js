@@ -13,9 +13,13 @@ import SignupForm from '../forms/SignupForm'
 import GoalConfirmation from '../pages/GoalConfirmation'
 import AccountDeletionConfirmation from '../pages/AccountDeletionConfirmation'
 import Footer from '../Footer'
+import Popup from '../Popup'
+import { useGoalContext } from '../../context/GoalContext'
 
 
 function Nav() {
+
+    const {secondsRemaining, setSecondsRemaining} = useGoalContext()
 
     const mql = window.matchMedia("screen and (max-width: 770px)")
     const [mobile, setMobile] = useState(mql.matches)
@@ -28,10 +32,15 @@ function Nav() {
         return () => mql.removeEventListener('change', handleScreenResize)
     }, [mql])
 
+    
+
     return (
         
         <>
             {mobile ? <MobileNav bluredState={bluredState} setBluredState={setBluredState} /> : <DesktopNav />}
+            {secondsRemaining > 0 && <div className="popup">
+                <Popup text="Your changes have been saved."/>
+            </div>}
             <div className={`middle ${bluredState}`}>
             <Routes>
                 <Route path="/" element={<App />} />

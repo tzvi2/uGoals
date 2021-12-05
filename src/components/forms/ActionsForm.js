@@ -22,10 +22,14 @@ function ActionsForm(props) {
                 return
             }
         }
-        let newActionState = {...props.actions, [getRandomID()] : actionName}
+        let newActionState = {...props.actions, [getRandomID()]: {
+                name: actionName, 
+                number: Object.keys(props.actions).length
+            }
+        } 
         props.setActions(newActionState)
         setActionName("")
-        window.scrollTo(0,document.body.scrollHeight);
+        //window.scrollTo(0,document.body.scrollHeight);
     }
 
     const removeAction = (id) => {
@@ -38,27 +42,24 @@ function ActionsForm(props) {
         }
     }
 
-    useEffect(() => {
-        //console.log('props.action',props.actions)
-    }, [props.actions])
-
     return (
         <div className={styles.actions}>
-
+        
             {Object.keys(props.actions).map(k => (
                 <div key={k} className={styles.row}>
-                    <label className={styles.saved}>{props.actions[k]}</label>
-                    <input className={styles.icon} type="button" value="X" onClick={() => removeAction(k)}></input>
+                    <label className={styles.saved}>{props.actions[k].name}</label>
+                    <input className={`${styles.icon} ${styles.x}`} type="button" value="X" onClick={() => removeAction(k)}></input>
                 </div>
+                
             ))}
 
-            <div className={styles.section}>
-                {actionError && <label className="warn">Action already exists</label>}
-                <div className={`${styles.row} ${styles.addingRow}`}>
-                    <input type="text" value={actionName} onChange={e => handleActionChange(e)} onKeyPress={e => {if (e.key === "Enter") {e.preventDefault(); addAction()}}}></input>
-                    <img className={styles.icon} src={check} onClick={addAction}></img>
-                </div>
+            
+            {actionError && <label className="warn">Action already exists</label>}
+            <div className={`${styles.row}`}>
+                <input className={styles.actionField} type="text" value={actionName} onChange={e => handleActionChange(e)} onKeyPress={e => {if (e.key === "Enter") {e.preventDefault(); addAction()}}}></input>
+                <p className={`${styles.icon} ${styles.plus}`} type="button" value="+" onClick={addAction}>+</p>
             </div>
+            
             
         </div>
     )

@@ -1,7 +1,9 @@
 import React from 'react'
 import styles from '../../css/About.module.css'
+import { useAuthContext } from '../../context/AuthContext'
 
 function About() {
+    const {authUser} = useAuthContext()
     return (
         <div className={styles.aboutPage}>
             <p className={styles.about}>uGoals guides you through an optimal goal setting process. This process is based on the research of Gail Matthews, a psychology professor at Dominican University.</p>
@@ -13,7 +15,7 @@ function About() {
                 <li>Sending progress updates</li>
             </ul>
             <p className={styles.about}>uGoals helps you along this process to maximize your chance of success.</p>
-            <a className={styles.signUp} href="/signup">Get Started</a>
+            {authUser === null &&<a className={styles.signUp} href="/signup">Get Started</a>}
         </div>
     )
 }

@@ -10,17 +10,18 @@ function LatestGoalCard() {
     const {mostRecentKey, currentTitle, currentUsersGoals} = useGoalContext()
 
 
-    useEffect(() => {
-        console.log('most recent key', mostRecentKey)
-        console.log('currnetUsersGoal[mostrecentkeys]', currentUsersGoals[mostRecentKey])
-        console.log('currnetUsersGoal[mostrecentkeys].deadline', currentUsersGoals[mostRecentKey].deadline)
-        console.log('new date', new Date())
-        console.log('new date from deadline', new Date(currentUsersGoals[mostRecentKey].deadline))
-        console.log('getDaysBetween', getDaysBetween(new Date(), new Date(currentUsersGoals[mostRecentKey].deadline)))
-    }, [mostRecentKey])
+    // useEffect(() => {
+    //     console.log('most recent key', mostRecentKey)
+    //     console.log('currnetUsersGoal[mostrecentkeys]', currentUsersGoals[mostRecentKey])
+    //     console.log('currnetUsersGoal[mostrecentkeys].deadline', currentUsersGoals[mostRecentKey].deadline)
+    //     console.log('new date', new Date())
+    //     console.log('new date from deadline', new Date(currentUsersGoals[mostRecentKey].deadline))
+    //     console.log('getDaysBetween', getDaysBetween(new Date(), new Date(currentUsersGoals[mostRecentKey].deadline)))
+    // }, [mostRecentKey])
+
     return (
         <>
-        {mostRecentKey && currentUsersGoals && Object.keys(currentUsersGoals).length > 0 &&
+        {currentUsersGoals && currentUsersGoals.actions && Object.keys(currentUsersGoals).length > 0 &&
         <div className={styles.latestGoalCard}>
 
             <label className={styles.ribbon}>Latest...</label>
@@ -40,8 +41,8 @@ function LatestGoalCard() {
             </div>
                 
             <ul>
-            {Object.values(currentUsersGoals[mostRecentKey]["actions"]).map((action, i) => (
-                <li key={i}>{action}</li>
+            {Object.keys(currentUsersGoals.actions).map((key, i) => (
+                <li key={i}>{currentUsersGoals.actions[key].name}</li>
             ))}
             </ul>
                 

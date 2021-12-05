@@ -39,7 +39,7 @@ function GoalConfirmation(props) {
         <>
         <div className="flexColumn">
             <p className={styles.left}>Your goal has been saved. </p>
-            <p className={styles.left}>The next step in setting achievable goals is an important one - send your plan to a friend: (feel free to edit before sending)</p>
+            <p className={styles.left}>The next step is an important one - send your plan to a friend: </p>
             <textarea className={styles.summary} value={currentSummary} onChange={e => handleChange(e)}></textarea>
             {edited && <input className={styles.btn} type="button" value="save" onClick={() => handleSubmit()}></input>}
             <input className={styles.viewBtn} type="button" value="View your goal" onClick={handleClick}></input>

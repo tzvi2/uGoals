@@ -18,9 +18,10 @@ export function GoalProvider({children}) {
     const [currentTitle, setCurrentTitle] = useState("")
     const [currentSummary, setCurrentSummary] = useState("")
     const [currentDeadline, setCurrentDeadline] = useState()
-    const [mostRecentKey, setMostRecentKey] = useState()
-    const [currentGoal, setCurrentGoal] = useState()
-    
+    const [mostRecentKey, setMostRecentKey] = useState("")
+    const [currentGoal, setCurrentGoal] = useState({})
+    const [pendingGoal, setPendingGoal] = useState({})
+    const [secondsRemaining, setSecondsRemaining] = useState(0)
 
     const saveGoal = async (goal, title) => {
         title = removeTrailingWhiteSpace(title)
@@ -95,7 +96,15 @@ export function GoalProvider({children}) {
             console.log('error getting summary.')
         }
     }
+
+    const deleteGoal = async (userId, goalId, newGoals) => {
+        const docRef = doc(db, "goals", authUser.uid)
+        await setDoc(docRef, newGoals)
+    }
     
+    const savePendingGoal = async (e) => {
+        //erase white space valued actions before saving
+    }
     
     useEffect(() => {
         if (authUser) {
@@ -109,21 +118,34 @@ export function GoalProvider({children}) {
     useEffect(() => {
         if (currentUsersGoals && Object.keys(currentUsersGoals).length > 0 ) {
             setMostRecentKey(getMostRecentKey())
-            console.log('currentUsersGOals', currentUsersGoals)
+            //setPendingGoal(currentUsersGoals[currentTitle])
         }
     }, [currentUsersGoals])
 
     useEffect(() => {
         //console.log('currentTitle in goalContext', currentTitle)
-        if (currentUsersGoals && Object.keys(currentUsersGoals).length > 0 && currentTitle) {
-            setCurrentGoal(currentUsersGoals[currentTitle])
+        if (currentGoal && Object.keys(currentGoal).length > 0) {
+            setPendingGoal(currentGoal)
         }
         
-    }, [currentTitle])
+    }, [currentGoal])
 
-    // useEffect(() => {
-    //     console.log('mostRecentKey', mostRecentKey)
-    // }, [mostRecentKey])
+    useEffect(() => {
+        if (secondsRemaining > 0) {
+            const seconds = setTimeout(() => {
+                setSecondsRemaining(secondsRemaining - 1)
+            }, 1000)
+            return () => clearTimeout(seconds)
+        }
+    }, [secondsRemaining])
+
+    useEffect(() => {
+        //console.log('pendingGoal', pendingGoal)
+    }, [pendingGoal])
+
+    useEffect(() => {
+        console.log('mostRecentKey', mostRecentKey)
+    }, [mostRecentKey])
 
     const value = {
         currentUsersGoals,
@@ -144,7 +166,12 @@ export function GoalProvider({children}) {
         currentDeadline, 
         setCurrentDeadline,
         currentGoal,
-        setCurrentGoal
+        setCurrentGoal,
+        pendingGoal,
+        setPendingGoal,
+        secondsRemaining,
+        setSecondsRemaining,
+        deleteGoal
     }
 
     return (

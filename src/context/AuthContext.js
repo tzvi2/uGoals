@@ -11,6 +11,7 @@ export function AuthProvider({children}) {
 
     const [authUser, setAuthUser] = useState()
     const [authLoading, setAuthLoading] = useState(true)
+    const [authStateLoading, setAuthStateLoading] = useState(true)
     const [userInfo, setUserInfo] = useState(null) // userInfo is {goalsCreated: x, etc.}
  
     const signup = async (name, email, password) => {
@@ -22,18 +23,6 @@ export function AuthProvider({children}) {
             goalsCreated: 0,
             goalsCompleted: 0
         })
-    }
-
-    const getUserInfo = async (id) => {
-        console.log('id', id)
-        const docRef = doc(db, "users", id)
-        const docSnap = await getDoc(docRef)
-        if (docSnap.exists()) {
-            return docSnap.data()
-        } else {
-            console.log('error getting user info')
-            return {}
-        }
     }
 
     const signin = async (email, password) => {
@@ -57,16 +46,21 @@ export function AuthProvider({children}) {
     }, [])
 
     useEffect(() => {
+        console.log('user info', userInfo)
+    }, [userInfo])
+
+    useEffect(() => {
+        //console.log('authUser', authUser)
         if (authUser || authUser === null) {
-            setAuthLoading(false)
+            setAuthStateLoading(false)
         }
         if (authUser) {
             const unsubUserInfoChanges = onSnapshot(doc(db, "users", authUser.uid), (info) => {
                 setUserInfo(info.data())
+                setAuthStateLoading(false)
             })
             return unsubUserInfoChanges
         }
-        
     }, [authUser])
 
     const value = {
@@ -76,9 +70,10 @@ export function AuthProvider({children}) {
         signout,
         userInfo,
         setUserInfo,
-        getUserInfo,
+        // getUserInfo,
         authLoading,
-        deleteAccount
+        deleteAccount,
+        authStateLoading
     }
 
     return (

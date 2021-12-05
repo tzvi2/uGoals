@@ -36,14 +36,14 @@ function GoalCard(props) {
         <div className={styles.goalCard} style={cardStyle}>
             <div className={styles.row}>
                 <label>Title</label>
-                <p>{props.title}</p>
+                <p className={styles.title}>{props.title}</p>
             </div>
             <div className={styles.row}>
                 <label>Deadline</label>
                 <p>{props.deadline}</p>
             </div>
             <div className={`${styles.complete}`}>
-                <label>{currentUsersGoals[props.title].complete ? "complete" : "In progress"}</label>
+                <label>{currentUsersGoals[props.title].complete ? "Complete" : "In progress"}</label>
                 <input className={styles.customCheckbox} type="checkbox" checked={currentUsersGoals[props.title].complete} onChange={() => toggleComplete()}></input>
             </div>
             <div className={`${styles.row} ${styles.center}`}>

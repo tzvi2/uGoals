@@ -3,21 +3,20 @@
     flex-direction: column;
     row-gap: 2vh;
     width: 94%;
-    /* border: 2px solid var(--shade2); */
+    border: 2px solid var(--shade2);
     border-radius: 5px;
     padding: 3%;
-    /* box-shadow: 5px 10px 18px #888888; */
+    box-shadow: 0 0 12px #888888;
     /* background: rgb(255, 255, 255); */
     margin-top: 2%;
 }
 
-.section label, .section input {
+.section label, .section input[type=text] {
     font-size: 1.2rem;
 }
 
 .newGoalForm label {
     margin-bottom: 2%;
-
 }
 
 .section {
@@ -31,6 +30,7 @@
     justify-content: space-between;
     align-content: center;
     column-gap: 1vh;
+    margin-bottom: 2%;
 }
 
 .row label {
@@ -44,11 +44,7 @@
     border-width: 2px;
 }
 
-.row input[type=button] {
-    border: 1px solid rgb(239, 239, 239);
-}
-
-.row .icon {
+.icon {
     width: 40px;
     height: 40px;
     border: 2px solid black;
@@ -56,6 +52,27 @@
     color: red;
     box-sizing: border-box;
     font-weight: 700;
+    border: 1px solid rgb(239, 239, 239);
+    background: rgb(239, 239, 239);
+    fill: var(--shade5);
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.plus {
+    color: black;
+    font-size: 2.25rem;
+    font-weight: 400;
+    color: var(--shade4);
+
+}
+
+.actionField {
+    padding: 1%;
+    align-self: center;
 }
 
 .left {
@@ -65,10 +82,6 @@
 
 .centered {
     text-align: center;
-}
-
-.addingRow {
-    /* margin-top: 5%; */
 }
 
 .summary {
@@ -88,10 +101,24 @@ input[type=button].viewBtn {
     border-radius: 5px;
 }
 
+.col {
+    display: flex;
+    flex-direction: column;
+    width: 48%;
+}
+
+.saveGoal {
+    background: var(--shade5);
+    color: white;
+}
+
+input.saveGoal:focus {
+    outline: none;
+    
+}
+
 @media screen and (min-width: 754px) {
-    .newGoalForm input {
-        padding: 1%;
-    }
+    
 
     .newGoalForm label {
         margin-bottom: 1%;
@@ -99,10 +126,15 @@ input[type=button].viewBtn {
 
     .icon {
         cursor: pointer;
+        color: black;
     }
 
-    .icon:hover {
-        /* background: var(--shade1); */
+    .icon.x:hover {
+        color: red;
+    }
+
+    .icon.plus:hover {
+        color: var(--shade4);
     }
 
     .left {

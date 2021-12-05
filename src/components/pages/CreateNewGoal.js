@@ -17,7 +17,10 @@ function CreateNewGoal() {
     let navigate = useNavigate()
 
     const [title, setTitle] = useState("")
-    const [totalNumber, setTotalNumber] = useState(0)
+    
+    const [currentNumber, setCurrentNumber] = useState(0)
+    const [targetNumber, setTargetNumber] = useState(0)
+
     const [units, setUnits] = useState("")
     const [deadline, setDeadline] = useState(new Date().toLocaleDateString("en-ca"))
     const [daysTillDeadline, setDaysTillDeadline] = useState(0)
@@ -30,12 +33,15 @@ function CreateNewGoal() {
         console.log(deadline)
     ], [deadline])
     
+    const totalNumber = targetNumber - currentNumber
     const perPeriodSummary = `${splitNumber} ${units} each ${splitTime}`
     const summary = `Hi, I'm using uGoals to set research-backed goals. A key step is to send my goal and action steps to a peer. Here's my goal: I will ${title} by ${deadline}. To achieve this I will do ${perPeriodSummary}. I'll send you a quick progess update each ${splitTime}.`
 
     const newGoal = {
-        
-        totalNumber: totalNumber,
+        title: title,
+        // totalNumber: totalNumber,
+        currentNumber: currentNumber,
+        targetNumber: targetNumber,
         deadline: deadline,
         splitTime: splitTime,
         perPeriodSummary: perPeriodSummary,
@@ -56,6 +62,8 @@ function CreateNewGoal() {
             console.log('errror', error)
         } 
     }
+
+
 
     useEffect(() => {
         if (daysTillDeadline > 21 && daysTillDeadline < 91 ) {
@@ -86,7 +94,7 @@ function CreateNewGoal() {
     const handleDateChange = (e) => {
         setDateError(false)
         let currentDate = new Date()
-        if (getDaysBetween(currentDate, new Date(e.target.value)) < 1 ) {
+        if (getDaysBetween(currentDate, new Date(e.target.value)) < 0 ) {
             setDateError(true)
         } else {
             setDaysTillDeadline(getDaysBetween(currentDate, new Date(e.target.value)))
@@ -94,17 +102,27 @@ function CreateNewGoal() {
         }
     }
 
+
     return (
         <form className={styles.newGoalForm} onSubmit={e => handleSubmit(e)}>
             <div className={styles.section}>
                 <label>Create a measurable goal.</label>
-                <input type="text" placeholder="e.g. Increase revenue by $10,000" onChange={e => setTitle(e.target.value)}></input>
+                <input type="text" placeholder="e.g. Increase revenue to $10,000/month" onChange={e => setTitle(e.target.value)}></input>
             </div>
-            {title && <div className={styles.section}>
-                <label>Total number of improvement:</label>
-                <input type="number" placeholder="e.g. 10,000" onChange={e => setTotalNumber(e.target.value)}></input>
+            {title && <div className={styles.row}>
+
+                <div className={styles.col}>
+                    <label>Current number:</label>
+                    <input type="number" placeholder="e.g. 7,500" onChange={e => setCurrentNumber(e.target.value)}></input> 
+                </div>
+                {currentNumber > 0 && 
+                <div className={styles.col}>
+                    <label>Target number:</label>
+                    <input type="number" placeholder="e.g. 10,000" onChange={e => setTargetNumber(e.target.value)}></input> 
+                </div>}
+
             </div>}
-            {totalNumber > 0 && <div className={styles.section}>
+            {targetNumber > 0 && <div className={styles.section}>
                 <label>What is your unit of measurement?</label>
                 <input type="text" placeholder="e.g. dollars, lbs, ..." onChange={e => setUnits(e.target.value)}></input>
             </div>}
@@ -113,12 +131,12 @@ function CreateNewGoal() {
                 <input type="date" value={deadline} onChange={e => handleDateChange(e)}></input>
             </div>}
             {deadline != new Date().toLocaleDateString("en-ca") && <div className={styles.section}>
-                <label>Next, create some action commitments. What will I do to achieve {perPeriodSummary}:</label>
+                <label>Next, choose some action commitments. What will I do to achieve {perPeriodSummary}:</label>
                 <ActionsForm actions={actions} setActions={setActions}/>
             </div>}
             {Object.keys(actions).length > 0 && <div className={styles.section}>
                 <label>Finally, save your goal:</label>
-                <input type="submit" value="Save"></input>
+                <input className={styles.saveGoal} type="submit" value="Save"></input>
             </div>}
 
             

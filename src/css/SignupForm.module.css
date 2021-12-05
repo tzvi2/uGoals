@@ -7,3 +7,13 @@
     justify-self: flex-start;
     /* transform: translateY(-50%); */
 }
+
+@media screen and (min-width: 754px) {
+    .form input {
+        cursor: pointer;
+    }
+
+    .form input:hover {
+        color: var(--shade4);
+    }
+}
