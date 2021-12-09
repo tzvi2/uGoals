@@ -7,7 +7,6 @@ export const cleanUrl = (str) => {
 }
 
 export const removeTrailingWhiteSpace = (str) => {
-    console.log('string to remove whitespace', str)
     let lastChar = str.length 
     while (str[lastChar - 1] === " ") {
         lastChar--

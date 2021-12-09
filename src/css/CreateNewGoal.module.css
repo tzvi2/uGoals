@@ -1,3 +1,15 @@
+.confirmation {
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.confirmation p {
+    text-align: center;
+    margin-bottom: 1%;
+}
+
 .newGoalForm {
     display: flex;
     flex-direction: column;
@@ -9,6 +21,8 @@
     box-shadow: 0 0 12px #888888;
     /* background: rgb(255, 255, 255); */
     margin-top: 2%;
+    max-height: 600px;
+    overflow-y: scroll;
 }
 
 .section label, .section input[type=text] {
@@ -88,17 +102,20 @@
     resize: none;
     height: 40vh;
     width: 100%;
+    padding: 1%;
 }
 
 input[type=button].btn {
     margin-top: 5%;
     width: 75%;
+    border-radius: 5px;
 }
 
 input[type=button].viewBtn {
     width: 75%;
     margin-top: 4%;
     border-radius: 5px;
+    padding: 1%;
 }
 
 .col {

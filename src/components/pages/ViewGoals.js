@@ -11,44 +11,31 @@ function ViewGoals() {
     let params = useParams()
 
 
-    const {getGoals} = useGoalContext()
+    const {getGoals, findGoalWithTitle, currentUsersGoals} = useGoalContext()
     const {authUser} = useAuthContext()
-    const [currentUsersGoals, setCurrentUsersGoals] = useState(null)
     const [animationDelay, setAnimationDelay] = useState(0.5)
 
-    const retrieve = async () => {
-        try {
-            const goals = await getGoals(authUser.uid)
-            setCurrentUsersGoals(goals)
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
     useEffect(() => {
-        if (authUser) {
-            retrieve()
-        }
-    }, [authUser])
+        console.log(currentUsersGoals)
+    }, [])
+
+
 
     return (
        <>
-        {currentUsersGoals && Object.keys(currentUsersGoals).length > 0 && 
+        {currentUsersGoals && 
         <div className={styles.goalsSection}>
-            {Object.keys(currentUsersGoals).map((key, i) => (
+            {Object.entries(currentUsersGoals).map(([key, goal], i) => (
                 <GoalCard 
-                    title={key}
-                    deadline={currentUsersGoals[key].deadline}
-                    complete={currentUsersGoals[key].complete}
-                    id={key}
+                    goal={goal}
                     key={Math.random()}
-                    index={i}
+                    id={key}
                 />
             ))}
         </div>}
         
         
-        {currentUsersGoals && Object.keys(currentUsersGoals).length === 0 && 
+        {(currentUsersGoals === null || Object.keys(currentUsersGoals).length === 0) && 
         <div>
             <p>No goals to show.</p>
         </div>}

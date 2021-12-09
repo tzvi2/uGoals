@@ -1,10 +1,11 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React, {useState, useEffect, useContext, useCallback} from 'react'
 import {auth, db} from '../config/firebase'
-import {setDoc, doc, getDoc, updateDoc, serverTimestamp, onSnapshot, increment} from 'firebase/firestore'
+import {setDoc, doc, getDoc, updateDoc, serverTimestamp, onSnapshot, increment, deleteField} from 'firebase/firestore'
 import { useAuthContext } from './AuthContext'
 import {getRandomID} from '../utils/ids'
 import { removeTrailingWhiteSpace } from '../utils/strings'
 import { useNavigate } from 'react-router'
+import {debounce} from 'lodash'
 
 const GoalContext = React.createContext()
 
@@ -15,6 +16,7 @@ export function GoalProvider({children}) {
     const {authUser} = useAuthContext()
 
     const [currentUsersGoals, setCurrentUsersGoals] = useState({})
+    const [currentGoalId, setCurrentGoalId] = useState("")
     const [currentTitle, setCurrentTitle] = useState("")
     const [currentSummary, setCurrentSummary] = useState("")
     const [currentDeadline, setCurrentDeadline] = useState()
@@ -23,18 +25,29 @@ export function GoalProvider({children}) {
     const [pendingGoal, setPendingGoal] = useState({})
     const [secondsRemaining, setSecondsRemaining] = useState(0)
 
-    const saveGoal = async (userId, goal, title) => {
-        title = removeTrailingWhiteSpace(title)
+    // const saveGoal = async (userId, goal, title) => {
+    //     title = removeTrailingWhiteSpace(title)
+    //     console.log('saving goal', goal)
+    //     await setDoc(doc(db, "goals", userId), {
+    //         [`${title}`]: {...goal, createdAt: serverTimestamp()}
+    //     }, {merge: true})
+    //     setCurrentTitle(title)
+    //     const userRef = doc(db, "users", userId)
+    //     await updateDoc(userRef, {
+    //         goalsCreated: increment(1)
+    //     })
+    // }
+
+    const saveGoal = async (userId, goal) => {
+        goal.title = removeTrailingWhiteSpace(goal.title)
         console.log('saving goal', goal)
         await setDoc(doc(db, "goals", userId), {
-            [`${title}`]: {...goal, createdAt: serverTimestamp()}
+            [`${getRandomID()}`]: {...goal, createdAt: serverTimestamp()}
         }, {merge: true})
-        setCurrentTitle(title)
         const userRef = doc(db, "users", userId)
         await updateDoc(userRef, {
             goalsCreated: increment(1)
         })
-
     }
 
     const getGoals = async (userId) => {
@@ -57,7 +70,7 @@ export function GoalProvider({children}) {
     }
 
     const toggleGoalComplete = async (userId, goalId, complete) => {
-        console.log(goalId, complete)
+        //console.log(goalId, complete)
         const docRef = doc(db, "goals", userId)
         const userRef = doc(db, "users", userId)
         await updateDoc(docRef, {
@@ -97,31 +110,48 @@ export function GoalProvider({children}) {
         }
     }
 
-    const deleteGoal = async (userId, goalId, newGoals) => {
-        const docRef = doc(db, "goals", authUser.uid)
-        await setDoc(docRef, newGoals)
-        const userRef = doc(db, "users", userId)
-        await updateDoc(userRef, {
-            goalsCreated: increment(-1),
-            goalsCompleted: increment(-1)
+    // const deleteGoal = async (userId, goalId, newGoals) => {
+    //     const docRef = doc(db, "goals", authUser.uid)
+    //     await setDoc(docRef, newGoals)
+    //     const userRef = doc(db, "users", userId)
+    //     await updateDoc(userRef, {
+    //         goalsCreated: increment(-1),
+    //         goalsCompleted: increment(-1)
+    //     })
+    // }
+
+    const deleteGoal = async (goalId) => {
+        console.log("attempting to delete goal with id: ", goalId)
+        const goalRef = doc(db, "goals", authUser.uid)
+        await updateDoc(goalRef, {
+            [`${goalId}`]: deleteField()
         })
     }
     
-    const savePendingGoal = async (e) => {
-        //erase white space valued actions before saving
+    const savePendingGoal = () => {
+        
     }
     
+
+ 
+    useEffect(() => {
+        //console.log('pendingGoalChange', pendingGoal)
+        console.log('pendingGoalChange', pendingGoal)
+        //savePendingGoal()
+    }, [pendingGoal])
+
     useEffect(() => {
         if (authUser) {
             const unsubGoalChanges = onSnapshot(doc(db, "goals", authUser.uid), (doc) => {
                 setCurrentUsersGoals(doc.data())
             })
-            return unsubGoalChanges
+            return () => unsubGoalChanges()
         }
     }, [authUser])
 
     useEffect(() => {
         if (currentUsersGoals && Object.keys(currentUsersGoals).length > 0 ) {
+            console.log('currentUsersGoals', currentUsersGoals)
             setMostRecentKey(getMostRecentKey())
             //setPendingGoal(currentUsersGoals[currentTitle])
         }
@@ -144,13 +174,21 @@ export function GoalProvider({children}) {
         }
     }, [secondsRemaining])
 
-    useEffect(() => {
-        console.log('pendingGoal', pendingGoal)
-    }, [pendingGoal])
+    
 
     useEffect(() => {
-        console.log('mostRecentKey', mostRecentKey)
+        //console.log('mostRecentKey', mostRecentKey)
     }, [mostRecentKey])
+
+    const findGoalWithTitle = (title) => {
+        //console.log('findingGoalWithTitle:', title)
+        for (let key of Object.keys(currentUsersGoals)) {
+            if (currentUsersGoals[key].title === title) {
+                console.log('found it!', currentUsersGoals[key])
+                break
+            }
+        }
+    }
 
     const value = {
         currentUsersGoals,
@@ -176,7 +214,10 @@ export function GoalProvider({children}) {
         setPendingGoal,
         secondsRemaining,
         setSecondsRemaining,
-        deleteGoal
+        deleteGoal,
+        currentGoalId, 
+        setCurrentGoalId,
+        findGoalWithTitle
     }
 
     return (

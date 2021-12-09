@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react'
 import {auth, db} from '../config/firebase'
 import {addDoc, collection, setDoc, doc, getDoc, onSnapshot} from 'firebase/firestore'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile, deleteUser } from '@firebase/auth'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile, deleteUser, reauthenticateWithCredential, reauthenticateWithPopup, EmailAuthCredential, AuthCredential, EmailAuthProvider} from '@firebase/auth'
 
 const AuthContext = React.createContext()
 
@@ -36,19 +36,27 @@ export function AuthProvider({children}) {
     }
 
     const deleteAccount = async () => {
-        console.log('deleting')
-        return deleteUser(auth)
+        return deleteUser(authUser)
+    }
+
+    const reAuthenticate = async (password) => {
+        const cred = EmailAuthProvider.credential(
+            authUser.email,
+            password
+        )
+        const re = await reauthenticateWithCredential(authUser, cred)
+        return re
     }
 
     useEffect(() => {
         const unsubAuthChanges = auth.onAuthStateChanged(user => {
             setAuthUser(user)
         })
-        return unsubAuthChanges
+        return () => unsubAuthChanges()
     }, [])
 
     useEffect(() => {
-        console.log('user info', userInfo)
+        //console.log('user info', userInfo)
     }, [userInfo])
 
     useEffect(() => {
@@ -61,7 +69,7 @@ export function AuthProvider({children}) {
                 setUserInfo(info.data())
                 setAuthStateLoading(false)
             })
-            return unsubUserInfoChanges
+            return () => unsubUserInfoChanges()
         }
     }, [authUser])
 
@@ -75,7 +83,8 @@ export function AuthProvider({children}) {
         // getUserInfo,
         authLoading,
         deleteAccount,
-        authStateLoading
+        authStateLoading,
+        reAuthenticate
     }
 
     return (

@@ -10,7 +10,7 @@ import Account from '../pages/Account'
 import App from '../../App'
 import SigninForm from '../forms/SigninForm'
 import SignupForm from '../forms/SignupForm'
-import GoalConfirmation from '../pages/GoalConfirmation'
+import GoalConfirmation from '../pages/GoalSummary'
 import AccountDeletionConfirmation from '../pages/AccountDeletionConfirmation'
 import Footer from '../Footer'
 import Popup from '../Popup'
@@ -48,7 +48,7 @@ function Nav() {
                 <Route path="/newgoal" element={<NewGoal />} />
                 <Route path="/goalconfirm" element={<GoalConfirmation />} />
                 <Route path="/viewgoal" element={<ViewGoal />}>
-                    <Route path=":goalId" element={<ViewGoal />} />
+                    <Route path=":goalTitle" element={<ViewGoal />} />
                 </Route>
                 <Route path="/viewgoals" element={<ViewGoals />} />
                 <Route path="/about" element={<About />} />

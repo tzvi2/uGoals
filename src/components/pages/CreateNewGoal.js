@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react'
 import styles from '../../css/CreateNewGoal.module.css'
 import ActionsForm from '../forms/ActionsForm'
-import GoalConfirmation from './GoalConfirmation'
+import GoalSummary from './GoalSummary'
 import {useNavigate} from 'react-router-dom'
-import {getDaysBetween} from '../../utils/dates'
-import {roundToPointFive} from '../../utils/math'
+import {getDaysBetween, getCalendarComposition} from '../../utils/dates'
+import {roundToPointFive, roundToPointTwoFive} from '../../utils/math'
 import { useGoalContext } from '../../context/GoalContext'
 import { useAuthContext } from '../../context/AuthContext'
 import {getRandomID} from '../../utils/ids'
@@ -20,9 +20,10 @@ function CreateNewGoal() {
 
     const [title, setTitle] = useState("")
     
-    const [currentNumber, setCurrentNumber] = useState(0)
+    const [currentNumber, setCurrentNumber] = useState(-1)
     const [targetNumber, setTargetNumber] = useState(0)
     const [showSignUp, setShowSignUp] = useState(false)
+    const [next, setNext] = useState(false)
 
     const [units, setUnits] = useState("")
     const [deadline, setDeadline] = useState(new Date().toLocaleDateString("en-ca"))
@@ -32,13 +33,14 @@ function CreateNewGoal() {
     const [dateError, setDateError] = useState(false)
     const [actions, setActions] = useState({})
 
-    useEffect(() => [
-        //console.log(deadline)
-    ], [deadline])
-    
     const totalNumber = targetNumber - currentNumber
-    const perPeriodSummary = `${splitNumber} ${units} each ${splitTime}`
-    const summary = `Hi, I'm using uGoals to set research-backed goals. A key step is to send my goal and action steps to a peer. Here's my goal: I will ${title} by ${deadline}. To achieve this I will do ${perPeriodSummary}. I'll send you a quick progess update each ${splitTime}.`
+    const perPeriodSummary = (totalNumber === 0) ? `each ${splitTime} to maintain ${currentNumber} ${units} for ${getCalendarComposition(50)}` : `to achieve ${splitNumber} ${units} each ${splitTime}`
+
+    const [summary, setSummary] = useState(`Hi, I'm using uGoals to set research-backed goals. A key step is to send my goal and action steps to a peer. \n\nHere's my goal: I will ${title} by ${deadline}. To achieve this I will do ${perPeriodSummary}. I'll send you a quick progress update each ${splitTime}.`)
+
+    useEffect(() => [
+        setSummary(`Hi, I'm using uGoals to set research-backed goals. A key step is to send my goal and action steps to a peer. \n\nHere's my goal: I will ${title} by ${deadline}. To achieve this I will do ${perPeriodSummary}. I'll send you a quick progess update each ${splitTime}.`)
+    ], [title, deadline, perPeriodSummary, splitTime])
 
     const newGoal = {
         title: title,
@@ -60,7 +62,7 @@ function CreateNewGoal() {
             return 
         }
         try {
-            await saveGoal(authUser.uid, newGoal, title)
+            await saveGoal(authUser.uid, newGoal)
             setCurrentTitle(title)
             setCurrentSummary(summary)
             navigate("/goalconfirm")
@@ -81,6 +83,8 @@ function CreateNewGoal() {
     }, [daysTillDeadline])
     
     useEffect(() => {
+        //console.log('daysTillDeadline', daysTillDeadline)
+        //console.log('totalNumber', totalNumber)
         let tempNum = 0
         switch (splitTime) {
             case "day":
@@ -93,7 +97,13 @@ function CreateNewGoal() {
                 tempNum = (totalNumber / daysTillDeadline) * 30
                 break 
         }
-        setSplitNumber(roundToPointFive(tempNum))
+        //console.log(tempNum)
+        if (totalNumber > -10 && totalNumber < 10) {
+            setSplitNumber(roundToPointTwoFive(tempNum))
+        } else {
+            setSplitNumber(roundToPointFive(tempNum))
+        }
+        
     }, [totalNumber, splitTime, daysTillDeadline])
 
     const handleDateChange = (e) => {
@@ -107,25 +117,24 @@ function CreateNewGoal() {
         }
     }
 
-
     return (
         <>
         {!showSignUp ? 
         <form className={styles.newGoalForm} onSubmit={e => handleSubmit(e)}>
             <div className={styles.section}>
                 <label>Create a measurable goal.</label>
-                <input type="text" placeholder="e.g. Increase revenue to $10,000/month" onChange={e => setTitle(e.target.value)}></input>
+                <input autoFocus type="text" placeholder="e.g. Increase revenue to $10,000/month" onChange={e => setTitle(e.target.value)}></input>
             </div>
             {title && <div className={styles.row}>
 
                 <div className={styles.col}>
                     <label>Current number:</label>
-                    <input type="number" placeholder="e.g. 7,500" onChange={e => setCurrentNumber(e.target.value)}></input> 
+                    <input type="number" placeholder="e.g. 7,500" onChange={e => setCurrentNumber(parseInt(e.target.value))}></input> 
                 </div>
-                {currentNumber > 0 && 
+                {currentNumber >= 0 && 
                 <div className={styles.col}>
                     <label>Target number:</label>
-                    <input type="number" placeholder="e.g. 10,000" onChange={e => setTargetNumber(e.target.value)}></input> 
+                    <input type="number" placeholder="e.g. 10,000" onChange={e => setTargetNumber(parseInt(e.target.value))}></input> 
                 </div>}
 
             </div>}
@@ -138,14 +147,18 @@ function CreateNewGoal() {
                 <input type="date" value={deadline} onChange={e => handleDateChange(e)}></input>
             </div>}
             {deadline != new Date().toLocaleDateString("en-ca") && <div className={styles.section}>
-                <label>Next, choose some action commitments. What will I do to achieve {perPeriodSummary}:</label>
+                <label>Next, choose some action commitments. What will I do {perPeriodSummary}:</label>
                 <ActionsForm actions={actions} setActions={setActions}/>
             </div>}
             {Object.keys(actions).length > 0 && <div className={styles.section}>
-                <label>Finally, save your goal:</label>
-                <input className={styles.saveGoal} type="submit" value="Save"></input>
+                {/* <label>Finally, save your goal:</label> */}
+                {!next && <input className={styles.saveGoal} type="button" value="Next" onClick={() => setNext(true)}></input>}
             </div>}
-
+            {next && <div className={styles.confirmation}>
+                <p >The next step is an important one. Copy, paste, and send this summary to a friend through your preferred means...</p>
+                <textarea className={styles.summary} value={summary} onChange={e => setSummary(e.target.value)}></textarea>
+                {<input className={styles.saveGoal} type="button" value="Next" onClick={() => setNext(true)}></input>}
+        </div>}
             
         </form> :
         <>

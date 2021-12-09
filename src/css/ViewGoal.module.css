@@ -2,14 +2,16 @@
     display: flex;
     flex-direction: column;
     row-gap: 1.5vh;
-    width: 94%;
+    width: 100%;
     flex-grow: 2;
-    padding: 3%;
-    border: 1px solid var(--shade2);
+    padding: 2%;
+    margin: 3%;
+    border: 1px solid var(--shade5);
     border-radius: 5px;
-    box-shadow: 0 0 5px 2px var(--shade3);
+    box-shadow: 0 0 5px var(--shade5);
     max-width: 500px;
     align-items: center;
+    box-sizing: border-box;
 }
 
 .flexColumn input, .flexColumn textarea {
@@ -69,7 +71,7 @@
 
 .inProgress, .inProgress input[type=checkbox] {
     color: var(--shade3);
-    border: 1px solid var(--shade3);
+    border: 2px solid var(--shade3);
 }
 
 input[type=checkbox] {
@@ -125,6 +127,8 @@ label ul {
     flex-direction: column;
     row-gap: 1.5vh;
     width: 100%;
+    margin: 0;
+    margin-top: .5%;
 }
 
 .actions .row input.fillFlex {
@@ -172,6 +176,37 @@ input.deleteBtn {
     cursor: pointer;
 }
 
+.backBtn {
+    align-self: flex-start;
+    padding: 1.5%;
+    margin: 0;
+    -webkit-appearance: none;
+    border-radius: 5px;
+    font-size: 1.3rem;
+    width: 35%;
+    background: var(--shade1);
+    border: none;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 0 5px var(--shade5);
+}
+
+.backBtn a {
+    color: var(--shade5);
+    text-decoration: none;
+    width: 100%;
+}
+
+.nOtFoUnD {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+p.notFound  {
+    font-size: 100px;
+}
+
 @keyframes flash {
     0% {
         color: var(--shade1);
@@ -187,6 +222,8 @@ input.deleteBtn {
         margin: 2%;
         padding: 2%;
         row-gap: 2vh;
+        min-height: 550px;
+        max-height: min(77vh, 600px);
     }
 
     .flexColumn button, .flexColumn input, .flexColumn textarea {
@@ -224,6 +261,12 @@ input.deleteBtn {
     .flexColumn .completeRow input[type=checkbox] {
         height: 30px;
         width: 30px;
+        cursor: pointer;
+    }
+
+    .flexColumn .summary {
+        height: 175px;
+        min-height: 60px;
     }
 
     .row input[type=date] {
@@ -239,11 +282,19 @@ input.deleteBtn {
         cursor: pointer;
     }
 
+    .completeRow {
+        padding: 1%;
+    }
+
     input.deleteBtn {
         color: black;
     }
 
     input.deleteBtn:hover {
         color: red;
+    }
+
+    .backBtn {
+        margin-bottom: 0%;
     }
 }

@@ -55,7 +55,7 @@ function Account() {
             <p>{getFraction(userInfo.goalsCompleted, userInfo.goalsCreated)}</p>
         </div>}
     
-        {/* <div className={styles.col}>
+        <div className={styles.col}>
             {deleteStage === 1 ?
             <input className="warn" type="button" value="Delete account" onClick={()=>setDeleteStage(2)}></input>
             :
@@ -67,7 +67,7 @@ function Account() {
             </div>
             </>
             }
-        </div> */}
+        </div>
         </>}
     </div>
     )

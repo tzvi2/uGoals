@@ -19,6 +19,7 @@ import {Link} from 'react-router-dom'
 function App() {
   const {authUser, authLoading, currentUsersGoals, userInfo, authStateLoading} = useAuthContext()
   //const {getMostRecentGoal} = useGoalContext()
+  
 
 
   return (

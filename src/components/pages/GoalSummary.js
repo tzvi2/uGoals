@@ -5,7 +5,7 @@ import { useGoalContext } from '../../context/GoalContext'
 import { useAuthContext } from '../../context/AuthContext'
 import { useEffect } from 'react/cjs/react.development'
 
-function GoalConfirmation(props) {
+function GoalSummary(props) {
 
     let navigate = useNavigate()
 
@@ -37,9 +37,9 @@ function GoalConfirmation(props) {
 
     return (
         <>
-        <div className="flexColumn">
-            <p className={styles.left}>Your goal has been saved. </p>
-            <p className={styles.left}>The next step is an important one - send your plan to a friend: </p>
+        <div className={styles.confirmation}>
+            
+            <p >The next step is an important one. Copy, paste, and send this summary to a friend through your preferred means...</p>
             <textarea className={styles.summary} value={currentSummary} onChange={e => handleChange(e)}></textarea>
             {edited && <input className={styles.btn} type="button" value="save" onClick={() => handleSubmit()}></input>}
             <input className={styles.viewBtn} type="button" value="View your goal" onClick={handleClick}></input>
@@ -48,4 +48,4 @@ function GoalConfirmation(props) {
     )
 }
 
-export default GoalConfirmation
+export default GoalSummary

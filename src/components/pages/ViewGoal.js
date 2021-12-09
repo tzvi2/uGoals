@@ -1,182 +1,183 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef, useCallback, useMemo} from 'react'
 import styles from '../../css/ViewGoal.module.css'
 import { useGoalContext } from '../../context/GoalContext'
 import { useAuthContext } from '../../context/AuthContext'
-import {useParams, useNavigate} from 'react-router-dom'
-import {joinSpacedString, cleanUrl} from '../../utils/strings'
-import ActionsForm from '../forms/ActionsForm'
-import check from '../../images/check.png'
-import {objectIsEmpty} from '../../utils/objects'
-import Popup from '../Popup'
+import {useParams, useNavigate, useLocation, Link} from 'react-router-dom'
+import {debounce} from 'lodash'
 import { getRandomID } from '../../utils/ids'
+import { removeTrailingWhiteSpace } from '../../utils/strings'
+import { act } from 'react-dom/test-utils'
+
+
 
 
 function ViewGoal(props) {
 
-    const {setCurrentTitle, currentTitle, currentDeadline, setCurrentDeadline, currentUsersGoals, currentGoal, setCurrentGoal, toggleGoalComplete, pendingGoal, setPendingGoal, secondsRemaining, setSecondsRemaining, deleteGoal} = useGoalContext()
-    const {authUser} = useAuthContext()
-
     let params = useParams()
     let navigate = useNavigate()
-    
-    useEffect(() => {
-        if (currentUsersGoals && currentUsersGoals[params.goalId])  {
-           setCurrentGoal(currentUsersGoals[params.goalId]) 
-        }
-        
-    }, [currentUsersGoals]) 
 
-    useEffect(() => {
-       
-        console.log('currentGoal', currentGoal?.complete)
-    }, [currentGoal])
-    
+    const {authUser} = useAuthContext()
+    const {pendingGoal, setPendingGoal, currentUsersGoals, setSecondsRemaining, currentGoalId, setCurrentGoalId, findGoalWithTitle, toggleGoalComplete, deleteGoal} = useGoalContext()
 
-
-
-    const [newTitle, setNewTitle] = useState(props.title)
-    const [newDeadline, setNewDeadline] = useState(props.deadline)
-    const [showSummary, setShowSummary] = useState(false)
-    const [editing, setEditing] = useState(true)
-    const [showSavedChangesMessage, setShowSavedChangesMessage] = useState(false)
-    const [changed, setChanged] = useState(false)
-    const [saved, setSaved] = useState(false)
-    // const [secondsRemaining, setSecondsRemaining] = useState(0)
+    const [actionNames, setActionNames] = useState({})
     const [actionError, setActionError] = useState(false)
     const [newAction, setNewAction] = useState("")
+    const [loading, setLoading] = useState(true)
 
-    const handleEditClick = () => {
-        setEditing(!editing)
-    }
+    let first = true
+    
+    useEffect(() => {
+        if (first && currentUsersGoals && Object.keys(currentUsersGoals).length > 0){
+            Object.entries(currentUsersGoals).map(([k, v], i) => {
+                if (v.title === params.goalTitle) {
+                    setPendingGoal(v)
+                    setActionNames(v.actions)
+                    setCurrentGoalId(k)
+                }
+            })
+            setLoading(false)
+            first = false
+        }
+    }, [currentUsersGoals])
+
 
     const handleTitleChange = (e) => {
-        setPendingGoal({...pendingGoal, title: e.target.value})
-        // setSecondsRemaining(2)
+
     }
 
     const handleDeadlineChange = (e) => {
-        setPendingGoal({...pendingGoal, deadline: e.target.value})
         
-    }
 
-    const handleActionChange = (e, k) =>  {
-        if (e.target.value === "") {
-            removeAction(k)
-        } else {
-            const newActions = {...pendingGoal.actions, [k]: {...pendingGoal.actions[k], name: e.target.value}}
-            setPendingGoal({...pendingGoal, actions: newActions})
-            setSecondsRemaining(2)
-        }
-
-        
-    }
-
-    const handleNewActionChange = (e) => {
-        setActionError(false)
-        setNewAction(e.target.value)
-    }
-
-    const handleAddAction = (e) => {
-        console.log('adding')
-        if (newAction === "" || newAction === " ") {
-            return
-        } else {
-            for (let id of Object.keys(pendingGoal.actions)) {
-                if (pendingGoal.actions[id].name === newAction) {
-                    console.log('duplicate')
-                    return
-                }
-            }
-            setPendingGoal({...pendingGoal, actions: {...pendingGoal.actions, [getRandomID()]: {
-                name: newAction,
-                number: Object.keys(pendingGoal.actions).length
-            } }})
-            console.log(pendingGoal.actions)
-            setNewAction("")
-        }
-    }
-
-    const removeAction = (k) => {
-        let newActions = pendingGoal.actions
-        delete newActions[k]
-        setPendingGoal({...pendingGoal, actions: newActions})
-        
     }
 
     const handleSummaryChange = (e) => {
-        setPendingGoal({...pendingGoal, summary: e.target.value})
+
     }
 
     const toggleComplete = async (e) => {
         try {
-            await toggleGoalComplete(authUser.uid, params.goalId, currentGoal.complete)
+            await toggleGoalComplete(authUser.uid, currentGoalId, pendingGoal.complete)
         } catch (err) {
             console.log(err)
         }
     }
 
-    const handleGoalDelete = async (title) => {
+    const handleGoalDelete = async () => {
+        console.log("handling Goal delete")
         try {
-            let newUsersGoals = currentUsersGoals
-            delete newUsersGoals[params.goalId]
-            await deleteGoal(authUser.uid, params.goalId, newUsersGoals)
+            await deleteGoal(currentGoalId)
             navigate("/viewgoals")
         } catch (error) {
             console.log(error)
         }
     }
 
- 
+    // * * * 
+    useEffect(() => {
+        //console.log('actionNames', actionNames)
+    }, [actionNames])
+
+    const handleActionChange = (e, key) => {
+        setActionNames({...actionNames, [key]: {...actionNames[key], name: e.target.value}})
+        save(e, key)
+    }
+
+    const setPending = (obj) => {
+        console.log('setting pending goal')
+        setPendingGoal({...pendingGoal, actions: {...obj}})
+    }
+    
+    const save = useCallback(
+        debounce((e, key) => {
+            const newActions = {...pendingGoal.actions, [key]: {...pendingGoal.actions[key], name: e.target.value}}
+            setPending(newActions)
+            setSecondsRemaining(2)
+        }, 1000)
+        , []
+    )
+
+    const handleActionRemove = (key) => {
+        let copy = {...actionNames}
+        delete copy[key]
+        setActionNames(copy)
+    }
+
+    const addAction = (e) => {
+        if (removeTrailingWhiteSpace(newAction).length === 0) {
+            return
+        }
+        for (let key of Object.keys(actionNames)) {
+            if (actionNames[key].name === newAction) {
+                setActionError(true)
+                return
+            }
+        }
+        setActionNames({...actionNames, [getRandomID()]: {
+            name: newAction,
+            number: Object.keys(actionNames).length
+        }})
+        setNewAction("")
+    }
+
+    // * * *
 
     return (
-        <>
-        {pendingGoal && currentGoal && currentUsersGoals && Object.keys(currentUsersGoals).length > 0 && 
-        <div className={styles.flexColumn}>
+        <div className="flexColumn">
+        <button className={styles.backBtn}><Link to="../viewgoals">Back</Link></button>
+        {currentGoalId && <div className={styles.flexColumn}>
 
+           
             <div className={styles.row}>
                 <label>Title</label>
-                <textarea rows={1} value={pendingGoal.title} onChange={e => handleTitleChange(e)}></textarea>
+                <textarea rows={1} value={pendingGoal.title} onChange={e => {}}></textarea>
             </div>
 
             <div className={styles.row}>
                 <label>Deadline</label>
-                <input type="date" value={pendingGoal.deadline || ""} onChange={e => handleDeadlineChange(e)}></input>
+                <input type="date" value={pendingGoal.deadline || ""} onChange={e => {}}></input>
             </div>
 
             <div className={styles.actions}>
 
-            <label>Actions to achieve {pendingGoal.perPeriodSummary}:
+            <label>Actions to achieve {""}:
             <ul className={styles.actions}>
-            {pendingGoal.actions && Object.entries(pendingGoal.actions).map(([k, v]) => (
-                <div key={k} className={styles.row}>
-                    <input className={styles.fillFlex} disabled={!editing} type="text" value={pendingGoal.actions[k].name} onChange={e => handleActionChange(e, k)}></input>
-                    <p className={styles.icon} onClick={() => removeAction(k, v)}>X</p>
-                </div>  
-            ))}
+                {actionNames && Object.keys(actionNames).map((key, i) => (
+                   <div key={key} className={styles.row}>
+                    <input autoFocus={false} className={styles.fillFlex} type="text" value={actionNames[key].name} onChange={e => handleActionChange(e, key)}></input>
+                    <p className={styles.icon} onClick={() => handleActionRemove(key)}>X</p>
+                </div> 
+                ))}
+ 
             {actionError && <label className="warn">Action already exists</label>}
                 <div className={styles.row}>
-                    <input className={styles.fillFlex} type="text" value={newAction} onChange={e => handleNewActionChange(e)} onKeyPress={e => {if (e.key === "Enter") {e.preventDefault(); handleAddAction()}}}></input>
-                    <p className={`${styles.icon} ${styles.plus}`} onClick={() => handleAddAction()}>+</p>
+                    <input autoFocus={false} className={styles.fillFlex} type="text" value={newAction} onChange={e => {setActionError(false); setNewAction(e.target.value)}} onKeyPress={e => {if (e.key === "Enter") {e.preventDefault(); addAction(e)}}}></input>
+                    <p className={`${styles.icon} ${styles.plus}`} onClick={(e) => addAction(e)}>+</p>
                 </div>
             </ul>
             </label>
 
             </div>
-            
-            <div className={`${styles.completeRow} ${currentGoal.complete ? `${styles.completed}` : `${styles.inProgress}`} `}>
-                <label>{currentGoal.complete ? "complete" : "In progress"}</label>
-                <input className={styles.customCheckbox} type="checkbox" checked={!!currentGoal.complete} onChange={() => toggleComplete()}></input>
+
+            <div className={`${styles.completeRow} ${"" ? `${styles.completed}` : `${styles.inProgress}`} `}>
+                <label>{"" ? "complete" : "In progress"}</label>
+                <input className={styles.customCheckbox} type="checkbox" checked={!!pendingGoal.complete} onChange={() => toggleComplete()}></input>
             </div>
 
-            
             <label>Summary:</label>
             <textarea className={styles.summary} value={pendingGoal.summary} onChange={e => handleSummaryChange(e)}></textarea>
 
             <input className={styles.deleteBtn} type="button" value="Delete Goal" onClick={() => handleGoalDelete()}></input>
-           
-            
+
         </div>}
-        </>
+
+        {!currentGoalId && !loading && <>
+            <div className={styles.nOtFoUnD}>
+                <p className={styles.notFound}>404</p>
+                <p>Goal not found. Double check the URL.</p>
+            </div>
+
+        </>}
+        </div>
     )
 }
 

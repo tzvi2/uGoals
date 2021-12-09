@@ -31,3 +31,31 @@ export const getTimeRemaining = (deadlineStr) => {
     }
    
 }
+
+export const getCalendarComposition = (daysTillDeadline) => {
+    let years = 0
+    let months = 0
+    let weeks = 0
+    let days = 0
+    while (daysTillDeadline > 364) {
+        years += 1
+        daysTillDeadline -= 365
+    }
+    while (daysTillDeadline > 29) {
+        months += 1
+        daysTillDeadline -= 30
+    }
+    while (daysTillDeadline > 6) {
+        weeks += 1
+        daysTillDeadline -= 7
+    }
+    while (daysTillDeadline > 0) {
+        days += 1
+        daysTillDeadline -= 1
+    }
+    let yearString = years === 0 ? "" : years === 1 ? "1 year" : `${years} years`
+    let monthString = months === 0 ? "" : months === 1 ? "1 month" : `${months} months`
+    let weekString = weeks === 0 ? "" : weeks === 1 ? "1 week" : `${weeks} weeks`
+    let dayString = days === 0 ? "" : days === 1 ? "1 day" : `${days} days`
+    return `${yearString} ${monthString} ${weekString} ${dayString}`
+}

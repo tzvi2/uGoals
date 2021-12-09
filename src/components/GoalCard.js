@@ -15,37 +15,42 @@ function GoalCard(props) {
     const {authUser} = useAuthContext()
 
     const handleViewGoal = () => {
-        navigate(`../viewgoal/${props.id}`)
+        navigate(`../viewgoal/${props.goal.title}`)
     }
 
     const cardStyle = {
         "animationDelay": `${(props.index + 1) / 4}s`,
     }
 
+    // useEffect(() => {
+    //     console.log("props.goal", props.goal)
+    //     console.log("props.id",props.id)
+    //     console.log("curr",currentUsersGoals[props.id].complete)
+    // }, [])
+
     const toggleComplete = async (e) => {
         try {
-            await toggleGoalComplete(authUser.uid, props.title, currentUsersGoals[props.title].complete)
+            await toggleGoalComplete(authUser.uid, props.id, currentUsersGoals[props.id].complete)
         } catch (err) {
             console.log(err)
         }
     }
     
-
     return (
         <>
-        {currentUsersGoals &&
+        {currentUsersGoals && currentUsersGoals[props.id] &&
         <div className={styles.goalCard} style={cardStyle}>
             <div className={styles.row}>
                 <label>Title</label>
-                <p className={styles.title}>{props.title}</p>
+                <p className={styles.title}>{props.goal.title}</p>
             </div>
             <div className={styles.row}>
                 <label>Deadline</label>
-                <p>{props.deadline}</p>
+                <p>{props.goal.deadline}</p>
             </div>
             <div className={`${styles.complete}`}>
-                <label>{currentUsersGoals[props.title].complete ? "Complete" : "In progress"}</label>
-                <input className={styles.customCheckbox} type="checkbox" checked={currentUsersGoals[props.title].complete} onChange={() => toggleComplete()}></input>
+                <label>{props.goal.complete ? "Complete" : "In progress"}</label>
+                <input className={styles.customCheckbox} type="checkbox" checked={currentUsersGoals[props.id].complete} onChange={() => toggleComplete()}></input>
             </div>
             <div className={`${styles.row} ${styles.center}`}>
                 <input type="button" value="View" onClick={handleViewGoal}></input>

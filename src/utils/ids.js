@@ -11,5 +11,5 @@ export const getRandomID = () => {
         let randomNum = Math.floor(Math.random() * (126 - 58 + 1)) + 58
         numberString += Math.round(randomNum * i)
     }
-    return letterString + numberString
+    return `${letterString}${numberString}`
 }

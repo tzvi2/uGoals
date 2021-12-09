@@ -17,7 +17,7 @@ function ActionsForm(props) {
             return 
         } 
         for (let id of Object.keys(props.actions)) {
-            if (props.actions[id] === actionName) {
+            if (props.actions[id].name === actionName) {
                 setActionError(true)
                 return
             }
