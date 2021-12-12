@@ -11,11 +11,11 @@ html, body, #root {
   --shade3: #5e503f;
   --shade4: #115c80;
   --shade5: #383d3b; */
-  --shade1: #ebd9c8;
-  --shade2: #fea02f;
-  --shade3: #de6600;
-  --shade4: #007a7a;
-  --shade5: #003f5a;
+  --shade1: #ebd9c8; /*235, 217, 200 */
+  --shade2: #fea02f; /*254, 160, 47 */
+  --shade3: #de6600; /*222, 102, 0 */
+  --shade4: #007a7a; /*0, 122, 122 */
+  --shade5: #003f5a; /*0, 63, 90 */
   height: 100%;
 }
 

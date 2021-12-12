@@ -55,8 +55,8 @@ function ActionsForm(props) {
 
             
             {actionError && <label className="warn">Action already exists</label>}
-            <div className={`${styles.row}`}>
-                <input className={styles.actionField} type="text" value={actionName} onChange={e => handleActionChange(e)} onKeyPress={e => {if (e.key === "Enter") {e.preventDefault(); addAction()}}}></input>
+            <div className={`${styles.row} ${styles.newAction}`}>
+                <input className={`${styles.actionField}`} type="text" value={actionName} onChange={e => handleActionChange(e)} onKeyPress={e => {if (e.key === "Enter") {e.preventDefault(); addAction()}}}></input>
                 <p className={`${styles.icon} ${styles.plus}`} type="button" value="+" onClick={addAction}>+</p>
             </div>
             

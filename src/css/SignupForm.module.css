@@ -1,9 +1,8 @@
 .form {
     margin-top: 5%;
-    border: 1px solid var(--shade3);
+
     padding: 3%;
     border-radius: 5px;
-    box-shadow: 2px 3px 4px var(--shade3);
     justify-self: flex-start;
     /* transform: translateY(-50%); */
 }

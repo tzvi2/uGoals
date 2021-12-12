@@ -32,8 +32,10 @@ function App() {
       :
       <div className="homecard2">
         <h2 className="welcome">Welcome {authUser.displayName}</h2>
-        {userInfo && userInfo.goalsCreated > 0 && <LatestGoalCard />}
+        <LatestGoalCard />
       </div> }
+
+      <div className="crossbar"></div>
      
       <div className="homecard3">
           {authUser === null ? <>

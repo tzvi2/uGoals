@@ -2,10 +2,8 @@
 .latestGoalCard {
     display: flex;
     flex-direction: column;
-    border: 1px solid var(--shade5);
-    border-radius: 5px;
     max-height: 25vh;
-    overflow: scroll;
+    overflow: auto;
     width: 91%;
     /* background: var(--shade2); */
     /* background: linear-gradient(180deg, var(--shade1) 50%, var(--shade2)); */
@@ -19,12 +17,18 @@
     margin: 0;
     margin-top: 1vh;
     padding-left: 3%;
+    color: var(--shade5);
 }
 
 .latestGoalCard p {
     padding-right: 3%;
     text-align: end;
     width: 60%;
+    color: var(--shade5);
+}
+
+.latestGoalCard ul {
+    color: var(--shade5);
 }
 
 .ribbon {
@@ -70,7 +74,13 @@
 }
 
 @media screen and (min-width: 754px) {
-    .latestGoalCard {
-      
+    .latestGoalCard::-webkit-scrollbar {
+        height: 1px;
+        width: 2px;
+    }
+
+    .latestGoalCard::-webkit-scrollbar-thumb {
+        border-radius: 6px;
+        background-color: var(--shade5);
     }
 }

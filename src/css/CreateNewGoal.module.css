@@ -10,6 +10,10 @@
     margin-bottom: 1%;
 }
 
+.confirmation label {
+    margin-top: 5%;
+}
+
 .newGoalForm {
     display: flex;
     flex-direction: column;
@@ -19,10 +23,10 @@
     border-radius: 5px;
     padding: 3%;
     box-shadow: 0 0 12px #888888;
-    /* background: rgb(255, 255, 255); */
-    margin-top: 2%;
     max-height: 600px;
-    overflow-y: scroll;
+    overflow-y: auto;
+    position: sticky;
+    bottom: 30%;
 }
 
 .section label, .section input[type=text] {
@@ -128,6 +132,8 @@ input[type=button].viewBtn {
     background: var(--shade5);
     color: white;
     cursor: pointer;
+    width: 80%;
+    margin-top: 4%;
 }
 
 input.saveGoal:focus {
@@ -162,7 +168,13 @@ input.saveGoal:focus {
 
     input[type=button].viewBtn {
         padding: 1%;
-        width: 50%;
+        width: 100%;
+        cursor: pointer;
+        box-shadow: 0 0 5px grey;
+    }
+
+    input[type=button].viewBtn:hover {
+        box-shadow: 0 0 9px 1px grey;
     }
 
     .saveGoal:hover {
@@ -173,6 +185,18 @@ input.saveGoal:focus {
     .saveGoal:active {
         color: var(--shade2);
     }
+
+    .newAction input {
+        border: 1px solid rgb(223, 222, 222);
+        color: rgb(223, 222, 222);
+    }
+
+
+    .newAction input:focus {
+        color: black;
+    }
+
+   
 }
 
 

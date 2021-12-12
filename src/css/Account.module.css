@@ -51,3 +51,10 @@
     /* color: var(--shade2); */
 }
 
+@media screen and (min-width: 754px) {
+    .account .col input:hover {
+        cursor: pointer;
+        box-shadow: 0 0 5px;
+    }
+}
+

@@ -4,7 +4,7 @@
     row-gap: 1.5vh;
     width: 100%;
     flex-grow: 2;
-    padding: 2%;
+    padding: 3%;
     margin: 3%;
     border: 1px solid var(--shade5);
     border-radius: 5px;
@@ -71,7 +71,7 @@
 
 .inProgress, .inProgress input[type=checkbox] {
     color: var(--shade3);
-    border: 2px solid var(--shade3);
+    border: 1px solid var(--shade3);
 }
 
 input[type=checkbox] {
@@ -179,7 +179,7 @@ input.deleteBtn {
 .backBtn {
     align-self: flex-start;
     padding: 1.5%;
-    margin: 0;
+
     -webkit-appearance: none;
     border-radius: 5px;
     font-size: 1.3rem;
@@ -224,6 +224,7 @@ p.notFound  {
         row-gap: 2vh;
         min-height: 550px;
         max-height: min(77vh, 600px);
+        overflow-y: scroll;
     }
 
     .flexColumn button, .flexColumn input, .flexColumn textarea {
@@ -271,11 +272,17 @@ p.notFound  {
 
     .row input[type=date] {
         padding: .5%;
+        z-index: 2;
     }
 
     input[type="date"]::-webkit-calendar-picker-indicator {
-        padding-left: 50%;
-
+        z-index: 0;
+        background-color: transparent;
+        position: absolute;
+        padding-left: 75%;
+        padding-right: 10%;
+        right: 0;
+        
     }
 
     input[type="date"]::-webkit-calendar-picker-indicator:hover {
@@ -296,5 +303,7 @@ p.notFound  {
 
     .backBtn {
         margin-bottom: 0%;
+        padding: .5%;
+        width: 25%;
     }
 }

@@ -30,6 +30,7 @@ function ViewGoals() {
                     goal={goal}
                     key={Math.random()}
                     id={key}
+                    index={i}
                 />
             ))}
         </div>}

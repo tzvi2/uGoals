@@ -12,7 +12,7 @@
     flex-direction: column;
     row-gap: 1vh;
     min-height: 150px;
-    background: var(--shade1);
+    
     box-shadow: 0 0 5px var(--shade5);
     justify-content: space-between;
 }
@@ -34,12 +34,11 @@
     border: 1px solid var(--shade5);
     border-radius: 5px;
     padding: 1% 2%;
-    background: linear-gradient(to right, white, var(--shade1));
 }
 
 p.title {
     white-space: nowrap;
-    overflow-X: scroll;
+    overflow-X: auto;
 }
 
 .center {
@@ -49,7 +48,7 @@ p.title {
 .center input[type=button] {
     width: 100%;
     /* background: var(--shade2); */
-    color: var(--shade4);
+    color: var(--shade5);
     font-weight: 500;
 }
 

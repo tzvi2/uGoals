@@ -25,6 +25,8 @@ export function GoalProvider({children}) {
     const [pendingGoal, setPendingGoal] = useState({})
     const [secondsRemaining, setSecondsRemaining] = useState(0)
 
+    const [hasPendingGoal, setHasPendingGoal] = useState(false)
+
     // const saveGoal = async (userId, goal, title) => {
     //     title = removeTrailingWhiteSpace(title)
     //     console.log('saving goal', goal)
@@ -128,16 +130,21 @@ export function GoalProvider({children}) {
         })
     }
     
-    const savePendingGoal = () => {
-        
+    const savePendingGoal = async () => {
+        console.log('updating pendign')
+        const usersGoals = doc(db, "goals", authUser.uid)
+        await updateDoc(usersGoals, {
+            [`${currentGoalId}`]: pendingGoal
+        })
     }
     
 
  
     useEffect(() => {
-        //console.log('pendingGoalChange', pendingGoal)
         console.log('pendingGoalChange', pendingGoal)
-        //savePendingGoal()
+        if (authUser) {
+            savePendingGoal()
+        }
     }, [pendingGoal])
 
     useEffect(() => {
@@ -217,7 +224,9 @@ export function GoalProvider({children}) {
         deleteGoal,
         currentGoalId, 
         setCurrentGoalId,
-        findGoalWithTitle
+        findGoalWithTitle,
+        hasPendingGoal,
+        setHasPendingGoal
     }
 
     return (

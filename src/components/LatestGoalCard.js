@@ -10,30 +10,27 @@ function LatestGoalCard() {
     const {mostRecentKey, currentTitle, currentUsersGoals} = useGoalContext()
 
 
-    // useEffect(() => {
-    //     console.log('most recent key', mostRecentKey)
-    //     console.log('currnetUsersGoal[mostrecentkeys]', currentUsersGoals[mostRecentKey])
-    //     console.log('currnetUsersGoal[mostrecentkeys].deadline', currentUsersGoals[mostRecentKey].deadline)
-    //     console.log('new date', new Date())
-    //     console.log('new date from deadline', new Date(currentUsersGoals[mostRecentKey].deadline))
-    //     console.log('getDaysBetween', getDaysBetween(new Date(), new Date(currentUsersGoals[mostRecentKey].deadline)))
-    // }, [mostRecentKey])
+    useEffect(() => {
+        if (currentUsersGoals && Object.keys(currentUsersGoals).length > 0) {
+            console.log('most recent key', mostRecentKey)
+        }
+    }, [mostRecentKey])
 
     return (
         <>
-        {currentUsersGoals && currentUsersGoals.actions && Object.keys(currentUsersGoals).length > 0 &&
+        {currentUsersGoals && mostRecentKey && currentUsersGoals[mostRecentKey] && Object.keys(currentUsersGoals).length > 0 &&
         <div className={styles.latestGoalCard}>
 
             <label className={styles.ribbon}>Latest...</label>
 
             <div className={styles.row}>
                 <label>Title:</label>
-                <p>{mostRecentKey}</p>
+                <p>{currentUsersGoals[mostRecentKey].title }</p>
             </div>
 
             <div className={styles.row}>
                 <label>Due:</label>
-                <p>{dateStringToUS(currentUsersGoals[mostRecentKey]["deadline"])}</p>
+                <p>{dateStringToUS(currentUsersGoals[mostRecentKey].deadline)}</p>
             </div>
             
             <div className={styles.row}>
@@ -41,14 +38,14 @@ function LatestGoalCard() {
             </div>
                 
             <ul>
-            {Object.keys(currentUsersGoals.actions).map((key, i) => (
-                <li key={i}>{currentUsersGoals.actions[key].name}</li>
+            {Object.keys(currentUsersGoals[mostRecentKey].actions).map((key, i) => (
+                <li key={i}>{currentUsersGoals[mostRecentKey].actions[key].name}</li>
             ))}
             </ul>
                 
             <div className={styles.row}>
                 <label>Days remaining:</label>
-                {currentUsersGoals[mostRecentKey] && <p className={styles.days}>{getDaysBetween(new Date(), new Date(currentUsersGoals[mostRecentKey]["deadline"]))}</p>}
+                {currentUsersGoals[mostRecentKey] && <p className={styles.days}>{getDaysBetween(new Date(), new Date(currentUsersGoals[mostRecentKey].deadline))}</p>}
             </div>
             
         </div>}

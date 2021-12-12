@@ -6,12 +6,10 @@ import {useParams, useNavigate, useLocation, Link} from 'react-router-dom'
 import {debounce} from 'lodash'
 import { getRandomID } from '../../utils/ids'
 import { removeTrailingWhiteSpace } from '../../utils/strings'
-import { act } from 'react-dom/test-utils'
-
-
-
 
 function ViewGoal(props) {
+
+    
 
     let params = useParams()
     let navigate = useNavigate()
@@ -27,9 +25,11 @@ function ViewGoal(props) {
     let first = true
     
     useEffect(() => {
+        
         if (first && currentUsersGoals && Object.keys(currentUsersGoals).length > 0){
             Object.entries(currentUsersGoals).map(([k, v], i) => {
                 if (v.title === params.goalTitle) {
+                    console.log('v (setting pending, actionNames, currentGoalId', v)
                     setPendingGoal(v)
                     setActionNames(v.actions)
                     setCurrentGoalId(k)
@@ -74,10 +74,13 @@ function ViewGoal(props) {
 
     // * * * 
     useEffect(() => {
-        //console.log('actionNames', actionNames)
+        console.log('actionNames', actionNames)
     }, [actionNames])
 
     const handleActionChange = (e, key) => {
+        // console.log("e.target.value", e.target.value)
+        // console.log("key", key)
+        // console.log("actionNames[key]", actionNames[key])
         setActionNames({...actionNames, [key]: {...actionNames[key], name: e.target.value}})
         save(e, key)
     }
@@ -85,21 +88,29 @@ function ViewGoal(props) {
     const setPending = (obj) => {
         console.log('setting pending goal')
         setPendingGoal({...pendingGoal, actions: {...obj}})
+        // setPendingGoal({...pendingGoal, actions: actionNames})
     }
     
     const save = useCallback(
         debounce((e, key) => {
+            console.log("e.target.value", e.target.value)
+            console.log("key", key)
+            console.log("pendingGoal", pendingGoal)
+            console.log("pendingGoal.actions", pendingGoal.actions)
+            console.log("pendingGoal.actions[key]", pendingGoal.actions[key])
             const newActions = {...pendingGoal.actions, [key]: {...pendingGoal.actions[key], name: e.target.value}}
-            setPending(newActions)
+            // setPending(newActions)
+            setPendingGoal({...pendingGoal, actions: newActions})
             setSecondsRemaining(2)
-        }, 1000)
-        , []
+        }, 500)
+        , [pendingGoal]
     )
 
     const handleActionRemove = (key) => {
         let copy = {...actionNames}
         delete copy[key]
         setActionNames(copy)
+        setPendingGoal({...pendingGoal, actions: copy})
     }
 
     const addAction = (e) => {
@@ -112,10 +123,12 @@ function ViewGoal(props) {
                 return
             }
         }
-        setActionNames({...actionNames, [getRandomID()]: {
+        let newActions = {...actionNames, [getRandomID()]: {
             name: newAction,
             number: Object.keys(actionNames).length
-        }})
+        }}
+        setActionNames(newActions)
+        setPendingGoal({...pendingGoal, actions: newActions})
         setNewAction("")
     }
 
@@ -158,8 +171,8 @@ function ViewGoal(props) {
 
             </div>
 
-            <div className={`${styles.completeRow} ${"" ? `${styles.completed}` : `${styles.inProgress}`} `}>
-                <label>{"" ? "complete" : "In progress"}</label>
+            <div className={`${styles.completeRow} ${pendingGoal.complete ? `${styles.completed}` : `${styles.inProgress}`} `}>
+                <label>{pendingGoal.complete ? "complete" : "In progress"}</label>
                 <input className={styles.customCheckbox} type="checkbox" checked={!!pendingGoal.complete} onChange={() => toggleComplete()}></input>
             </div>
 

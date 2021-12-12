@@ -3,6 +3,7 @@ import styles from '../../css/SigninForm.module.css'
 import {Link, useNavigate} from 'react-router-dom'
 import { useAuthContext } from '../../context/AuthContext'
 import { useGoalContext } from '../../context/GoalContext'
+import { setPersistence } from '@firebase/auth'
 
 function SigninForm() {
 
@@ -16,6 +17,8 @@ function SigninForm() {
     const [emailError, setEmailError] = useState(false)
     const [passwordError, setPasswordError] = useState(false)
     const [showForgotPassword, setShowForgotPassword] = useState(false)
+    const [loginError, setLoginError] = useState(false)
+    
 
     const handleLogin = async (e) => {
         e.preventDefault()
@@ -26,20 +29,40 @@ function SigninForm() {
             }
             navigate("/")
         } catch (error) {
-            return -1
+            if (error.code === "auth/user-not-found") {
+                setEmailError(true)
+            }
+            else if (error.code === "auth/wrong-password") {
+                setPasswordError(true)
+            }
+            else {
+                setLoginError(true)
+            }
+            
         }
     }
+
+    const handleChange = () => {
+        setLoginError(false)
+        setPasswordError(false)
+        setEmailError(false)
+    }
+
     return (
-            <form className={styles.form} onSubmit={e => handleLogin(e)}>
-                {emailError && <p className={styles.error}>Email not found</p>}
+        <>
+            <label>Welcome back.</label>
+            <form className={styles.form} onSubmit={e => handleLogin(e)} onChange={() => handleChange()}>
+                {loginError && <p className="warn">Error logging in.</p>}
+                {emailError && <p className="warn">Email not found</p>}
                 <input placeholder="Email..." type="text" onChange={e => setEmail(e.target.value)}></input>
-                {passwordError && <p className={styles.error}>Incorrect password</p>}
+                {passwordError && <p className="warn">Incorrect password</p>}
                 <input placeholder="Password..." type="password" onChange={e => setPassword(e.target.value)}></input>
-                <input type="submit" value="Log In"></input>
+                <input type="submit" value="Sign In"></input>
                 
                 <p className="subtext">Don't have an account? <Link className="subtext" to="/signup">Sign up</Link></p>
                 {showForgotPassword && <p className={styles.subtext}>Forgot your password? <Link className={styles.subtext} to="/signup">Reset</Link></p>}
             </form>
+            </>
     )
 }
 

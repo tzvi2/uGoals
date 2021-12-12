@@ -25,6 +25,10 @@ a {
     flex-grow: 2;
 }
 
+.middle::before {
+
+}
+
 .middle {
     display: flex;
     flex-direction: column;
@@ -35,7 +39,8 @@ a {
     animation-duration: .5s;
     animation-timing-function: ease-out;
     flex-grow: 2;
-    padding: 2%;
+    padding: 0 3%;
+    /* background: linear-gradient(to left, rgba(235, 217, 200, 0.3), rgba(0, 63, 90, 0.3)) */
 }
 
 .tan {
@@ -64,8 +69,9 @@ a {
 }
 
 .homecard1 {
-    background:  linear-gradient(to top, white, var(--shade1));
+    background: white;
     border: 1px solid var(--shade5);
+    box-shadow: 0 0 10px 1px var(--shade5);
 }
 
 .homecard1 p, .homecard1 label, .homecard1 h2, .homecard1 ul {
@@ -78,8 +84,9 @@ a {
 }
 
 .homecard2 {
-    background:  linear-gradient(to top, white, var(--shade1));
+    background: rgb(122, 168, 206);
     border: 1px solid var(--shade5);
+    box-shadow: 0 0 10px 1px var(--shade5);
 }
 
 .homecard3 a {
@@ -112,17 +119,10 @@ form {
     width: 90%;
 }
 
-form input::placeholder {
-    /* color: rgb(158, 157, 157); */
-}
-
-.warn {
+p.warn, input.warn {
     color: red;
 }
 
-.error {
-    color: red;
-}
 
 .subtext {
     font-size: 1.1rem;
@@ -135,43 +135,30 @@ h2.home {
 a.home {
     text-decoration: none;
     text-align: center;
-    /* background: var(--shade1); */
+    background: var(--shade2);
     padding: 2%;
     width: 65%;
     border-radius: 5px;
-    /* color: var(--shade3); */
     font-weight: 500;
     margin: 2.5% 0;
-    /* box-shadow: 1px 2px 7px var(--shade3); */
     font-size: 1.4rem;
 }
 
 
-
-a.home:active {
-    /* box-shadow: 1px 1px 3px var(--shade3); */
-    
-}
-
 label.home {
     margin-bottom: 1%;
-    /* color: var(--shade2); */
     font-weight: 500;
 }
 
 .welcome {
-
     border-radius: 5px;
-
     font-size: 1.3rem;
     padding: 3%;
     width: 85%;
     text-align: center;
     margin: 0;
- 
+    color: var(--shade5);
 }
-
-
 
 .top {
     display: flex;
@@ -180,9 +167,8 @@ label.home {
 }
 
 #learnMore {
-    /* background: var(--shade2); */
-    color: var(--shade5);
-    border: 1px solid var(--shade5);
+    background: var(--shade5);
+    color: var(--shade1);
     /* margin-bottom: 3%; */
 }
 
@@ -244,12 +230,8 @@ label.home {
     }
 
     .flexColumn {
-        margin: 3%;
+        margin: 1%;
         max-width: 500px;
-    }
-
-    .middle {
-        
     }
 
     .homepage {
@@ -260,33 +242,22 @@ label.home {
     }
 
     .homecard1, .homecard2, .homecard3 {
-
         height: 50%;
         justify-content: center;
-
         width: 38%;
         padding: 3%;
-    }
-
-    .homecard1 {
-        background:  linear-gradient(to top, white, var(--shade1));
-    }
-
-    .homecard2  {
-
-        background: linear-gradient(to bottom, white, var(--shade1));
-        border: 1px solid var(--shade5);
+        z-index: 2;
     }
 
     .homecard2 a {
         width: 70%;
         color: var(--shade3);
-        
+     
     }
 
     .homecard3 {
-        border: 1px solid white;
-        box-shadow: 0 0 8px grey;
+        box-shadow: 0 0 10px var(--shade5);
+        backdrop-filter: blur(30px);
     }
 
    .homecard3 a:hover {
@@ -297,5 +268,13 @@ label.home {
         max-width: 450px;
     }
 
+    .crossbar {
+        height: 30%;
+        background: linear-gradient(to left, rgb(122, 168, 206), rgb(223, 232, 238), rgba(254, 160, 47, .6));
+        width: 90%;
+        position: absolute;
+        z-index: -1;
+        border-radius: 5px;
+    }
 
 }
