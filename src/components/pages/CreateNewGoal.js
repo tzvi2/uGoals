@@ -35,7 +35,7 @@ function CreateNewGoal() {
     const [actions, setActions] = useState({})
 
     const totalNumber = targetNumber - currentNumber
-    const perPeriodSummary = (totalNumber === 0) ? `each ${splitTime} to maintain ${currentNumber} ${units} for ${getCalendarComposition(50)}` : `to achieve ${splitNumber} ${units} each ${splitTime}`
+    const perPeriodSummary = (totalNumber === 0) ? `each ${splitTime} to maintain ${currentNumber} ${units} for ${getCalendarComposition(50)}` : `to achieve ${totalNumber > 0 ? "an increase of" : "a decrease of"} ${splitNumber} ${units} each ${splitTime}`
 
     const [summary, setSummary] = useState(`Hi, I'm using uGoals to set research-backed goals. A key step is to send my goal and action steps to a peer. \n\nHere's my goal: I will ${title} by ${deadline}. To achieve this I will do ${perPeriodSummary}. I'll send you a quick progress update each ${splitTime}.`)
 
