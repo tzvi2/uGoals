@@ -258,6 +258,7 @@ label.home {
     .homecard3 {
         box-shadow: 0 0 10px var(--shade5);
         backdrop-filter: blur(30px);
+        filter: blur(30px);
     }
 
    .homecard3 a:hover {
