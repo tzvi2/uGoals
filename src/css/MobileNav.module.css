@@ -27,7 +27,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    background: linear-gradient(to right, rgb(255, 255, 255), rgba(254, 160, 47, .6));
+    background: linear-gradient(to right, rgb(122, 168, 206), rgb(223, 232, 238), rgba(254, 160, 47, .6));
+
     padding-bottom: 10%;
     /* background: linear-gradient(to bottom, var(--shade1), var(--shade2)); */
     position: absolute;
