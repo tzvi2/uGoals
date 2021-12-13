@@ -24,7 +24,7 @@ export function GoalProvider({children}) {
     const [currentGoal, setCurrentGoal] = useState({})
     const [pendingGoal, setPendingGoal] = useState({})
     const [secondsRemaining, setSecondsRemaining] = useState(0)
-
+    const [userGoalsLoading, setUserGoalsLoading] = useState(false)
     const [hasPendingGoal, setHasPendingGoal] = useState(false)
 
     // const saveGoal = async (userId, goal, title) => {
@@ -122,6 +122,10 @@ export function GoalProvider({children}) {
     //     })
     // }
 
+    const userHasGoals = () => {
+        return (Object.keys(currentUsersGoals).length > 0)
+    }
+
     const deleteGoal = async (goalId) => {
         console.log("attempting to delete goal with id: ", goalId)
         const goalRef = doc(db, "goals", authUser.uid)
@@ -142,7 +146,7 @@ export function GoalProvider({children}) {
  
     useEffect(() => {
         console.log('pendingGoalChange', pendingGoal)
-        if (authUser) {
+        if (authUser && Object.keys(pendingGoal).length > 0) {
             savePendingGoal()
         }
     }, [pendingGoal])
@@ -157,6 +161,10 @@ export function GoalProvider({children}) {
     }, [authUser])
 
     useEffect(() => {
+        setUserGoalsLoading(true)
+        if (currentUsersGoals) {
+            setUserGoalsLoading(false)
+        }
         if (currentUsersGoals && Object.keys(currentUsersGoals).length > 0 ) {
             console.log('currentUsersGoals', currentUsersGoals)
             setMostRecentKey(getMostRecentKey())
@@ -226,7 +234,9 @@ export function GoalProvider({children}) {
         setCurrentGoalId,
         findGoalWithTitle,
         hasPendingGoal,
-        setHasPendingGoal
+        setHasPendingGoal,
+        userHasGoals,
+        userGoalsLoading
     }
 
     return (

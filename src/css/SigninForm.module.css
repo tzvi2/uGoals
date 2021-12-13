@@ -23,9 +23,7 @@ form input[type=submit] {
     font-weight: 400;
 }
 
-a {
-    /* color: var(--shade3); */
-}
+
 
 @media screen and (min-width: 754px) {
     .form {

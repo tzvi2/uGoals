@@ -12,7 +12,7 @@
     flex-direction: column;
     row-gap: 1vh;
     min-height: 150px;
-    
+    background: linear-gradient(to right, rgba(122, 168, 206, .4), rgb(223, 232, 238), rgba(254, 160, 47, .4));
     box-shadow: 0 0 5px var(--shade5);
     justify-content: space-between;
 }

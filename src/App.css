@@ -84,7 +84,7 @@ a {
 }
 
 .homecard2 {
-    background: rgb(122, 168, 206);
+    background: white;
     border: 1px solid var(--shade5);
     box-shadow: 0 0 10px 1px var(--shade5);
 }
@@ -258,6 +258,13 @@ label.home {
     .homecard3 {
         box-shadow: 0 0 10px var(--shade5);
         backdrop-filter: blur(20px);
+
+    }
+
+    @supports not ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+        .homecard3 {
+            background-color: rgba(255, 255, 255, .5);
+        }   
     }
 
    .homecard3 a:hover {

@@ -11,7 +11,7 @@ function SignupForm() {
     const navigate = useNavigate()
 
     const {signup} = useAuthContext()
-    const {pendingGoal, saveGoal, hasPendingGoal} = useGoalContext()
+    const {pendingGoal, saveGoal, setHasPendingGoal, setPendingGoal} = useGoalContext()
 
     const [firstName, setFirstName] = useState("")
     const [email, setEmail] = useState("")
@@ -32,8 +32,11 @@ function SignupForm() {
             if (Object.keys(pendingGoal).length > 0) {
                 await saveGoal(newUser.user.uid, pendingGoal, pendingGoal.title)
                 navigate("/goalconfirm")
+                setHasPendingGoal(false)
+                setPendingGoal({})
+            } else {
+                navigate("/")
             }
-            navigate("/")
         } catch (error) {
             switch (error.code) {
                 case "auth/weak-password":
@@ -58,11 +61,11 @@ function SignupForm() {
 
     return (
         <>
-        {!hasPendingGoal && <label>Start here.</label>}
         <form className={styles.form} onSubmit={e => handleSubmit(e)} onChange={() => handleChange()}>
+            {Object.keys(pendingGoal).length < 1 ? <label>Start here.</label> : <label>Sign up to save your goal.</label>}
             {nameError && <p className="warn">Please enter a name</p>}
             <input placeholder="First name..." type="text" onChange={e => setFirstName(e.target.value)}></input>
-            {emailInUse&& <p className="warn">Email already in use.</p>}
+            {emailInUse && <p className="warn">Email already in use.</p>}
             {emailError && <p className="warn">Invalid email.</p>}
             <input placeholder="Email..." type="text" onChange={e => setEmail(e.target.value)}></input>
             {passwordError && <p className="warn">Password must be at least six characters</p>}

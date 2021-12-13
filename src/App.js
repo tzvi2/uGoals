@@ -1,32 +1,21 @@
 import {useEffect} from 'react'
 import './App.css';
-import Nav from './components/nav/Nav';
-import {BrowserRouter, Routes, Route} from 'react-router-dom'
-import About from './components/pages/About'
-import NewGoal from './components/pages/CreateNewGoal'
-import ViewGoal from './components/pages/ViewGoal'
-import ViewGoals from './components/pages/ViewGoals'
-import Account from './components/pages/Account'
-import GoalCard from './components/GoalCard'
 import LatestGoalCard from './components/LatestGoalCard'
 import SigninForm from './components/forms/SigninForm';
 import { useAuthContext } from './context/AuthContext';
 import { useGoalContext } from './context/GoalContext';
-import green from './images/green.png'
+
 
 import {Link} from 'react-router-dom'
 
 function App() {
-  const {authUser, authLoading, currentUsersGoals, userInfo, authStateLoading} = useAuthContext()
-  //const {getMostRecentGoal} = useGoalContext()
-  
-
-
+  const {authUser, userInfo, authStateLoading} = useAuthContext()
+ 
   return (
     <>
     {!authStateLoading && <div className="homepage">
     
-      { authUser === null ? <div className="homecard1">
+      {authUser === null ? <div className="homecard1">
         <SigninForm />
       </div> 
       :

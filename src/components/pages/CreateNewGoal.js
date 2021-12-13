@@ -13,7 +13,7 @@ import SignupForm from '../forms/SignupForm'
 
 function CreateNewGoal() {
 
-    const {saveGoal, getGoal, setCurrentGoal, setCurrentSummary, currentGoal, setCurrentTitle, setPendingGoal, hasPendingGoal, setHasPendingGoal} = useGoalContext()
+    const {saveGoal, setCurrentSummary, setCurrentTitle, setPendingGoal, setHasPendingGoal} = useGoalContext()
     const {authUser} = useAuthContext()
 
     let navigate = useNavigate()
@@ -64,7 +64,7 @@ function CreateNewGoal() {
         if (authUser === null) {
             setHasPendingGoal(true)
             setPendingGoal(newGoal)
-            setShowSignUp(true)
+            navigate('../signup')
             return 
         }
         try {
@@ -127,7 +127,7 @@ function CreateNewGoal() {
 
     return (
         <>
-        {!showSignUp ? 
+        
         <form className={styles.newGoalForm} onSubmit={e => handleSubmit(e)}>
             <div className={styles.section}>
                 <label>Create a measurable goal.</label>
@@ -169,11 +169,7 @@ function CreateNewGoal() {
                 <input className={styles.saveGoal} type="button" value="Save goal" onClick={(e) => handleSubmit(e)}></input>
         </div>}
             
-        </form> :
-        <>
-        <p>Sign up to save your goal.</p>
-        <SignupForm />
-        </>}
+        </form>
       </> 
     )
 }

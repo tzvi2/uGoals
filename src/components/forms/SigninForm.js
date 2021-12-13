@@ -10,7 +10,7 @@ function SigninForm() {
     const navigate = useNavigate()
 
     const {authUser, signin} = useAuthContext()
-    const {pendingGoal, saveGoal} = useGoalContext()
+    const {pendingGoal, saveGoal, setPendingGoal, setHasPendingGoal} = useGoalContext()
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -26,6 +26,9 @@ function SigninForm() {
             const newUser = await signin(email, password)
             if (Object.keys(pendingGoal).length > 0) {
                 await saveGoal(newUser.user.uid, pendingGoal, pendingGoal.title)
+                setPendingGoal({})
+                setHasPendingGoal(false)
+                navigate('../goalconfirm')
             }
             navigate("/")
         } catch (error) {
@@ -50,8 +53,9 @@ function SigninForm() {
 
     return (
         <>
-            <label>Welcome back.</label>
+            
             <form className={styles.form} onSubmit={e => handleLogin(e)} onChange={() => handleChange()}>
+                {Object.keys(pendingGoal).length > 0 && <label>Sign in to save your goal</label>}
                 {loginError && <p className="warn">Error logging in.</p>}
                 {emailError && <p className="warn">Email not found</p>}
                 <input placeholder="Email..." type="text" onChange={e => setEmail(e.target.value)}></input>
