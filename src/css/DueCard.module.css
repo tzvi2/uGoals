@@ -1,0 +1,28 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--shade5);
+    padding: 3%;
+    row-gap: 10px;
+    background: linear-gradient(25deg, rgba(122, 168, 206, .4), rgb(223, 232, 238), rgba(254, 160, 47, .4));
+    border-radius: 5px;
+    margin: 2% 0;
+    width: 94%;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    column-gap: 10px;
+    align-items: center;
+}
+
+.row input[type=button] {
+    width: 35%;
+}
+
+.row input[type=text] {
+    width: 65%;
+    text-align: center;
+}

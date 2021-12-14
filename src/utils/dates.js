@@ -15,6 +15,22 @@ export const dateStringToUS = (string) => {
     return (`${month} ${day}, ${year}`)
 }
 
+export const getMonthAndDay = (string) => {
+    return string.slice(4, 10)
+}
+
+export const dateInOneWeek = () => {
+    let today = new Date()
+    return new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000)
+}
+
+export const dateInOneMonth = () => {
+    let today = new Date()
+    return new Date(today.getTime() + 30 * 24 * 60 * 60 * 1000)
+}
+
+
+
 export const getEarlierDate = (date1, date2) => {
 
 }

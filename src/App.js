@@ -7,22 +7,37 @@ import { useGoalContext } from './context/GoalContext';
 
 
 import {Link} from 'react-router-dom'
+import DueCard, {renderDueActions} from './components/DueCard';
 
 function App() {
   const {authUser, userInfo, authStateLoading} = useAuthContext()
- 
+  const {currentUsersGoals, dueActions} = useGoalContext()
+
   return (
     <>
     {!authStateLoading && <div className="homepage">
-    
-      {authUser === null ? <div className="homecard1">
+
+      {authUser === null ? <>
         <SigninForm />
-      </div> 
+      </> 
       :
-      <div className="homecard2">
+      <>
         <h2 className="welcome">Welcome {authUser.displayName}</h2>
-        <LatestGoalCard />
-      </div> }
+        {currentUsersGoals && Object.keys(currentUsersGoals).length > 0 && <>
+        {Object.entries(dueActions).map(([k, v], i) => {
+            //console.log('k', k, 'v', v)
+            if (Object.keys(v).length > 0) {
+              return (
+                <DueCard 
+                  days={k === "day" ? 1 : k === "week" ? 7 : 30}
+                  key={i}
+                  actions={v}
+                />
+              )
+            }
+        })}
+        </>}
+      </>}
 
       <div className="crossbar"></div>
      

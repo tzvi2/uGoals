@@ -6,6 +6,7 @@ import {getRandomID} from '../utils/ids'
 import { removeTrailingWhiteSpace } from '../utils/strings'
 import { useNavigate } from 'react-router'
 import {debounce} from 'lodash'
+import { getDaysBetween } from '../utils/dates'
 
 const GoalContext = React.createContext()
 
@@ -13,7 +14,7 @@ export const useGoalContext = () => useContext(GoalContext)
 
 export function GoalProvider({children}) {
 
-    const {authUser} = useAuthContext()
+    const {authUser, userInfo} = useAuthContext()
 
     const [currentUsersGoals, setCurrentUsersGoals] = useState({})
     const [currentGoalId, setCurrentGoalId] = useState("")
@@ -26,19 +27,9 @@ export function GoalProvider({children}) {
     const [secondsRemaining, setSecondsRemaining] = useState(0)
     const [userGoalsLoading, setUserGoalsLoading] = useState(false)
     const [hasPendingGoal, setHasPendingGoal] = useState(false)
+    const [actionsShelMata, setActionsShelMata] = useState({})
 
-    // const saveGoal = async (userId, goal, title) => {
-    //     title = removeTrailingWhiteSpace(title)
-    //     console.log('saving goal', goal)
-    //     await setDoc(doc(db, "goals", userId), {
-    //         [`${title}`]: {...goal, createdAt: serverTimestamp()}
-    //     }, {merge: true})
-    //     setCurrentTitle(title)
-    //     const userRef = doc(db, "users", userId)
-    //     await updateDoc(userRef, {
-    //         goalsCreated: increment(1)
-    //     })
-    // }
+    const [dueActions, setDueActions] = useState({day: {}, week: {}, month: {}})
 
     const saveGoal = async (userId, goal) => {
         goal.title = removeTrailingWhiteSpace(goal.title)
@@ -50,6 +41,7 @@ export function GoalProvider({children}) {
         await updateDoc(userRef, {
             goalsCreated: increment(1)
         })
+        
     }
 
     const getGoals = async (userId) => {
@@ -112,15 +104,7 @@ export function GoalProvider({children}) {
         }
     }
 
-    // const deleteGoal = async (userId, goalId, newGoals) => {
-    //     const docRef = doc(db, "goals", authUser.uid)
-    //     await setDoc(docRef, newGoals)
-    //     const userRef = doc(db, "users", userId)
-    //     await updateDoc(userRef, {
-    //         goalsCreated: increment(-1),
-    //         goalsCompleted: increment(-1)
-    //     })
-    // }
+ 
 
     const userHasGoals = () => {
         return (Object.keys(currentUsersGoals).length > 0)
@@ -131,6 +115,11 @@ export function GoalProvider({children}) {
         const goalRef = doc(db, "goals", authUser.uid)
         await updateDoc(goalRef, {
             [`${goalId}`]: deleteField()
+        })
+        const userRef = doc(db, "users", authUser.uid)
+        await updateDoc(userRef, {
+            goalsCreated: increment(-1),
+            goalsCompleted: increment(-1)
         })
     }
     
@@ -143,6 +132,11 @@ export function GoalProvider({children}) {
     }
     
 
+
+    useEffect(() => {
+        //console.log('due actions', dueActions)
+        //updateDBActions()
+    }, [dueActions])
  
     useEffect(() => {
         console.log('pendingGoalChange', pendingGoal)
@@ -160,6 +154,51 @@ export function GoalProvider({children}) {
         }
     }, [authUser])
 
+    const updateDueActions = () => {
+        for (let goal of Object.values(currentUsersGoals)) {
+            let obj = {}
+            for (let [key, data] of Object.entries(goal.actions)) {
+                //if (goal.splitTime === "day") {
+                    obj = dueActions[goal.splitTime]
+                    obj[key] = {
+                        name: data.name,
+                    }
+                    for (let elem of getDateStringsUntilDeadline(goal.deadline, goal.splitTime)) {
+                        obj[key][elem] = {
+                            complete: false
+                        }
+                    } 
+                //}
+            }
+            setDueActions({...dueActions, [goal.splitTime]: obj})
+        }
+    }
+
+    const getDateStringsUntilDeadline = (date, period) => {
+        date = new Date(date)
+        let results = []
+        let today = new Date()
+        if (period === "day") {
+            for (let i = 0; i < getDaysBetween(today, date); i++) {
+                let tomorrow = new Date(today)
+                tomorrow.setDate(tomorrow.getDate() + i)
+                results.push(tomorrow.toDateString())
+            }
+        } else if (period === "week") {
+            while (today.getTime() < date.getTime()) {
+                results.push(today.toDateString())
+                today.setDate(today.getDate() + 7)
+            }
+        } else {
+            // add case for feb
+            while (today.getTime() < date.getTime()) {
+                results.push(today.toDateString())
+                today.setDate(today.getMonth() + 1)
+            }
+        }
+        return results
+    }
+
     useEffect(() => {
         setUserGoalsLoading(true)
         if (currentUsersGoals) {
@@ -169,6 +208,8 @@ export function GoalProvider({children}) {
             console.log('currentUsersGoals', currentUsersGoals)
             setMostRecentKey(getMostRecentKey())
             //setPendingGoal(currentUsersGoals[currentTitle])
+            updateDueActions()
+            //getDateStringsUntilDeadline(new Date("2022-02-03"), "week")
         }
     }, [currentUsersGoals])
 
@@ -236,7 +277,8 @@ export function GoalProvider({children}) {
         hasPendingGoal,
         setHasPendingGoal,
         userHasGoals,
-        userGoalsLoading
+        userGoalsLoading,
+        dueActions
     }
 
     return (

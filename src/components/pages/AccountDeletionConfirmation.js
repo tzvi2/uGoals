@@ -11,6 +11,7 @@ function AccountDeletionConfirmation() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [accountDeleted, setAccountDeleted] = useState(false)
+    const [passwordError, setPasswordError] = useState(false)
 
     const {deleteAccount, authUser, reAuthenticate} = useAuthContext()
     const [showSignIn, setShowSignIn] = useState(false)
@@ -33,6 +34,7 @@ function AccountDeletionConfirmation() {
             await reAuthenticate(password)
             await removeAccount()
         } catch (error) {
+            setPasswordError(true)
             console.log(error)
         }
     }
@@ -46,9 +48,9 @@ function AccountDeletionConfirmation() {
         {showSignIn && <> 
         <form className={styles.reAuthenticate}>
             <p>Please confirm account info:</p>
-            {/* <input type="text" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)}></input> */}
-            <input type="password" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)}></input>
-            <input type="button" value="Delete" onClick={() => handleReauthentication()}></input>
+            {passwordError && <p className="warn">Incorrect password.</p>}
+            <input type="password" placeholder="password" value={password} onChange={(e) => {setPasswordError(false); setPassword(e.target.value)}}></input>
+            <input type="button" value="Delete account" onClick={() => handleReauthentication()}></input>
         </form>
         {/* <input className="warn" type="button" value="Delete" onClick={() => removeAccount()}></input> */}
         </>}

@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react'
 import {auth, db} from '../config/firebase'
-import {addDoc, collection, setDoc, doc, getDoc, onSnapshot} from 'firebase/firestore'
+import {addDoc, collection, setDoc, doc, getDoc, onSnapshot, deleteDoc} from 'firebase/firestore'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile, deleteUser, reauthenticateWithCredential, reauthenticateWithPopup, EmailAuthCredential, AuthCredential, EmailAuthProvider} from '@firebase/auth'
 
 const AuthContext = React.createContext()
@@ -23,6 +23,7 @@ export function AuthProvider({children}) {
             goalsCreated: 0,
             goalsCompleted: 0
         })
+        
         return newUser
     }
 
@@ -36,6 +37,8 @@ export function AuthProvider({children}) {
     }
 
     const deleteAccount = async () => {
+        await deleteDoc(doc(db, "users", authUser.uid))
+        await deleteDoc(doc(db, "goals", authUser.uid))
         return deleteUser(authUser)
     }
 

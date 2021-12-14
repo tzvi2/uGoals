@@ -21,7 +21,7 @@ a {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-evenly;
     flex-grow: 2;
 }
 
@@ -40,6 +40,7 @@ a {
     animation-timing-function: ease-out;
     flex-grow: 2;
     padding: 0 3%;
+    margin-top: 2%;
     /* background: linear-gradient(to left, rgba(235, 217, 200, 0.3), rgba(0, 63, 90, 0.3)) */
 }
 
@@ -58,14 +59,7 @@ a {
 }
 
 .homecard1, .homecard2, .homecard3 {
-    display: flex;
-    flex-direction: column;
-    width: 90%;
-    align-items: center;
-    border-radius: 5px;
-    /* box-shadow: 0 0 10px var(--shade3); */
-    padding: 3% 0;
-    max-height: 280px;
+    
 }
 
 .homecard1 {
@@ -84,13 +78,17 @@ a {
 }
 
 .homecard2 {
-    background: white;
-    border: 1px solid var(--shade5);
-    box-shadow: 0 0 10px 1px var(--shade5);
+   
+}
+
+.homecard3 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .homecard3 a {
-    box-shadow: 0 0 8px grey;
+    box-shadow: 0 0 5px 2px grey;
 }
 
 
@@ -136,7 +134,7 @@ a.home {
     text-decoration: none;
     text-align: center;
     background: var(--shade2);
-    padding: 2%;
+    padding: 2% 5%;
     width: 65%;
     border-radius: 5px;
     font-weight: 500;
@@ -153,10 +151,12 @@ label.home {
 .welcome {
     border-radius: 5px;
     font-size: 1.3rem;
-    padding: 3%;
-    width: 85%;
+    padding: 3% 0;
+    width: 100%;
     text-align: center;
     margin: 0;
+    color: var(--shade5);
+    border: 1px solid var(--shade5);
     color: var(--shade5);
 }
 
