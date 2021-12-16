@@ -13,6 +13,7 @@ function ActionsForm(props) {
     }
 
     const addAction = () => {
+        const milliseconds = new Date().getTime()
         if (actionName === "") {
             return 
         } 
@@ -22,14 +23,15 @@ function ActionsForm(props) {
                 return
             }
         }
-        let newActionState = {...props.actions, [getRandomID()]: {
+        let newAction = {
                 name: actionName, 
-                number: Object.keys(props.actions).length
+                number: Object.keys(props.actions).length,
+                createdAt: milliseconds
             }
-        } 
-        props.setActions(newActionState)
+        console.log('newAction', newAction)
+        
+        props.setActions({...props.actions, [getRandomID()]: newAction})
         setActionName("")
-        //window.scrollTo(0,document.body.scrollHeight);
     }
 
     const removeAction = (id) => {
@@ -57,7 +59,7 @@ function ActionsForm(props) {
             {actionError && <label className="warn">Action already exists</label>}
             <div className={`${styles.row} ${styles.newAction}`}>
                 <input className={`${styles.actionField}`} type="text" value={actionName} onChange={e => handleActionChange(e)} onKeyPress={e => {if (e.key === "Enter") {e.preventDefault(); addAction()}}}></input>
-                <p className={`${styles.icon} ${styles.plus}`} type="button" value="+" onClick={addAction}>+</p>
+                <p className={`${styles.icon} ${styles.plus}`} type="button" value="+" onClick={() => addAction()}>+</p>
             </div>
             
             

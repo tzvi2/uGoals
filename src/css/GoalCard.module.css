@@ -1,4 +1,4 @@
-.goalCard {
+.goalCard, .goalCard.completeGoal {
     width: 80%;
     max-height: 220px;
     max-width: 300px;
@@ -15,6 +15,10 @@
     background: linear-gradient(to right, rgba(122, 168, 206, .4), rgb(223, 232, 238), rgba(254, 160, 47, .4));
     box-shadow: 0 0 5px var(--shade5);
     justify-content: space-between;
+}
+
+.goalCard.completeGoal {
+    background: linear-gradient(to right, rgba(122, 168, 206, .4), rgb(223, 232, 238), rgba(254, 160, 47, .4));
 }
 
 .goalCard input {

@@ -15,6 +15,31 @@ export const dateStringToUS = (string) => {
     return (`${month} ${day}, ${year}`)
 }
 
+export const getDateStringsUntilDeadline = (date, period) => {
+    date = new Date(date)
+    let results = []
+    let today = new Date()
+    if (period === "day") {
+        for (let i = 0; i < getDaysBetween(today, date); i++) {
+            let tomorrow = new Date(today)
+            tomorrow.setDate(tomorrow.getDate() + i)
+            results.push(tomorrow.toDateString())
+        }
+    } else if (period === "week") {
+        while (today.getTime() < date.getTime()) {
+            results.push(today.toDateString())
+            today.setDate(today.getDate() + 7)
+        }
+    } else {
+        // add case for >30<
+        while (today.getTime() < date.getTime()) {
+            results.push(today.toDateString())
+            today.setDate(today.getDate() + 30)
+        }
+    }
+    return results
+}
+
 export const getMonthAndDay = (string) => {
     return string.slice(4, 10)
 }
@@ -74,4 +99,30 @@ export const getCalendarComposition = (daysTillDeadline) => {
     let weekString = weeks === 0 ? "" : weeks === 1 ? "1 week" : `${weeks} weeks`
     let dayString = days === 0 ? "" : days === 1 ? "1 day" : `${days} days`
     return `${yearString} ${monthString} ${weekString} ${dayString}`
+}
+
+export const getCurrentStart = (action, period) => {
+    //console.log("action", action)
+    //console.log("period", period)
+    let today = new Date()
+    // * * * 
+    //test: today.setDate(today.getDate() + 3)
+    // * * * 
+    if (period === "day") return today.toDateString()
+    else if (period === "week") {
+        for (let i = 0; i < 7; i++ ) {
+            today.setDate(today.getDate() - i)
+            if (action[today.toDateString()]) {
+                return today.toDateString()
+            }
+        } 
+    }
+    else {
+        for (let i = 0; i < 30; i++) {
+            today.setDate(today.getDate() - i)
+            if (action[today.toDateString()]) {
+                return today.toDateString()
+            }
+        }
+    }
 }

@@ -39,7 +39,7 @@ function GoalCard(props) {
     return (
         <>
         {currentUsersGoals && currentUsersGoals[props.id] &&
-        <div className={styles.goalCard} style={cardStyle}>
+        <div className={props.goal.complete ? `${styles.goalCard} ${styles.completeGoal}` : `${styles.goalCard}`} style={cardStyle}>
             <div className={styles.row}>
                 <label>Title</label>
                 <p className={styles.title}>{props.goal.title}</p>

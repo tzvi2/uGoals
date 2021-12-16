@@ -23,7 +23,11 @@ export function AuthProvider({children}) {
             goalsCreated: 0,
             goalsCompleted: 0
         })
-        
+        await setDoc(doc(db, "actions", newUser.user.uid), {
+            day: {},
+            week: {},
+            month: {}
+        })
         return newUser
     }
 
@@ -36,10 +40,11 @@ export function AuthProvider({children}) {
         return signOut(auth)
     }
 
-    const deleteAccount = async () => {
-        await deleteDoc(doc(db, "users", authUser.uid))
-        await deleteDoc(doc(db, "goals", authUser.uid))
-        return deleteUser(authUser)
+    const deleteAccount = async (userID) => {
+        await deleteDoc(doc(db, "users", userID))
+        await deleteDoc(doc(db, "goals", userID))
+        await deleteDoc(doc(db, "actions", userID))
+        deleteUser(authUser)
     }
 
     const reAuthenticate = async (password) => {

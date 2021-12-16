@@ -7,11 +7,40 @@ import { useGoalContext } from './context/GoalContext';
 
 
 import {Link} from 'react-router-dom'
-import DueCard, {renderDueActions} from './components/DueCard';
+import DueCard from './components/DueCard';
 
 function App() {
   const {authUser, userInfo, authStateLoading} = useAuthContext()
-  const {currentUsersGoals, dueActions} = useGoalContext()
+  const {currentUsersGoals, actions, saveGoal} = useGoalContext()
+
+  const handleQuick = async () => {
+    try {
+      await saveGoal(authUser.uid, {
+        title: "quick goal",
+        currentNumber: 23,
+        targetNumber: 52,
+        deadline: "2021-12-26",
+        splitTime: "day",
+        perPeriodSummary: "some fake ppsummary",
+        actions: {
+          twefe42: {
+            createdAt: 2382359,
+            name: "da ting",
+            number: 613
+          },
+          tw34jt2: {
+            createdAt: 23823559,
+            name: "anuda ting",
+            number: 1
+          },
+        },
+        summary: "summary",
+        complete: false
+    })
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <>
@@ -23,18 +52,18 @@ function App() {
       :
       <>
         <h2 className="welcome">Welcome {authUser.displayName}</h2>
-        {currentUsersGoals && Object.keys(currentUsersGoals).length > 0 && <>
-        {Object.entries(dueActions).map(([k, v], i) => {
-            //console.log('k', k, 'v', v)
-            if (Object.keys(v).length > 0) {
-              return (
-                <DueCard 
-                  days={k === "day" ? 1 : k === "week" ? 7 : 30}
-                  key={i}
-                  actions={v}
-                />
-              )
-            }
+        {actions && Object.keys(actions).length > 0 && <>
+        {Object.entries(actions).map(([period, actionData], i) => {
+          if (Object.keys(actionData).length > 0) {
+            //console.log("actionData", actionData)
+            return (
+                  <DueCard 
+                    period={period}
+                    key={i}
+                    actions={actionData}
+                  />
+                )
+          }
         })}
         </>}
       </>}
@@ -51,6 +80,7 @@ function App() {
           <>
           {userInfo && userInfo.goalsCreated > 0 && <Link className="home" id="learnMore" to="/viewgoals">View your Goals</Link>}
           <Link className="home" id="startNow" to="/newgoal">New Goal +</Link>
+          <button onClick={handleQuick}>Quick goal</button>
           </>}
       </div>
 

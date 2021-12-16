@@ -20,7 +20,7 @@ function AccountDeletionConfirmation() {
 
     const removeAccount = async () => {
         try {
-            await deleteAccount()
+            await deleteAccount(authUser.uid)
             setAccountDeleted(true)
             setShowSignIn(false)
         } catch (error) {

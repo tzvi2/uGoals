@@ -9,13 +9,11 @@ import { removeTrailingWhiteSpace } from '../../utils/strings'
 
 function ViewGoal(props) {
 
-    
-
     let params = useParams()
     let navigate = useNavigate()
 
     const {authUser} = useAuthContext()
-    const {pendingGoal, setPendingGoal, currentUsersGoals, setSecondsRemaining, currentGoalId, setCurrentGoalId, findGoalWithTitle, toggleGoalComplete, deleteGoal} = useGoalContext()
+    const {pendingGoal, setPendingGoal, currentUsersGoals, setSecondsRemaining, currentGoalId, setCurrentGoalId, findGoalWithTitle, toggleGoalComplete, deleteGoal, removeAction} = useGoalContext()
 
     const [actionNames, setActionNames] = useState({})
     const [actionError, setActionError] = useState(false)
@@ -111,6 +109,7 @@ function ViewGoal(props) {
         delete copy[key]
         setActionNames(copy)
         setPendingGoal({...pendingGoal, actions: copy})
+        removeAction(pendingGoal.splitTime, key)
     }
 
     const addAction = (e) => {
@@ -125,7 +124,8 @@ function ViewGoal(props) {
         }
         let newActions = {...actionNames, [getRandomID()]: {
             name: newAction,
-            number: Object.keys(actionNames).length
+            number: Object.keys(actionNames).length,
+            createdAt: new Date().getTime()
         }}
         setActionNames(newActions)
         setPendingGoal({...pendingGoal, actions: newActions})
