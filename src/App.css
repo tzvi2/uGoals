@@ -1,4 +1,4 @@
-.flexColumn {
+/* .flexColumn {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -7,38 +7,30 @@
     z-index: 0;
     width: 100%;
     justify-content: center;
-    /* animation-name: slidein ; */
     animation-duration: .5s;
     animation-timing-function: ease-out;
-}
+} */
 
 a {
     color: black;
 }
 
-.homepage {
-    width: 96%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-    flex-grow: 2;
-    row-gap: 3%;
-}
-
 .middle {
-    display: flex;
-    flex-direction: column;
     z-index: 0;
-    justify-content: space-evenly;
-    align-items: center;
-    /* animation-name: slidein ; */
+    /* animation-name: slidein; */
     animation-duration: .5s;
     animation-timing-function: ease-out;
-    flex-grow: 2;
-    padding: 0 3%;
-    margin-top: 2%;
+    padding: 0 2%;
 }
+
+.homepage {
+    display: flex;
+    flex-direction: column;
+    row-gap: 18px;
+    margin-top: 18px;
+}
+
+
 
 .homecard1 {
     background: white;
@@ -54,11 +46,11 @@ a {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
 }
 
 .homecard3 a {
-    box-shadow: 0 0 5px 2px grey;
+    box-shadow: 0 0 5px 2px var(--shade5);
+    margin-bottom: 18px;
 }
 
 
@@ -82,13 +74,12 @@ input, input[type=date] {
 form {
     display: flex;
     flex-direction: column;
-    width: 90%;
+    /* width: 90%; */
 }
 
 p.warn, input.warn {
     color: red;
 }
-
 
 .subtext {
     font-size: 1.1rem;
@@ -98,6 +89,7 @@ h2.home {
     text-align: center;
 }
 
+
 a.home {
     text-decoration: none;
     text-align: center;
@@ -106,7 +98,6 @@ a.home {
     width: 65%;
     border-radius: 5px;
     font-weight: 500;
-    margin: 3% 0;
     font-size: 1.4rem;
 }
 
@@ -120,7 +111,6 @@ label.home {
     border-radius: 5px;
     font-size: 1.3rem;
     padding: 3% 0;
-    width: 100%;
     text-align: center;
     margin: 0;
     color: var(--shade5);
@@ -128,20 +118,18 @@ label.home {
     color: var(--shade5);
 }
 
-.top {
-    display: flex;
-    flex-direction: column;
-    
+.crossbar {
+    display: none;
 }
 
 #learnMore {
-    background: var(--shade5);
-    color: var(--shade1);
+    border: none;
+    background: white;
+    color: var(--shade5);
 }
 
 #startNow {
-    border: 1px solid var(--shade2);
-    background: var(--shade2);
+    background: linear-gradient(25deg, rgba(122, 168, 206, .3), rgb(234, 238, 241));
     color: var(--shade5);
 }
 
@@ -242,6 +230,7 @@ label.home {
     }
 
     .crossbar {
+        display: block;
         height: 30%;
         background: linear-gradient(to left, rgb(122, 168, 206), rgb(223, 232, 238), rgba(254, 160, 47, .6));
         width: 90%;

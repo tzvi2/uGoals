@@ -4,9 +4,7 @@ import {setDoc, doc, collection, getDoc, getDocs, updateDoc, serverTimestamp, on
 import { useAuthContext } from './AuthContext'
 import {getRandomID} from '../utils/ids'
 import { removeTrailingWhiteSpace } from '../utils/strings'
-import { useNavigate } from 'react-router'
-import {debounce} from 'lodash'
-import { dateStringToUS, getDateStringsUntilDeadline } from '../utils/dates'
+import { getDateStringsUntilDeadline } from '../utils/dates'
 
 const GoalContext = React.createContext()
 
@@ -16,7 +14,7 @@ export function GoalProvider({children}) {
 
     const {authUser, userInfo} = useAuthContext()
 
-    const [currentUsersGoals, setCurrentUsersGoals] = useState({})
+    const [currentUsersGoals, setCurrentUsersGoals] = useState(null)
     const [currentGoalId, setCurrentGoalId] = useState("")
     const [currentTitle, setCurrentTitle] = useState("")
     const [currentSummary, setCurrentSummary] = useState("")
@@ -25,10 +23,10 @@ export function GoalProvider({children}) {
     const [currentGoal, setCurrentGoal] = useState({})
     const [pendingGoal, setPendingGoal] = useState({})
     const [secondsRemaining, setSecondsRemaining] = useState(0)
-    const [userGoalsLoading, setUserGoalsLoading] = useState(false)
+    const [userGoalsLoading, setUserGoalsLoading] = useState(true)
     const [hasPendingGoal, setHasPendingGoal] = useState(false)
     const [actions, setActions] = useState({day: {}, week: {}, month: {}})
-    let firstLoad = true
+    const [justOpenedGoal, setJustOpenedGoal] = useState(true)
 
     const saveGoal = async (userId, goal) => {
         console.log('goal', goal)
@@ -40,7 +38,6 @@ export function GoalProvider({children}) {
         await updateDoc(userRef, {
             goalsCreated: increment(1)
         })
-        //saveActions()
         return newGoal
     }
 
@@ -60,16 +57,6 @@ export function GoalProvider({children}) {
         const docSnap = await getDoc(docRef)
         if (docSnap.exists()) {
             return docSnap.data()[goalId]
-        }
-    }
-
-    const getActions = async () => {
-        const actionsRef = doc(db, "actions", authUser.uid)
-        const actionsSnap = await getDoc(actionsRef)
-        if (actionsSnap.exists()) {
-            return actionsSnap.data()
-        } else {
-            return {}
         }
     }
 
@@ -149,7 +136,7 @@ export function GoalProvider({children}) {
     }
     
     const savePendingGoal = async () => {
-        console.log('updating pendign')
+        console.log('saving pending to DB')
         const usersGoals = doc(db, "goals", authUser.uid)
         await updateDoc(usersGoals, {
             [`${currentGoalId}`]: pendingGoal
@@ -165,36 +152,7 @@ export function GoalProvider({children}) {
         }
     }
 
-    const saveActions = async () => {
-        let obj = actions // { day:{}, week:{}, month:{}}
-        console.log('currentUsersGoals', currentUsersGoals)
-        for (let goal of Object.values(currentUsersGoals)) {
-            console.log('goal', goal)
-            for (let [key, data] of Object.entries(goal.actions)) {
-                obj[goal.splitTime][key] = {
-                    name: data.name,
-                    createdAt: serverTimestamp()
-                }
-                for (let elem of getDateStringsUntilDeadline(goal.deadline, goal.splitTime)) {
-                    obj[goal.splitTime][key][elem] = {
-                        complete: false
-                    }
-                } 
-            } 
-        }
-        const actionsRef = doc(db, "actions", authUser.uid)
-        await updateDoc(actionsRef, obj)
-    }
-
-
-
     const updateActions = async () => {
-        // check if all actions in currUsersGoals
-        // are in database data
-        // if action is in currUsersGoals thats
-        // not in database data
-        // update newActions
-        // send newActions to DB
         let dbActions = {}
         let newActions = actions
         let changed = false
@@ -227,34 +185,12 @@ export function GoalProvider({children}) {
         
     }
 
-    const handleSetActions = async (allGoals) => {
-        let newActions = actions
-        const actionsRef = doc(db, "actions", authUser.uid)
-        let oldActions = await getDoc(actionsRef)
-        if (oldActions.exists()) {
-            oldActions = oldActions.data()
-        }
-        let changed = false
-        Object.entries(allGoals).forEach(([goalID, goalData]) => {
-            Object.entries(allGoals[goalID].actions).forEach(([actionID, actionData]) => {
-                if (!actions[goalData.splitTime][actionID]) {
-                    changed = true
-                    newActions[goalData.splitTime][actionID] = {
-                        name: actionData.name,
-                        createdAt: new Date().getTime()
-                    }
-                    for (let date of getDateStringsUntilDeadline(goalData.deadline, goalData.splitTime)) {
-                        newActions[goalData.splitTime][actionID][date] = {
-                            complete: false
-                        }
-                    }
-                }
-            })
-        })
-        if (changed) {
-            const actionsRef = doc(db, "actions", authUser.uid)
-            await setDoc(actionsRef, newActions)
-        }
+    const handleSetActions = (obj) => {
+        let newActions = {}
+        newActions["day"] = obj["day"]
+        newActions["week"] = obj["week"]
+        newActions["month"] = obj["month"]
+        setActions(newActions)
     }
 
     const removeAction = async (period, actionID) => {
@@ -265,8 +201,6 @@ export function GoalProvider({children}) {
     }
 
     const removeActions = async (goalID) => {
-        // delete all action keys in goal from
-        // newActions, setDOc
         let newActions = actions
         for (let key of Object.keys(currentUsersGoals[goalID].actions)) {
             delete newActions[currentUsersGoals[goalID].splitTime][key]
@@ -274,75 +208,17 @@ export function GoalProvider({children}) {
         const actionsRef = doc(db, "actions", authUser.uid)
         await updateDoc(actionsRef, newActions)
     }
-    
-    // const updateActions = async () => {
-    //     let newActions = {}
-    //     let oldActions = {}
-    //     const actionsRef = doc(db, "actions", authUser.uid)
-    //     const actionsSnap = await getDoc(actionsRef)
-    //     if (actionsSnap.exists()) {
-    //         oldActions = actionsSnap.data()
-    //         newActions = actionsSnap.data()
-    //     }
-    //     for (let goalID of Object.keys(currentUsersGoals)) {
-    //         for (let [actionID, data] of Object.entries(currentUsersGoals[goalID].actions)) {
-    //             if (!newActions[currentUsersGoals[goalID].splitTime][actionID]) {
-    //                 newActions[currentUsersGoals[goalID].splitTime][actionID] = {
-    //                     name: data.name,
-    //                     createdAt: serverTimestamp()
-    //                 }
-    //                 for (let elem of getDateStringsUntilDeadline(currentUsersGoals[goalID].deadline, currentUsersGoals[goalID].splitTime)) {
-    //                     newActions[currentUsersGoals[goalID].splitTime][actionID][elem] = {
-    //                         complete: false
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //         for (let key of Object.keys(newActions[currentUsersGoals[goalID].splitTime])) {
-    //             if (!currentUsersGoals[goalID].actions[key]) {
-    //                 await updateDoc(actionsRef, {
-    //                     [`${currentUsersGoals[goalID].splitTime}.${key}`]: deleteField()
-    //                 })
-    //                 return 
-    //             }
-    //         }
-    //     }
-    //     console.log('new actions', newActions)
-    //     //await updateDoc(actionsRef, newActions)
-    // }
 
     useEffect(() => {
-        console.log("actions", actions)
+       // console.log("actions", actions)
     }, [actions])
  
     useEffect(() => {
         //console.log('pendingGoalChange', pendingGoal)
-        if (authUser && Object.keys(pendingGoal).length > 0) {
+        if (authUser && Object.keys(pendingGoal).length > 0 && !justOpenedGoal) {
             savePendingGoal()
         }
     }, [pendingGoal])
-
-    // useEffect(() => {
-    //     if (authUser) {
-    //         const unsubGoalChanges = onSnapshot(doc(db, "goals", authUser.uid), (doc) => {
-    //             setCurrentUsersGoals(doc.data())
-    //             handleSetActions(doc.data())
-    //         })
-    //         return () => {
-    //             unsubGoalChanges()
-    //         }
-    //     }
-    // }, [authUser])
-
-    // useEffect(() => {
-    //     if (authUser) {
-    //         const unsubscribe = onSnapshot(doc(db, "actions", authUser.uid), (doc) => {
-    //             console.log('actions DB change')
-    //             setActions(doc.data())
-    //         })
-    //         return () => unsubscribe()
-    //     }
-    // }, [authUser])
 
     useEffect(() => {
         if (authUser) {
@@ -350,7 +226,7 @@ export function GoalProvider({children}) {
                 setCurrentUsersGoals(goals.data())
             })
             const unsubActionChanges = onSnapshot(doc(db, "actions", authUser.uid), (actions) => {
-                setActions(actions.data())
+                handleSetActions(actions.data())
             })
             return () => {
                 unsubGoalChanges()
@@ -360,15 +236,12 @@ export function GoalProvider({children}) {
     }, [authUser])
 
     useEffect(() => {
-        setUserGoalsLoading(true)
         if (currentUsersGoals) {
             setUserGoalsLoading(false)
         }
         if (currentUsersGoals && Object.keys(currentUsersGoals).length > 0 ) {
             setMostRecentKey(getMostRecentKey())
-            //console.log('currentUserGoals not empty, updating DB actions')
             updateActions()
-            //getSortedActions()
         }
     }, [currentUsersGoals])
 
@@ -424,7 +297,9 @@ export function GoalProvider({children}) {
         actions,
         removeAction,
         toggleActionComplete,
-        getSortedActions
+        getSortedActions,
+        justOpenedGoal,
+        setJustOpenedGoal
     }
 
     return (

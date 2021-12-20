@@ -102,27 +102,29 @@ export const getCalendarComposition = (daysTillDeadline) => {
 }
 
 export const getCurrentStart = (action, period) => {
-    //console.log("action", action)
-    //console.log("period", period)
     let today = new Date()
     // * * * 
     //test: today.setDate(today.getDate() + 3)
     // * * * 
-    if (period === "day") return today.toDateString()
+    if (period === "day") {
+        return today.toDateString()
+    }
     else if (period === "week") {
         for (let i = 0; i < 7; i++ ) {
             today.setDate(today.getDate() - i)
             if (action[today.toDateString()]) {
                 return today.toDateString()
             }
+            today = new Date()
         } 
     }
     else {
         for (let i = 0; i < 30; i++) {
             today.setDate(today.getDate() - i)
             if (action[today.toDateString()]) {
-                return today.toDateString()
+               return today.toDateString()
             }
+            today = new Date()
         }
     }
 }

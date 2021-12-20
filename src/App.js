@@ -1,22 +1,22 @@
-import {useEffect} from 'react'
+import {useEffect, useState} from 'react'
 import './App.css';
 import LatestGoalCard from './components/LatestGoalCard'
 import SigninForm from './components/forms/SigninForm';
 import { useAuthContext } from './context/AuthContext';
 import { useGoalContext } from './context/GoalContext';
-
-
 import {Link} from 'react-router-dom'
-import DueCard from './components/DueCard';
+import DueCard from './components/ActionsCard';
+import { getCurrentStart } from './utils/dates';
 
 function App() {
   const {authUser, userInfo, authStateLoading} = useAuthContext()
   const {currentUsersGoals, actions, saveGoal} = useGoalContext()
+  
 
   const handleQuick = async () => {
     try {
       await saveGoal(authUser.uid, {
-        title: "quick goal",
+        title: "anuda quik goal",
         currentNumber: 23,
         targetNumber: 52,
         deadline: "2021-12-26",
@@ -25,12 +25,12 @@ function App() {
         actions: {
           twefe42: {
             createdAt: 2382359,
-            name: "da ting",
+            name: "some ting",
             number: 613
           },
           tw34jt2: {
             createdAt: 23823559,
-            name: "anuda ting",
+            name: "Sam Ting Wong",
             number: 1
           },
         },
@@ -52,21 +52,22 @@ function App() {
       :
       <>
         <h2 className="welcome">Welcome {authUser.displayName}</h2>
-        {actions && Object.keys(actions).length > 0 && <>
-        {Object.entries(actions).map(([period, actionData], i) => {
-          if (Object.keys(actionData).length > 0) {
-            //console.log("actionData", actionData)
+        {Object.keys(actions).map(key => {
+          if (Object.keys(actions[key]).length > 0) {
+            //console.log(actions, key, )
             return (
-                  <DueCard 
-                    period={period}
-                    key={i}
-                    actions={actionData}
-                  />
-                )
+              <DueCard 
+                period={key}
+                data={actions[key]}
+                key={key}
+              />
+            )
           }
+          
+          
         })}
-        </>}
-      </>}
+      </>
+      }
 
       <div className="crossbar"></div>
      
@@ -80,7 +81,6 @@ function App() {
           <>
           {userInfo && userInfo.goalsCreated > 0 && <Link className="home" id="learnMore" to="/viewgoals">View your Goals</Link>}
           <Link className="home" id="startNow" to="/newgoal">New Goal +</Link>
-          <button onClick={handleQuick}>Quick goal</button>
           </>}
       </div>
 

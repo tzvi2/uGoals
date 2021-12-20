@@ -1,7 +1,6 @@
 .aboutPage {
     display: flex;
     flex-direction: column;
-    width: 100%;
     max-width: 660px;
     align-items: center;
     margin-top: 2%;

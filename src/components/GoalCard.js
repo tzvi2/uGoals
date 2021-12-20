@@ -11,22 +11,17 @@ function GoalCard(props) {
 
     let navigate = useNavigate()
 
-    const {currentUsersGoals, setGoalComplete, setCurrentGoal, toggleGoalComplete} = useGoalContext()
+    const {currentUsersGoals, setJustOpenedGoal, toggleGoalComplete} = useGoalContext()
     const {authUser} = useAuthContext()
 
     const handleViewGoal = () => {
+        setJustOpenedGoal(true)
         navigate(`../viewgoal/${props.goal.title}`)
     }
 
     const cardStyle = {
         "animationDelay": `${(props.index + 1) / 4}s`,
     }
-
-    // useEffect(() => {
-    //     console.log("props.goal", props.goal)
-    //     console.log("props.id",props.id)
-    //     console.log("curr",currentUsersGoals[props.id].complete)
-    // }, [])
 
     const toggleComplete = async (e) => {
         try {
@@ -46,7 +41,7 @@ function GoalCard(props) {
             </div>
             <div className={styles.row}>
                 <label>Deadline</label>
-                <p>{props.goal.deadline}</p>
+                <p className={props.goal.complete ? `${styles.disabled}` : ""}>{props.goal.deadline}</p>
             </div>
             <div className={`${styles.complete}`}>
                 <label>{props.goal.complete ? "Complete" : "In progress"}</label>

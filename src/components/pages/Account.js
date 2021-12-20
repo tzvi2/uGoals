@@ -10,6 +10,7 @@ function Account() {
     let navigate = useNavigate()
   
     const {authUser, userInfo, authLoading} = useAuthContext()
+  
     const [date, setDate] = useState(null)
     const [deleteStage, setDeleteStage] = useState(1)
     const [editing, setEditing] = useState()

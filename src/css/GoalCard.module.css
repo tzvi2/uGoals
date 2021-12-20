@@ -12,13 +12,15 @@
     flex-direction: column;
     row-gap: 1vh;
     min-height: 150px;
-    background: linear-gradient(to right, rgba(122, 168, 206, .4), rgb(223, 232, 238), rgba(254, 160, 47, .4));
+    background: linear-gradient(25deg, rgba(122, 168, 206, .4), rgb(223, 232, 238), rgba(122, 168, 206, .4));
     box-shadow: 0 0 5px var(--shade5);
     justify-content: space-between;
+    
 }
 
 .goalCard.completeGoal {
-    background: linear-gradient(to right, rgba(122, 168, 206, .4), rgb(223, 232, 238), rgba(254, 160, 47, .4));
+    background: linear-gradient(25deg, var(--shade4), rgba(117, 236, 117, .2), rgba(117, 236, 117, .2));
+    opacity: .8;
 }
 
 .goalCard input {
@@ -38,6 +40,10 @@
     border: 1px solid var(--shade5);
     border-radius: 5px;
     padding: 1% 2%;
+}
+
+.row p.disabled {
+    opacity: .2;
 }
 
 p.title {

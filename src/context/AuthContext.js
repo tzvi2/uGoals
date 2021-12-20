@@ -41,10 +41,10 @@ export function AuthProvider({children}) {
     }
 
     const deleteAccount = async (userID) => {
-        await deleteDoc(doc(db, "users", userID))
-        await deleteDoc(doc(db, "goals", userID))
-        await deleteDoc(doc(db, "actions", userID))
-        deleteUser(authUser)
+        // await deleteDoc(doc(db, "users", userID))
+        // await deleteDoc(doc(db, "goals", userID))
+        // await deleteDoc(doc(db, "actions", userID))
+        await deleteUser(authUser)
     }
 
     const reAuthenticate = async (password) => {

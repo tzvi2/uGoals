@@ -13,7 +13,7 @@ function ViewGoal(props) {
     let navigate = useNavigate()
 
     const {authUser} = useAuthContext()
-    const {pendingGoal, setPendingGoal, currentUsersGoals, setSecondsRemaining, currentGoalId, setCurrentGoalId, findGoalWithTitle, toggleGoalComplete, deleteGoal, removeAction} = useGoalContext()
+    const {pendingGoal, setPendingGoal, currentUsersGoals, setSecondsRemaining, currentGoalId, setCurrentGoalId, findGoalWithTitle, toggleGoalComplete, deleteGoal, removeAction, setJustOpenedGoal} = useGoalContext()
 
     const [actionNames, setActionNames] = useState({})
     const [actionError, setActionError] = useState(false)
@@ -40,16 +40,16 @@ function ViewGoal(props) {
 
 
     const handleTitleChange = (e) => {
-
+        setJustOpenedGoal(false)
     }
 
     const handleDeadlineChange = (e) => {
-        
+        setJustOpenedGoal(false)
 
     }
 
     const handleSummaryChange = (e) => {
-
+        setJustOpenedGoal(false)
     }
 
     const toggleComplete = async (e) => {
@@ -72,10 +72,11 @@ function ViewGoal(props) {
 
     // * * * 
     useEffect(() => {
-        console.log('actionNames', actionNames)
-    }, [actionNames])
+        
+    }, [])
 
     const handleActionChange = (e, key) => {
+        setJustOpenedGoal(false)
         // console.log("e.target.value", e.target.value)
         // console.log("key", key)
         // console.log("actionNames[key]", actionNames[key])
@@ -105,6 +106,7 @@ function ViewGoal(props) {
     )
 
     const handleActionRemove = (key) => {
+        setJustOpenedGoal(false)
         let copy = {...actionNames}
         delete copy[key]
         setActionNames(copy)
@@ -113,6 +115,7 @@ function ViewGoal(props) {
     }
 
     const addAction = (e) => {
+        setJustOpenedGoal(false)
         if (removeTrailingWhiteSpace(newAction).length === 0) {
             return
         }
@@ -135,11 +138,10 @@ function ViewGoal(props) {
     // * * *
 
     return (
-        <div className="flexColumn">
+        <div className={styles.outer}>
         <button className={styles.backBtn}><Link to="../viewgoals">Back</Link></button>
         {currentGoalId && <div className={styles.flexColumn}>
 
-           
             <div className={styles.row}>
                 <label>Title</label>
                 <textarea rows={1} value={pendingGoal.title} onChange={e => {}}></textarea>

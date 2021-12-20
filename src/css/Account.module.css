@@ -1,13 +1,13 @@
 .account {
     display: flex;
     flex-direction: column;
-    width: 94%;
     max-width: 600px;
     align-items: center;
     margin-top: 2%;
     border: 2px solid black;
     border-radius: 5px;
     padding: 2%;
+    background: linear-gradient(25deg, rgba(122, 168, 206, .6), rgb(234, 238, 241));
 }
 
 .row {

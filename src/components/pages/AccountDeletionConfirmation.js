@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react/cjs/react.development'
 import { useAuthContext } from '../../context/AuthContext'
+import { useGoalContext } from '../../context/GoalContext'
 import {AuthCredential, deleteUser, EmailAuthCredential, EmailAuthProvider, reauthenticateWithCredential} from '@firebase/auth'
 import {useNavigate} from 'react-router-dom'
 import SigninForm from '../forms/SigninForm'
@@ -14,6 +15,7 @@ function AccountDeletionConfirmation() {
     const [passwordError, setPasswordError] = useState(false)
 
     const {deleteAccount, authUser, reAuthenticate} = useAuthContext()
+    const {setPendingGoal} = useGoalContext()
     const [showSignIn, setShowSignIn] = useState(false)
 
     let navigate = useNavigate()
