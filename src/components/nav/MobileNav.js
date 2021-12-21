@@ -3,11 +3,13 @@ import {Link, useNavigate} from 'react-router-dom'
 import styles from '../../css/MobileNav.module.css'
 import { Cross as Hamburger } from 'hamburger-react'
 import { useAuthContext } from '../../context/AuthContext'
+import { useGoalContext } from '../../context/GoalContext'
 
 function MobileNav(props) {
     const [expanded, setExpanded] = useState(false)
     const wrapper = useRef(null)
     const {authUser, signout} = useAuthContext()
+    const {setPendingGoal} = useGoalContext()
     const navigate = useNavigate()
 
     const handleClickOutside = (e) => {
@@ -19,6 +21,7 @@ function MobileNav(props) {
     const handleSignOut = async () => {
         try {
             await signout()
+            setPendingGoal({})
             navigate("/")
         } catch (error) {
             console.log(error)

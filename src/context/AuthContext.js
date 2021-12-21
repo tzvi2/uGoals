@@ -64,11 +64,6 @@ export function AuthProvider({children}) {
     }, [])
 
     useEffect(() => {
-        //console.log('user info', userInfo)
-    }, [userInfo])
-
-    useEffect(() => {
-        //console.log('authUser', authUser)
         if (authUser || authUser === null) {
             setAuthStateLoading(false)
         }

@@ -1,36 +1,39 @@
-/* .flexColumn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0 3%;
-    margin: 6% 0;
-    z-index: 0;
-    width: 100%;
-    justify-content: center;
-    animation-duration: .5s;
-    animation-timing-function: ease-out;
-} */
-
 a {
     color: black;
 }
 
 .middle {
     z-index: 0;
-    /* animation-name: slidein; */
     animation-duration: .5s;
     animation-timing-function: ease-out;
     padding: 0 2%;
+    flex-grow: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .homepage {
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
     row-gap: 18px;
     margin-top: 18px;
+    height: 100%;
 }
 
+.actionCardRow {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    row-gap: 12px;
+}
 
+div.landingcard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
 .homecard1 {
     background: white;
@@ -46,10 +49,11 @@ a {
     display: flex;
     flex-direction: column;
     align-items: center;
+    
 }
 
-.homecard3 a {
-    box-shadow: 0 0 5px 2px var(--shade5);
+.homepage a {
+    box-shadow: 0 0 7px var(--shade5);
     margin-bottom: 18px;
 }
 
@@ -81,8 +85,9 @@ p.warn, input.warn {
     color: red;
 }
 
-.subtext {
+a.subtext {
     font-size: 1.1rem;
+    box-shadow: none;
 }
 
 h2.home {
@@ -163,8 +168,27 @@ label.home {
     transition: filter 200ms linear 0s;
 }
 
+.pulse {
+    animation-name: colorchange;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
 .noAnimation {
     animation: none;
+}
+
+@keyframes colorchange {
+    0% {
+        color: orange;
+    }
+    50% {
+        color: rgb(243, 91, 91);
+    }
+    100% {
+        color: orangered;
+    }
 }
 
 @keyframes slidein {
@@ -179,6 +203,11 @@ label.home {
 
 @media screen and (min-width: 754px) {
 
+    .middle {
+        padding: 0 5%;
+        margin: auto;
+    }
+
     p, input, textarea, a, ul, label {
         font-size: 1.2rem;
     }
@@ -189,40 +218,111 @@ label.home {
     }
 
     .homepage {
-        flex-direction: row;
         max-width: 1100px;
-        justify-content: space-evenly;
-        column-gap: 4vh;
+        display: grid;
+        justify-items: center;
+        align-items: center;
+        grid-template-columns: 50% 50%;
+        margin: 2% 0;
+        column-gap: 5%;
     }
 
-    .homecard1, .homecard2, .homecard3 {
+    .welcome {
+        align-self: center;
+        padding: 6px;
+        grid-row: 1;
+        grid-column: 1;
         height: 50%;
+        display: flex;
+        align-items: center;
         justify-content: center;
-        width: 38%;
-        padding: 3%;
-        z-index: 2;
+        font-size: 1.4rem;
     }
+
+    .actionCardRow {
+        flex-direction: row;
+        grid-column-start: 1;
+        grid-column-end: 3;
+        justify-content: space-between;
+    }
+
+   
 
     .homecard2 a {
         width: 70%;
         color: var(--shade3);
-     
     }
 
-    .homecard3 {
-        box-shadow: 0 0 10px var(--shade5);
-        backdrop-filter: blur(20px);
+    .signincard {
+        backdrop-filter: blur(18px);
+        grid-column: 1;
+        border-radius: 5px;
+        box-shadow: 0 0 5px 2px var(--shade5);
+        height: 320px;
+        justify-content: stretch;
+        width: 400px;
+        display: flex;
+        flex-direction: column;
 
+    }
+
+    div.landingcard {
+        backdrop-filter: blur(18px);
+        grid-column: 2;
+        border-radius: 5px;
+        box-shadow: 0 0 5px 2px var(--shade5);
+        height: 320px;
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    div.landingcard h2 {
+        width: 70%;
+    }
+
+    div.landingcard a {
+        width: 50%;
+    }
+
+    div.landingcard a:hover {
+        box-shadow: 0 0 7px 1.5px var(--shade5);
+    }
+    
+
+    .homecard3 {
+       
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        grid-row: 1;
+        grid-column: 2;
+        height: 50%;
+        justify-self: stretch;
+    }
+
+    .homecard3 a {
+        margin: 0;
+        padding: 6px;
+        width: 45%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     @supports not ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
         .homecard3 {
             background-color: rgba(255, 255, 255, .5);
         }   
+
+        div.landingcard {
+            background-color: rgba(255, 255, 255, .5);
+        }
     }
 
    .homecard3 a:hover {
-        box-shadow: 0 0 7px var(--shade5);
+        box-shadow: 0 0 7px 1.5px var(--shade5);
     }
 
     form {
@@ -231,9 +331,9 @@ label.home {
 
     .crossbar {
         display: block;
-        height: 30%;
+        height: 25%;
+        width: 100%;
         background: linear-gradient(to left, rgb(122, 168, 206), rgb(223, 232, 238), rgba(254, 160, 47, .6));
-        width: 90%;
         position: absolute;
         z-index: -1;
         border-radius: 5px;

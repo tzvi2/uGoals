@@ -5,6 +5,7 @@ import { useAuthContext } from '../../context/AuthContext'
 import {useParams, useNavigate, useLocation, Link} from 'react-router-dom'
 import {debounce} from 'lodash'
 import { getRandomID } from '../../utils/ids'
+import { getCurrentStart } from '../../utils/dates'
 import { removeTrailingWhiteSpace } from '../../utils/strings'
 
 function ViewGoal(props) {
@@ -13,43 +14,56 @@ function ViewGoal(props) {
     let navigate = useNavigate()
 
     const {authUser} = useAuthContext()
-    const {pendingGoal, setPendingGoal, currentUsersGoals, setSecondsRemaining, currentGoalId, setCurrentGoalId, findGoalWithTitle, toggleGoalComplete, deleteGoal, removeAction, setJustOpenedGoal} = useGoalContext()
+    const {pendingGoal, setPendingGoal, currentUsersGoals, setSecondsRemaining, currentGoalId, setCurrentGoalId, findGoalWithTitle, toggleGoalComplete, deleteGoal, removeAction, setJustOpenedGoal, actions, setActions} = useGoalContext()
 
-    const [actionNames, setActionNames] = useState({})
+    const [currentTitle, setCurrentTitle] = useState("")
+    const [currentSummary, setCurrentSummary] = useState("")
+    const [currentActions, setCurrentActions] = useState({})
     const [actionError, setActionError] = useState(false)
     const [newAction, setNewAction] = useState("")
     const [loading, setLoading] = useState(true)
+    const [sortedActions, setSortedActions] = useState([])
 
     let first = true
-    
-    useEffect(() => {
-        
-        if (first && currentUsersGoals && Object.keys(currentUsersGoals).length > 0){
-            Object.entries(currentUsersGoals).map(([k, v], i) => {
-                if (v.title === params.goalTitle) {
-                    console.log('v (setting pending, actionNames, currentGoalId', v)
-                    setPendingGoal(v)
-                    setActionNames(v.actions)
-                    setCurrentGoalId(k)
-                }
-            })
-            setLoading(false)
-            first = false
+
+    const handleSorting = () => {
+        let arr = []
+        for (let [key, value] of Object.entries(currentActions)) {
+            arr.push({id: key, name: value.name, createdAt: value.createdAt})
         }
-    }, [currentUsersGoals])
-
-
-    const handleTitleChange = (e) => {
-        setJustOpenedGoal(false)
+        setSortedActions(sortByCreationTime(arr))
     }
+
+    const sortByCreationTime = (arr) => {
+        for (let i = 1; i < arr.length; i++) {
+            let p = i
+            while (p > 0 && arr[p].createdAt < arr[p - 1].createdAt) {
+                let temp = arr[p - 1]
+                arr[p - 1] = arr[p]
+                arr[p] = temp
+                p--
+            }
+        }
+        return arr
+    }
+
+    const handleTitleChange = (title) => {
+        setJustOpenedGoal(false)
+        setCurrentTitle(title)
+        debouncedSaveTitle(title)
+    }
+
 
     const handleDeadlineChange = (e) => {
         setJustOpenedGoal(false)
-
+        setPendingGoal({...pendingGoal, deadline: e.target.value})
     }
 
     const handleSummaryChange = (e) => {
         setJustOpenedGoal(false)
+        setCurrentSummary()
+        debouncedSaveSummary(e.target.value)
+
     }
 
     const toggleComplete = async (e) => {
@@ -61,42 +75,22 @@ function ViewGoal(props) {
     }
 
     const handleGoalDelete = async () => {
-        console.log("handling Goal delete")
         try {
-            await deleteGoal(currentGoalId)
+            await deleteGoal(currentGoalId, pendingGoal.complete)
             navigate("/viewgoals")
         } catch (error) {
             console.log(error)
         }
     }
 
-    // * * * 
-    useEffect(() => {
-        
-    }, [])
-
     const handleActionChange = (e, key) => {
         setJustOpenedGoal(false)
-        // console.log("e.target.value", e.target.value)
-        // console.log("key", key)
-        // console.log("actionNames[key]", actionNames[key])
-        setActionNames({...actionNames, [key]: {...actionNames[key], name: e.target.value}})
+        setCurrentActions({...currentActions, [key]: {...currentActions[key], name: e.target.value}})
         save(e, key)
-    }
-
-    const setPending = (obj) => {
-        console.log('setting pending goal')
-        setPendingGoal({...pendingGoal, actions: {...obj}})
-        // setPendingGoal({...pendingGoal, actions: actionNames})
     }
     
     const save = useCallback(
         debounce((e, key) => {
-            console.log("e.target.value", e.target.value)
-            console.log("key", key)
-            console.log("pendingGoal", pendingGoal)
-            console.log("pendingGoal.actions", pendingGoal.actions)
-            console.log("pendingGoal.actions[key]", pendingGoal.actions[key])
             const newActions = {...pendingGoal.actions, [key]: {...pendingGoal.actions[key], name: e.target.value}}
             // setPending(newActions)
             setPendingGoal({...pendingGoal, actions: newActions})
@@ -105,11 +99,27 @@ function ViewGoal(props) {
         , [pendingGoal]
     )
 
+    const debouncedSaveTitle = useCallback(
+        debounce((text) => {
+            setPendingGoal({...pendingGoal, title: text})
+            setSecondsRemaining(2)
+        }, 500)
+        , [pendingGoal]
+    )
+
+    const debouncedSaveSummary = useCallback(
+        debounce((text) => {
+            setPendingGoal({...pendingGoal, summary: text})
+            setSecondsRemaining(2)
+        }, 500)
+        , [pendingGoal]
+    )
+
     const handleActionRemove = (key) => {
         setJustOpenedGoal(false)
-        let copy = {...actionNames}
+        let copy = {...currentActions}
         delete copy[key]
-        setActionNames(copy)
+        setCurrentActions(copy)
         setPendingGoal({...pendingGoal, actions: copy})
         removeAction(pendingGoal.splitTime, key)
     }
@@ -119,23 +129,45 @@ function ViewGoal(props) {
         if (removeTrailingWhiteSpace(newAction).length === 0) {
             return
         }
-        for (let key of Object.keys(actionNames)) {
-            if (actionNames[key].name === newAction) {
+        for (let key of Object.keys(currentActions)) {
+            if (currentActions[key].name === newAction) {
                 setActionError(true)
                 return
             }
         }
-        let newActions = {...actionNames, [getRandomID()]: {
+        let newActions = {...currentActions, [getRandomID()]: {
             name: newAction,
-            number: Object.keys(actionNames).length,
+            number: Object.keys(currentActions).length,
             createdAt: new Date().getTime()
         }}
-        setActionNames(newActions)
+        setCurrentActions(newActions)
         setPendingGoal({...pendingGoal, actions: newActions})
         setNewAction("")
+        setSecondsRemaining(2)
     }
 
-    // * * *
+    useEffect(() => {
+    
+        if (first && currentUsersGoals && Object.keys(currentUsersGoals).length > 0){
+            Object.entries(currentUsersGoals).map(([k, v], i) => {
+                if (v.title === params.goalTitle) {
+                    setPendingGoal(v)
+                    setCurrentActions(v.actions)
+                    setCurrentGoalId(k)
+                    setCurrentTitle(v.title)
+                    setCurrentSummary(v.summary)
+                }
+            })
+            setLoading(false)
+            first = false
+        }
+    }, [currentUsersGoals])
+
+    useEffect(() => {
+        if (currentActions && Object.keys(currentActions).length > 0 && Object.keys(actions).length > 0 ) {
+            handleSorting()
+        }
+    }, [currentActions])
 
     return (
         <div className={styles.outer}>
@@ -144,7 +176,7 @@ function ViewGoal(props) {
 
             <div className={styles.row}>
                 <label>Title</label>
-                <textarea rows={1} value={pendingGoal.title} onChange={e => {}}></textarea>
+                <textarea rows={1} value={currentTitle} onChange={e => handleTitleChange(e.target.value)}></textarea>
             </div>
 
             <div className={styles.row}>
@@ -156,10 +188,10 @@ function ViewGoal(props) {
 
             <label>Actions to achieve {""}:
             <ul className={styles.actions}>
-                {actionNames && Object.keys(actionNames).map((key, i) => (
-                   <div key={key} className={styles.row}>
-                    <input autoFocus={false} className={styles.fillFlex} type="text" value={actionNames[key].name} onChange={e => handleActionChange(e, key)}></input>
-                    <p className={styles.icon} onClick={() => handleActionRemove(key)}>X</p>
+                {sortedActions && sortedActions.map((action, i) => (
+                   <div key={i} className={styles.row}>
+                    <input autoFocus={false} className={styles.fillFlex} type="text" value={action.name} onChange={e => handleActionChange(e, action.id)}></input>
+                    <p className={styles.icon} onClick={() => handleActionRemove(action.id)}>X</p>
                 </div> 
                 ))}
  
@@ -179,7 +211,7 @@ function ViewGoal(props) {
             </div>
 
             <label>Summary:</label>
-            <textarea className={styles.summary} value={pendingGoal.summary} onChange={e => handleSummaryChange(e)}></textarea>
+            <textarea className={styles.summary} value={currentSummary} onChange={e => handleSummaryChange(e)}></textarea>
 
             <input className={styles.deleteBtn} type="button" value="Delete Goal" onClick={() => handleGoalDelete()}></input>
 

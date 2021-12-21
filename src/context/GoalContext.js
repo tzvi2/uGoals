@@ -29,7 +29,6 @@ export function GoalProvider({children}) {
     const [justOpenedGoal, setJustOpenedGoal] = useState(true)
 
     const saveGoal = async (userId, goal) => {
-        console.log('goal', goal)
         goal.title = removeTrailingWhiteSpace(goal.title)
         const newGoal = await setDoc(doc(db, "goals", userId), {
             [`${getRandomID()}`]: {...goal, createdAt: serverTimestamp()}
@@ -60,14 +59,14 @@ export function GoalProvider({children}) {
         }
     }
 
-    const getSortedActions = async () => {
-        const actionsRef = collection(db, "actions", authUser.uid)
-        const q = query(actionsRef, orderBy("createdAt"))
-        const querySnapshot = await getDocs(q)
-        querySnapshot.forEach((doc) => {
-            console.log(doc.data())
-        })
-    }
+    // const getSortedActions = async () => {
+    //     const actionsRef = collection(db, "actions", authUser.uid)
+    //     const q = query(actionsRef, orderBy("createdAt"))
+    //     const querySnapshot = await getDocs(q)
+    //     querySnapshot.forEach((doc) => {
+    //         console.log(doc.data())
+    //     })
+    // }
 
     const toggleGoalComplete = async (userId, goalId, complete) => {
         const docRef = doc(db, "goals", userId)
@@ -120,37 +119,39 @@ export function GoalProvider({children}) {
         return (Object.keys(currentUsersGoals).length > 0)
     }
 
-    const deleteGoal = async (goalId) => {
-        console.log("attempting to delete goal with id: ", goalId)
+    const deleteGoal = async (goalId, complete) => {
         removeActions(goalId)
         const goalRef = doc(db, "goals", authUser.uid)
         await updateDoc(goalRef, {
             [`${goalId}`]: deleteField()
         })
-        
         const userRef = doc(db, "users", authUser.uid)
-        await updateDoc(userRef, {
-            goalsCreated: increment(-1),
-            goalsCompleted: increment(-1)
-        })
+        if (complete) {
+            await updateDoc(userRef, {
+                goalsCreated: increment(-1),
+                goalsCompleted: increment(-1)
+            })
+        } else {
+            await updateDoc(userRef, {
+                goalsCreated: increment(-1),
+            })
+        }
     }
     
     const savePendingGoal = async () => {
-        console.log('saving pending to DB')
         const usersGoals = doc(db, "goals", authUser.uid)
         await updateDoc(usersGoals, {
             [`${currentGoalId}`]: pendingGoal
         })
     }
 
-    const findGoalWithTitle = (title) => {
-        for (let key of Object.keys(currentUsersGoals)) {
-            if (currentUsersGoals[key].title === title) {
-                console.log('found it!', currentUsersGoals[key])
-                break
-            }
-        }
-    }
+    // const findGoalWithTitle = (title) => {
+    //     for (let key of Object.keys(currentUsersGoals)) {
+    //         if (currentUsersGoals[key].title === title) {
+    //             break
+    //         }
+    //     }
+    // }
 
     const updateActions = async () => {
         let dbActions = {}
@@ -161,14 +162,14 @@ export function GoalProvider({children}) {
         if (obj.exists()) {
             dbActions = obj.data()
         }
-        //console.log('dbActions', dbActions)
         Object.entries(currentUsersGoals).forEach(([goalID, goalData]) => {
             Object.entries(currentUsersGoals[goalID].actions).forEach(([actionID, actionData]) => {
                 if (!dbActions[goalData.splitTime][actionID]) {
                     changed = true
                     newActions[goalData.splitTime][actionID] = {
                         name: actionData.name,
-                        createdAt: actionData.createdAt
+                        createdAt: actionData.createdAt,
+                        goal: goalID
                     }
                     for (let date of getDateStringsUntilDeadline(goalData.deadline, goalData.splitTime)) {
                         newActions[goalData.splitTime][actionID][date] = {
@@ -186,10 +187,11 @@ export function GoalProvider({children}) {
     }
 
     const handleSetActions = (obj) => {
+        if (!obj) return 
         let newActions = {}
-        newActions["day"] = obj["day"]
-        newActions["week"] = obj["week"]
-        newActions["month"] = obj["month"]
+        newActions.day = obj.day
+        newActions.week = obj.week
+        newActions.month = obj.month
         setActions(newActions)
     }
 
@@ -208,13 +210,8 @@ export function GoalProvider({children}) {
         const actionsRef = doc(db, "actions", authUser.uid)
         await updateDoc(actionsRef, newActions)
     }
-
-    useEffect(() => {
-       // console.log("actions", actions)
-    }, [actions])
  
     useEffect(() => {
-        //console.log('pendingGoalChange', pendingGoal)
         if (authUser && Object.keys(pendingGoal).length > 0 && !justOpenedGoal) {
             savePendingGoal()
         }
@@ -223,7 +220,9 @@ export function GoalProvider({children}) {
     useEffect(() => {
         if (authUser) {
             const unsubGoalChanges = onSnapshot(doc(db, "goals", authUser.uid), (goals) => {
-                setCurrentUsersGoals(goals.data())
+                if (goals.data()) {
+                    setCurrentUsersGoals(goals.data())
+                }
             })
             const unsubActionChanges = onSnapshot(doc(db, "actions", authUser.uid), (actions) => {
                 handleSetActions(actions.data())
@@ -236,6 +235,7 @@ export function GoalProvider({children}) {
     }, [authUser])
 
     useEffect(() => {
+        console.log('currentUsersGoals', currentUsersGoals)
         if (currentUsersGoals) {
             setUserGoalsLoading(false)
         }
@@ -246,7 +246,6 @@ export function GoalProvider({children}) {
     }, [currentUsersGoals])
 
     useEffect(() => {
-        //console.log('currentTitle in goalContext', currentTitle)
         if (currentGoal && Object.keys(currentGoal).length > 0) {
             setPendingGoal(currentGoal)
         }
@@ -289,7 +288,6 @@ export function GoalProvider({children}) {
         deleteGoal,
         currentGoalId, 
         setCurrentGoalId,
-        findGoalWithTitle,
         hasPendingGoal,
         setHasPendingGoal,
         userHasGoals,
@@ -297,7 +295,6 @@ export function GoalProvider({children}) {
         actions,
         removeAction,
         toggleActionComplete,
-        getSortedActions,
         justOpenedGoal,
         setJustOpenedGoal
     }

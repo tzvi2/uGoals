@@ -40,7 +40,7 @@ function CreateNewGoal() {
     const [summary, setSummary] = useState(`Hi, I'm using uGoals to set research-backed goals. A key step is to send my goal and action steps to a peer. \n\nHere's my goal: I will ${title} by ${deadline}. To achieve this I will do ${perPeriodSummary}. I'll send you a quick progress update each ${splitTime}.`)
 
     useEffect(() => [
-        setSummary(`Hi, I'm using uGoals to set research-backed goals. A key step is to send my goal and action steps to a peer. \n\nHere's my goal: I will ${title} by ${dateStringToUS(deadline)}. To achieve this I will do ${perPeriodSummary}. I'll send you a quick progess update each ${splitTime}.`)
+        setSummary(`Hi, I'm using uGoals to set research-backed goals. A key step is to send my goal and action steps to a peer. \n\nHere's my goal: I will ${title} by ${dateStringToUS(deadline)}. To achieve this I will do ${perPeriodSummary}. I'll send you a quick progress update each ${splitTime}.`)
     ], [title, deadline, perPeriodSummary, splitTime])
 
     const newGoal = {
@@ -64,6 +64,7 @@ function CreateNewGoal() {
         if (authUser === null) {
             setHasPendingGoal(true)
             setPendingGoal(newGoal)
+            setCurrentTitle(newGoal.title)
             navigate('../signup')
             return 
         }
@@ -103,7 +104,6 @@ function CreateNewGoal() {
                 tempNum = (totalNumber / daysTillDeadline) * 30
                 break 
         }
-        //console.log(tempNum)
         if (totalNumber > -10 && totalNumber <= 10) {
             setSplitNumber(roundToPointTwoFive(tempNum))
         } else {
@@ -129,6 +129,7 @@ function CreateNewGoal() {
         <>
         
         <form className={styles.newGoalForm} onSubmit={e => handleSubmit(e)}>
+            
             <div className={styles.section}>
                 <label>Create a measurable goal.</label>
                 <input autoFocus type="text" placeholder="e.g. Increase revenue to $10,000/month" onChange={e => setTitle(e.target.value)}></input>

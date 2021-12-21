@@ -1,13 +1,18 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import styles from '../../css/DesktopNav.module.css'
 import { useAuthContext } from '../../context/AuthContext'
+import { useGoalContext } from '../../context/GoalContext'
 
 function DesktopNav() {
     const {authUser, signout} = useAuthContext()
+    const {setPendingGoal} = useGoalContext()
+    const navigate = useNavigate()
     const handleSignOut = async () => {
         try {
             await signout()
+            setPendingGoal({})
+            navigate('/')
         } catch (err) {
             return -1
         }

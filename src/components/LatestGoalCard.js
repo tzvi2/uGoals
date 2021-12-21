@@ -9,13 +9,6 @@ function LatestGoalCard() {
 
     const {mostRecentKey, currentTitle, currentUsersGoals} = useGoalContext()
 
-
-    useEffect(() => {
-        if (currentUsersGoals && Object.keys(currentUsersGoals).length > 0) {
-            console.log('most recent key', mostRecentKey)
-        }
-    }, [mostRecentKey])
-
     return (
         <>
         {currentUsersGoals && mostRecentKey && currentUsersGoals[mostRecentKey] && Object.keys(currentUsersGoals).length > 0 &&

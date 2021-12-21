@@ -223,11 +223,12 @@ p.notFound  {
 @media screen and (min-width: 754px)  {
 
     .flexColumn {
-        margin: 2%;
+        
         padding: 2%;
         row-gap: 2vh;
         min-height: 550px;
         max-height: min(77vh, 600px);
+        min-width: 500px;
         overflow-y: scroll;
     }
 
@@ -282,9 +283,9 @@ p.notFound  {
     input[type="date"]::-webkit-calendar-picker-indicator {
         z-index: 0;
         background-color: transparent;
-        position: absolute;
-        padding-left: 75%;
-        padding-right: 10%;
+        padding-left: 40%;
+        
+       
         right: 0;
         
     }

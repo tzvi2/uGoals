@@ -12,49 +12,20 @@ function App() {
   const {authUser, userInfo, authStateLoading} = useAuthContext()
   const {currentUsersGoals, actions, saveGoal} = useGoalContext()
   
-
-  const handleQuick = async () => {
-    try {
-      await saveGoal(authUser.uid, {
-        title: "anuda quik goal",
-        currentNumber: 23,
-        targetNumber: 52,
-        deadline: "2021-12-26",
-        splitTime: "day",
-        perPeriodSummary: "some fake ppsummary",
-        actions: {
-          twefe42: {
-            createdAt: 2382359,
-            name: "some ting",
-            number: 613
-          },
-          tw34jt2: {
-            createdAt: 23823559,
-            name: "Sam Ting Wong",
-            number: 1
-          },
-        },
-        summary: "summary",
-        complete: false
-    })
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
   return (
     <>
     {!authStateLoading && <div className="homepage">
 
-      {authUser === null ? <>
+      {authUser === null ? <div className="signincard">
         <SigninForm />
-      </> 
+      </div> 
       :
       <>
         <h2 className="welcome">Welcome {authUser.displayName}</h2>
+
+        
         {Object.keys(actions).map(key => {
           if (Object.keys(actions[key]).length > 0) {
-            //console.log(actions, key, )
             return (
               <DueCard 
                 period={key}
@@ -63,15 +34,15 @@ function App() {
               />
             )
           }
-          
-          
         })}
+        
       </>
       }
 
       <div className="crossbar"></div>
+      
      
-      <div className="homecard3">
+      <div className={authUser === null ? "landingcard" : "homecard3"}>
           {authUser === null ? <>
           <h2 className="home">Achieve your goals with research-backed goal setting.</h2>
           <Link className="home" id="learnMore" to="/about">Learn More</Link>
@@ -80,6 +51,7 @@ function App() {
           :
           <>
           {userInfo && userInfo.goalsCreated > 0 && <Link className="home" id="learnMore" to="/viewgoals">View your Goals</Link>}
+          {userInfo && userInfo.goalsCreated === 0 && <p className="pulse">Create your first goal</p>}
           <Link className="home" id="startNow" to="/newgoal">New Goal +</Link>
           </>}
       </div>

@@ -13,7 +13,6 @@ function ActionsCard(props) {
     const [sortedActions, setSortedActions] = useState([])
 
     const handleSorting = () => {
-        //console.log('props.data', props.data)
         let completed = []
         let inProgress = []
         for (let [key, value] of Object.entries(props.data)) {
@@ -30,7 +29,6 @@ function ActionsCard(props) {
     const sortByCreationTime = (arr) => {
         console.log('sorting by creation', arr)
         for (let i = 1; i < arr.length; i++) {
-            console.log(arr[i])
             let p = i
             while (p > 0 && arr[p].createdAt < arr[p - 1].createdAt) {
                 let temp = arr[p - 1]
@@ -53,12 +51,7 @@ function ActionsCard(props) {
         }
     }
 
-    useEffect(() => {
-        console.log('sortedActions', sortedActions)
-    }, [sortedActions])
-
     const handleToggle = async (k) => {
-        console.log('handling toggle')
         try {
             await toggleActionComplete(props.period, k, today, props.data[k][new Date().toDateString()].complete)
         } catch (err) {
@@ -71,24 +64,20 @@ function ActionsCard(props) {
     }, [])
 
     useEffect(() => {
-        
-        // if (today && Object.keys(props.data).length > 0) {
-        //     handleSorting()
-        // }
-        //console.log('props.data', props.data)
         if (Object.keys(props.data).length > 0) {
             handleSorting()
         }
-        
     }, [props.data])
 
     return (
         <>{
         <div className={styles.card}>
-            <div className={styles.row}>
+            <div className={styles.top}>
                 <input type="button" value={props.period === "day" ? "Today" : props.period === "week" ? "This Week" : "This Month"}></input>
                 <input readOnly type="text" value={getValue(props.period)}></input>
             </div>
+
+            <div className={styles.bottom}>
             {sortedActions.map((obj, i) => (
                 <div className={styles.row} key={i}>
                     <ActionChecklistItem 
@@ -100,6 +89,7 @@ function ActionsCard(props) {
                     />
                 </div>
             ))}
+            </div>
         </div>}
         </>
     )

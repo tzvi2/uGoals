@@ -20,19 +20,19 @@ export const getDateStringsUntilDeadline = (date, period) => {
     let results = []
     let today = new Date()
     if (period === "day") {
-        for (let i = 0; i < getDaysBetween(today, date); i++) {
+        for (let i = 0; i <= getDaysBetween(today, date); i++) {
             let tomorrow = new Date(today)
             tomorrow.setDate(tomorrow.getDate() + i)
             results.push(tomorrow.toDateString())
         }
     } else if (period === "week") {
-        while (today.getTime() < date.getTime()) {
+        while (today.getTime() <= date.getTime()) {
             results.push(today.toDateString())
             today.setDate(today.getDate() + 7)
         }
     } else {
         // add case for >30<
-        while (today.getTime() < date.getTime()) {
+        while (today.getTime() <= date.getTime()) {
             results.push(today.toDateString())
             today.setDate(today.getDate() + 30)
         }

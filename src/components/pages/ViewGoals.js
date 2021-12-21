@@ -17,7 +17,6 @@ function ViewGoals() {
         let inProgress = []
         for (let [key, value] of Object.entries(currentUsersGoals)) {
             if (currentUsersGoals[key].complete) {
-                //console.log(currentUsersGoals[props.period][key][today])
                 completed.push({id: key, ...value})
             } else {
                 inProgress.push({id: key, ...value})
@@ -41,19 +40,15 @@ function ViewGoals() {
     }
 
     useEffect(() => {
-        //console.log(currentUsersGoals)
+        console.log(currentUsersGoals)
         if (currentUsersGoals && Object.keys(currentUsersGoals).length > 0) {
             handleSortGoals()
         }
     }, [currentUsersGoals])
 
-    useEffect(() => {
-        console.log('sortedGoals', sortedGoals)
-    }, [sortedGoals])
-
     return (
        <>
-        {sortedGoals && 
+        {sortedGoals.length > 0 && 
         <div className={styles.goalsSection}>
             {sortedGoals.map((goal, i) => (
                 <GoalCard 

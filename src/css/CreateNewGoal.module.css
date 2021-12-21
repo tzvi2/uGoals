@@ -27,6 +27,7 @@
     overflow-y: auto;
     position: sticky;
     bottom: 30%;
+    align-self: center;
 }
 
 .section label, .section input[type=text] {
@@ -143,6 +144,10 @@ input.saveGoal:focus {
 
 @media screen and (min-width: 754px) {
     
+    .newGoalForm {
+        width: 100%;
+        min-width: 440px;
+    }
 
     .newGoalForm label {
         margin-bottom: 1%;

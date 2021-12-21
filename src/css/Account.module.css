@@ -50,9 +50,20 @@
 }
 
 @media screen and (min-width: 754px) {
+
+    .account {
+        min-width: 460px;;
+    }
+
     .account .col input:hover {
         cursor: pointer;
         box-shadow: 0 0 5px;
+    }
+
+    .row p {
+        width: 60%;
+        overflow: auto;
+        text-align: end;
     }
 }
 

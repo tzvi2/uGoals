@@ -28,7 +28,6 @@ function ActionsForm(props) {
                 number: Object.keys(props.actions).length,
                 createdAt: milliseconds
             }
-        console.log('newAction', newAction)
         
         props.setActions({...props.actions, [getRandomID()]: newAction})
         setActionName("")

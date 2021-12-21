@@ -15,10 +15,6 @@ function ActionChecklistItem(props) {
         }
     }
 
-    useEffect(() => {
-        // today
-    }, [])
-
     return (
         <>
             <input type="checkbox" checked={props.complete} onChange={() => handleToggle()}></input>
