@@ -62,7 +62,7 @@ function ViewGoals() {
         
         
         {!userGoalsLoading && Object.keys(currentUsersGoals).length === 0 &&
-        <div>
+        <div className={styles.message}>
             <p>No goals to show.</p>
         </div>}
        </> 

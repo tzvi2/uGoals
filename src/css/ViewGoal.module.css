@@ -222,6 +222,10 @@ p.notFound  {
 
 @media screen and (min-width: 754px)  {
 
+    .outer {
+        align-self: center;
+    }
+
     .flexColumn {
         
         padding: 2%;

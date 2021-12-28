@@ -6,20 +6,19 @@ a {
     z-index: 0;
     animation-duration: .5s;
     animation-timing-function: ease-out;
-    padding: 0 2%;
+    padding: 2%;
     flex-grow: 2;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.homepage {
+.homepage_bottom {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     row-gap: 18px;
     margin-top: 18px;
-    height: 100%;
 }
 
 .actionCardRow {
@@ -33,6 +32,11 @@ div.landingcard {
     display: flex;
     flex-direction: column;
     align-items: center;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 3px 1px;
+    border-radius: 5px;
+    padding: 5%;
+    row-gap: 14px;
 }
 
 .homecard1 {
@@ -52,9 +56,9 @@ div.landingcard {
     
 }
 
-.homepage a {
+.homepage_bottom a {
     box-shadow: 0 0 7px var(--shade5);
-    margin-bottom: 18px;
+    
 }
 
 
@@ -204,8 +208,15 @@ label.home {
 @media screen and (min-width: 754px) {
 
     .middle {
-        padding: 0 5%;
-        margin: auto;
+        padding: 1% 0 ;
+        margin: 0;
+        
+    }
+
+    .homepage_top {
+        margin: 1%;
+        display: flex;
+        flex-direction: column;
     }
 
     p, input, textarea, a, ul, label {
@@ -217,26 +228,28 @@ label.home {
         max-width: 500px;
     }
 
-    .homepage {
-        max-width: 1100px;
-        display: grid;
-        justify-items: center;
-        align-items: center;
-        grid-template-columns: 50% 50%;
-        margin: 2% 0;
-        column-gap: 5%;
+    .homepage_top {
+        display: flex;
+        justify-content: center;
+    }
+
+    .homepage_bottom {
+        flex-direction: row;
+        align-items: stretch;
+        height: 50%;
+        width: 100%;
+        justify-content: space-evenly;
+        
+    }
+
+    a.home {
+        font-size: 1.4rem;
     }
 
     .welcome {
+        padding: 1% 6%;
+        width: 23%;
         align-self: center;
-        padding: 6px;
-        grid-row: 1;
-        grid-column: 1;
-        height: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.4rem;
     }
 
     .actionCardRow {
@@ -246,8 +259,6 @@ label.home {
         justify-content: space-between;
     }
 
-   
-
     .homecard2 a {
         width: 70%;
         color: var(--shade3);
@@ -255,36 +266,31 @@ label.home {
 
     .signincard {
         backdrop-filter: blur(18px);
-        grid-column: 1;
         border-radius: 5px;
         box-shadow: 0 0 5px 2px var(--shade5);
-        height: 320px;
+       
         justify-content: stretch;
-        width: 400px;
+        width: 23%;
+        
         display: flex;
         flex-direction: column;
 
     }
 
     div.landingcard {
-        backdrop-filter: blur(18px);
-        grid-column: 2;
-        border-radius: 5px;
-        box-shadow: 0 0 5px 2px var(--shade5);
-        height: 320px;
-        justify-content: center;
         display: flex;
         flex-direction: column;
-        align-items: center;
+        justify-content: center;
+        padding: 0;
+        width: 23%;
+        min-height: 150px;
     }
 
     div.landingcard h2 {
         width: 70%;
     }
 
-    div.landingcard a {
-        width: 50%;
-    }
+ 
 
     div.landingcard a:hover {
         box-shadow: 0 0 7px 1.5px var(--shade5);
@@ -330,10 +336,13 @@ label.home {
     }
 
     .crossbar {
-        display: block;
+        display: inherit;
+        background: linear-gradient(to left, rgb(122, 168, 206), rgb(223, 232, 238), rgba(254, 160, 47, .6));
+        grid-row-start: 1;
+        grid-row-end: 3;
         height: 25%;
         width: 100%;
-        background: linear-gradient(to left, rgb(122, 168, 206), rgb(223, 232, 238), rgba(254, 160, 47, .6));
+        align-self: center;
         position: absolute;
         z-index: -1;
         border-radius: 5px;

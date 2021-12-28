@@ -3,10 +3,11 @@
     flex-direction: column;
     max-width: 660px;
     align-items: center;
-    margin-top: 2%;
     border: 2px solid black;
     border-radius: 5px;
     padding: 2%;
+    background: linear-gradient(25deg, rgba(122, 168, 206, .6), rgb(234, 238, 241));
+
 }
 
 p a {
@@ -52,6 +53,12 @@ ul.wide {
 }
 
 @media screen and (min-width: 754px) {
+
+    .aboutPage {
+        align-self: center;
+        width: 100%;
+    }
+
     .aboutPage li {
         margin-bottom: 1%;
     }

@@ -1,9 +1,8 @@
 .account {
     display: flex;
     flex-direction: column;
-    max-width: 600px;
+    max-width: 660px;
     align-items: center;
-    margin-top: 2%;
     border: 2px solid black;
     border-radius: 5px;
     padding: 2%;
@@ -52,7 +51,8 @@
 @media screen and (min-width: 754px) {
 
     .account {
-        min-width: 460px;;
+        align-self: center;
+        width: 100%;
     }
 
     .account .col input:hover {

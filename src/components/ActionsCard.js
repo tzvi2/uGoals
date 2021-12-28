@@ -16,7 +16,6 @@ function ActionsCard(props) {
         let completed = []
         let inProgress = []
         for (let [key, value] of Object.entries(props.data)) {
-
             if (props.data[key][getCurrentStart(props.data[key], props.period)].complete) {
                 completed.push({id: key, ...value})
             } else {
@@ -71,7 +70,7 @@ function ActionsCard(props) {
 
     return (
         <>{
-        <div className={styles.card}>
+        <div className={`${styles.card} card`}>
             <div className={styles.top}>
                 <input type="button" value={props.period === "day" ? "Today" : props.period === "week" ? "This Week" : "This Month"}></input>
                 <input readOnly type="text" value={getValue(props.period)}></input>

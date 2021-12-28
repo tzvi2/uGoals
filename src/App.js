@@ -14,35 +14,33 @@ function App() {
   
   return (
     <>
-    {!authStateLoading && <div className="homepage">
-
-      {authUser === null ? <div className="signincard">
+    {!authStateLoading && <>
+    <div className='homepage_top'>
+      {authUser !== null && <h2 className="welcome">Welcome {authUser.displayName}</h2>}
+      </div>
+      <div className="homepage_bottom">
+      <div className='crossbar'></div>
+      {authUser === null ? 
+      <div className="signincard">
         <SigninForm />
       </div> 
       :
       <>
-        <h2 className="welcome">Welcome {authUser.displayName}</h2>
-
-        
-        {Object.keys(actions).map(key => {
-          if (Object.keys(actions[key]).length > 0) {
-            return (
-              <DueCard 
-                period={key}
-                data={actions[key]}
-                key={key}
-              />
-            )
-          }
-        })}
-        
-      </>
-      }
-
-      <div className="crossbar"></div>
       
-     
-      <div className={authUser === null ? "landingcard" : "homecard3"}>
+      {Object.keys(actions).map(key => {
+        if (Object.keys(actions[key]).length > 0) {
+          return (
+            <DueCard 
+              period={key}
+              data={actions[key]}
+              key={key}
+            />
+          )
+        }
+      })}  
+      </>}
+
+      <div className="landingcard">
           {authUser === null ? <>
           <h2 className="home">Achieve your goals with research-backed goal setting.</h2>
           <Link className="home" id="learnMore" to="/about">Learn More</Link>
@@ -50,13 +48,14 @@ function App() {
           </>
           :
           <>
+          
           {userInfo && userInfo.goalsCreated > 0 && <Link className="home" id="learnMore" to="/viewgoals">View your Goals</Link>}
           {userInfo && userInfo.goalsCreated === 0 && <p className="pulse">Create your first goal</p>}
           <Link className="home" id="startNow" to="/newgoal">New Goal +</Link>
           </>}
       </div>
-
-    </div>}
+      
+    </div></>}
     </>
   );
 }

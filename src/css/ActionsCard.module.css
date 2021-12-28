@@ -1,15 +1,9 @@
 .card {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid var(--shade5);
+    box-shadow: 0 0 3px 1px;
     border-radius: 5px;
-    overflow-y: auto;
-    align-self: center;
-    box-shadow: 0 0 4px 0;
-    width: 100%;
-    box-sizing: content-box;
-    background: linear-gradient(25deg, rgba(122, 168, 206, .3), rgb(234, 238, 241));
- 
+    background: linear-gradient(25deg, rgba(122, 168, 206, .6), rgb(234, 238, 241));
+    overflow: auto;
+    max-height: 250px;
 }
 
 .top {
@@ -66,8 +60,9 @@
 @media screen and (min-width: 754px) {
 
     .card {
-        width: 390px;
-        height: 260px;
+        width: 23%;
+        height: 100%;
+        max-height: none;
     }
 
     input[type=checkbox]:hover {

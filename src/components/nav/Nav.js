@@ -42,6 +42,7 @@ function Nav() {
                 <Popup text="Your changes have been saved."/>
             </div>}
             <div className={`middle ${bluredState}`}>
+            {/* <div className='crossbar'></div> */}
             <Routes>
                 <Route path="/" element={<App />} />
                 <Route path="/account" element={<Account />} />
