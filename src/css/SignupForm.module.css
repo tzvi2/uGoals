@@ -1,0 +1,29 @@
+.form {
+    margin-top: 5%;
+    padding: 3%;
+    border-radius: 5px;
+    justify-self: flex-start;
+}
+
+.form label {
+    align-self: center;
+    margin-bottom: 5%;
+}
+
+@media screen and (min-width: 754px) {
+
+    .form {
+        width: 100%;
+        box-shadow: 0 0 5px 1px var(--shade3);
+        align-self: center;
+    }
+
+    .form input {
+        cursor: pointer;
+       
+    }
+
+    .form input:hover {
+        color: var(--shade4);
+    }
+}

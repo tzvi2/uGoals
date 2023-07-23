@@ -1,0 +1,347 @@
+a {
+    color: black;
+}
+
+.middle {
+    z-index: 0;
+    animation-duration: .5s;
+    animation-timing-function: ease-out;
+    padding: 2%;
+    flex-grow: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.homepage_bottom {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    row-gap: 18px;
+    margin-top: 18px;
+}
+
+.actionCardRow {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    row-gap: 12px;
+}
+
+div.landingcard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 3px 1px;
+    border-radius: 5px;
+    padding: 5%;
+    row-gap: 14px;
+}
+
+.homecard1 {
+    background: white;
+    border: 1px solid var(--shade5);
+    box-shadow: 0 0 10px 1px var(--shade5);
+}
+
+.homecard1 p, .homecard1 label, .homecard1 h2, .homecard1 ul {
+    color: var(--shade5);
+}
+
+.homecard3 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.homepage_bottom a {
+    box-shadow: 0 0 7px var(--shade5);
+    
+}
+
+
+p, input, textarea, a, ul, label {
+    font-size: 1.3rem;
+}
+
+input[type=submit], input[type=button] {
+    -webkit-appearance: none;
+}
+
+input[type=date] {
+    -webkit-appearance: none;
+}
+
+input, input[type=date] {
+    padding: .5vh;
+    border: 1px solid black;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    /* width: 90%; */
+}
+
+p.warn, input.warn {
+    color: red;
+}
+
+a.subtext {
+    font-size: 1.1rem;
+    box-shadow: none;
+}
+
+h2.home {
+    text-align: center;
+}
+
+
+a.home {
+    text-decoration: none;
+    text-align: center;
+    background: var(--shade2);
+    padding: 2% 5%;
+    width: 65%;
+    border-radius: 5px;
+    font-weight: 500;
+    font-size: 1.4rem;
+}
+
+
+label.home {
+    margin-bottom: 1%;
+    font-weight: 500;
+}
+
+.welcome {
+    border-radius: 5px;
+    font-size: 1.3rem;
+    padding: 3% 0;
+    text-align: center;
+    margin: 0;
+    color: var(--shade5);
+    border: 1px solid var(--shade5);
+    color: var(--shade5);
+}
+
+.crossbar {
+    display: none;
+}
+
+#learnMore {
+    border: none;
+    background: white;
+    color: var(--shade5);
+}
+
+#startNow {
+    background: linear-gradient(25deg, rgba(122, 168, 206, .3), rgb(234, 238, 241));
+    color: var(--shade5);
+}
+
+.popup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    color: var(--shade4);
+    padding: 1% 2%;
+    background: rgba(221, 212, 212, .8);
+    border-radius: 5px;
+    align-self: center;
+    position: fixed;
+    top: 50%;
+    z-index: 4;
+    transform: translateY(-50%);
+}
+
+.popup p {
+    margin: 0;
+}
+
+.blured {
+    filter: blur(10px);
+    transition: filter 200ms linear 0s;
+}
+
+.clear {
+    filter: blur(none);
+    transition: filter 200ms linear 0s;
+}
+
+.pulse {
+    animation-name: colorchange;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+.noAnimation {
+    animation: none;
+}
+
+@keyframes colorchange {
+    0% {
+        color: orange;
+    }
+    50% {
+        color: rgb(243, 91, 91);
+    }
+    100% {
+        color: orangered;
+    }
+}
+
+@keyframes slidein {
+    0%{
+        transform: translateX(-100vw);
+    }
+
+    100%{
+        transform: translateX(-0vw);
+    }
+}
+
+@media screen and (min-width: 754px) {
+
+    .middle {
+        padding: 1% 0 ;
+        margin: 0;
+        
+    }
+
+    .homepage_top {
+        margin: 1%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    p, input, textarea, a, ul, label {
+        font-size: 1.2rem;
+    }
+
+    .flexColumn {
+        margin: 1%;
+        max-width: 500px;
+    }
+
+    .homepage_top {
+        display: flex;
+        justify-content: center;
+    }
+
+    .homepage_bottom {
+        flex-direction: row;
+        align-items: stretch;
+        height: 50%;
+        width: 100%;
+        justify-content: space-evenly;
+        
+    }
+
+    a.home {
+        font-size: 1.4rem;
+    }
+
+    .welcome {
+        padding: 1% 6%;
+        width: 23%;
+        align-self: center;
+    }
+
+    .actionCardRow {
+        flex-direction: row;
+        grid-column-start: 1;
+        grid-column-end: 3;
+        justify-content: space-between;
+    }
+
+    .homecard2 a {
+        width: 70%;
+        color: var(--shade3);
+    }
+
+    .signincard {
+        backdrop-filter: blur(18px);
+        border-radius: 5px;
+        box-shadow: 0 0 5px 2px var(--shade5);
+        justify-content: stretch;
+        width: 23%;
+        display: flex;
+        flex-direction: column;
+
+    }
+
+    div.landingcard {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0;
+        width: 23%;
+        min-height: 150px;
+    }
+
+    div.landingcard h2 {
+        width: 70%;
+    }
+
+    div.landingcard a:hover {
+        box-shadow: 0 0 7px 1.5px var(--shade5);
+    }
+    
+
+    .homecard3 {
+       
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        grid-row: 1;
+        grid-column: 2;
+        height: 50%;
+        justify-self: stretch;
+    }
+
+    .homecard3 a {
+        margin: 0;
+        padding: 6px;
+        width: 45%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    @supports not ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+        .homecard3 {
+            background-color: rgba(255, 255, 255, .5);
+        }   
+
+        div.landingcard {
+            background-color: rgba(255, 255, 255, .5);
+        }
+    }
+
+   .homecard3 a:hover {
+        box-shadow: 0 0 7px 1.5px var(--shade5);
+    }
+
+    form {
+        max-width: 450px;
+    }
+
+    .crossbar {
+        display: inherit;
+        background: linear-gradient(to left, rgb(122, 168, 206), rgb(223, 232, 238), rgba(254, 160, 47, .6));
+        grid-row-start: 1;
+        grid-row-end: 3;
+        height: 25%;
+        width: 100%;
+        align-self: center;
+        position: absolute;
+        z-index: -1;
+        border-radius: 5px;
+    }
+
+}

@@ -1,0 +1,134 @@
+.goalCard, .goalCard.completeGoal {
+    max-height: 220px;
+    max-width: 300px;
+    border: 1px solid var(--shade5);
+    border-radius: 5px;
+    padding: 3%;
+    /* animation: slidein .75s 0s;
+    animation-fill-mode: forwards; */
+    margin: 3% 0;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1vh;
+    min-height: 150px;
+    background: linear-gradient(25deg, rgba(122, 168, 206, .4), rgb(223, 232, 238), rgba(122, 168, 206, .4));
+    box-shadow: 0 0 5px var(--shade5);
+    justify-content: space-between;
+    
+}
+
+.goalCard.completeGoal {
+    background: linear-gradient(25deg, var(--shade4), rgba(117, 236, 117, .2), rgba(117, 236, 117, .2));
+    opacity: .8;
+}
+
+.goalCard input {
+    border-radius: 5px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  
+}
+
+.row p {
+    margin: 0;
+    width: 60%;
+    border: 1px solid var(--shade5);
+    border-radius: 5px;
+    padding: 1% 2%;
+}
+
+.row p.disabled {
+    opacity: .2;
+}
+
+p.title {
+    white-space: nowrap;
+    overflow-X: auto;
+}
+
+.center {
+    justify-content: center;
+}
+
+.center input[type=button] {
+    width: 100%;
+    /* background: var(--shade2); */
+    color: var(--shade5);
+    font-weight: 500;
+}
+
+.complete { 
+    display: flex;
+    justify-content: space-between;
+    align-self: center;
+    align-items: center;
+    width: 100%;
+    /* border-bottom: 1px solid black;
+    border-top: 1px solid black; */
+}
+
+.complete input[type=checkbox].customCheckbox {
+    -webkit-appearance: none;
+    height: 4.5vh;
+    background: white;
+    width: 4.5vh;
+    /* border: 1px solid var(--shade2); */
+    display: flex;
+    padding-bottom: 2%;
+    justify-content: center;
+    align-items: center;
+    font-size: 4vh;
+}
+
+.complete input[type=checkbox]:checked {
+    
+    /* background-color: var(--shade); */
+}
+
+.complete > input:checked::before {
+    color: black;
+}
+
+@keyframes slidein {
+    0% {
+        transform: translateX(-100vw);
+    }
+    100% {
+        transform: translateX(0vw);
+    }
+} 
+
+@media screen and (min-width: 754px) {
+    .goalCard, .goalCard.completeGoal {
+        height: 34vh;
+        width: 100%;
+    }
+
+    .goalCard p {
+        text-align: end;
+    }
+
+    .goalCard .row input[type=button] {
+        cursor: pointer;
+    }
+
+    .goalCard .row input[type=button]:hover {
+        box-shadow: 0 0 5px var(--shade4);
+    }
+
+    
+    .complete input[type=checkbox].customCheckbox {
+        height: 30px;
+        width: 30px;
+    }
+
+    .complete input[type=checkbox].customCheckbox:hover {
+        cursor: pointer;
+        background: rgb(211, 219, 219);
+    }
+}

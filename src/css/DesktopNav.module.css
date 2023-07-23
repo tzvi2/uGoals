@@ -1,0 +1,44 @@
+.desktopNav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .5% 2%;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: linear-gradient(to right, rgb(122, 168, 206), rgb(223, 232, 238), rgba(254, 160, 47, .6));
+    /* border-bottom: 2px solid var(--shade4); */
+}
+
+.desktopNav h1 {
+    margin: 0;
+    color: var(--shade5);
+}
+
+.desktopNav h1:hover {
+    margin: 0;
+    color: var(--shade2);
+}
+
+.desktopNav a {
+    text-decoration: none;
+}
+
+.links {
+    display: flex;
+    justify-content: space-between;
+    column-gap: 4vh;
+    
+}
+
+.links a {
+    flex-shrink: 0;
+    color: var(--shade5);
+    border-bottom: 2px solid transparent;
+    
+}
+
+.links a:hover {
+    /* color: var(--shade3); */
+    border-bottom: 2px solid var(--shade5);
+}

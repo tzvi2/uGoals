@@ -1,0 +1,208 @@
+.confirmation {
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-self: center;
+}
+
+.confirmation p {
+    text-align: center;
+    margin-bottom: 1%;
+}
+
+.confirmation label {
+    margin-top: 5%;
+}
+
+.newGoalForm {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2vh;
+    width: 94%;
+    border: 2px solid var(--shade2);
+    border-radius: 5px;
+    padding: 3%;
+    box-shadow: 0 0 12px #888888;
+    max-height: 600px;
+    overflow-y: auto;
+    position: sticky;
+    bottom: 30%;
+    align-self: center;
+}
+
+.section label, .section input[type=text] {
+    font-size: 1.2rem;
+}
+
+.newGoalForm label {
+    margin-bottom: 2%;
+}
+
+.section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    column-gap: 1vh;
+    margin-bottom: 2%;
+}
+
+.row label {
+    display: flex;
+    width: 86%;
+    align-items: center;
+}
+
+.row input[type=text] {
+    margin: 0;
+    border-width: 2px;
+}
+
+.icon {
+    width: 40px;
+    height: 40px;
+    border: 2px solid black;
+    border-radius: 5px;
+    color: red;
+    box-sizing: border-box;
+    font-weight: 700;
+    border: 1px solid rgb(239, 239, 239);
+    background: rgb(239, 239, 239);
+    fill: var(--shade5);
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.plus {
+    color: black;
+    font-size: 2.25rem;
+    font-weight: 400;
+    color: var(--shade4);
+
+}
+
+.actionField {
+    padding: 1%;
+    align-self: center;
+}
+
+.left {
+    align-self: flex-start;
+    margin: 3% 0;
+}
+
+.centered {
+    text-align: center;
+}
+
+.summary {
+    resize: none;
+    height: 40vh;
+    width: 100%;
+    padding: 1%;
+}
+
+input[type=button].btn {
+    margin-top: 5%;
+    width: 75%;
+    border-radius: 5px;
+}
+
+input[type=button].viewBtn {
+    width: 75%;
+    margin-top: 4%;
+    border-radius: 5px;
+    padding: 1%;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+    width: 48%;
+}
+
+.saveGoal {
+    background: var(--shade5);
+    color: white;
+    cursor: pointer;
+    width: 80%;
+    margin-top: 4%;
+}
+
+input.saveGoal:focus {
+    outline: none;
+    
+}
+
+@media screen and (min-width: 754px) {
+    
+    .newGoalForm {
+        width: 100%;
+        min-width: 440px;
+    }
+
+    .newGoalForm label {
+        margin-bottom: 1%;
+    }
+
+    .icon {
+        cursor: pointer;
+        color: black;
+    }
+
+    .icon.x:hover {
+        color: red;
+    }
+
+    .icon.plus:hover {
+        color: var(--shade4);
+    }
+
+    .left {
+        margin: 0;
+        margin-bottom: 1%;
+    }
+
+    input[type=button].viewBtn {
+        padding: 1%;
+        width: 100%;
+        cursor: pointer;
+        box-shadow: 0 0 5px grey;
+    }
+
+    input[type=button].viewBtn:hover {
+        box-shadow: 0 0 9px 1px grey;
+    }
+
+    .saveGoal:hover {
+        box-shadow: 0 0 7px var(--shade5);
+        
+    }
+
+    .saveGoal:active {
+        color: var(--shade2);
+    }
+
+    .newAction input {
+        border: 1px solid rgb(223, 222, 222);
+        color: rgb(223, 222, 222);
+    }
+
+
+    .newAction input:focus {
+        color: black;
+    }
+
+   
+}
+
+

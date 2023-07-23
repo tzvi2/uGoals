@@ -1,0 +1,71 @@
+.card {
+    box-shadow: 0 0 3px 1px;
+    border-radius: 5px;
+    background: linear-gradient(25deg, rgba(122, 168, 206, .6), rgb(234, 238, 241));
+    overflow: auto;
+    max-height: 250px;
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.9);
+    position: sticky;
+    top: 0;
+    padding: 3px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    box-shadow: 0 0 5px 0;
+}
+
+.bottom {
+    display: flex;
+    flex-direction: column;
+    row-gap: 6px;
+    
+    padding: 12px 6px;
+    
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    column-gap: 10px;
+    align-items: center;
+}
+
+.top input, .top label {
+    color: var(--shade5);
+    border-color: var(--shade5);
+    padding: 0;
+    
+}
+
+.top input[type=button] {
+    width: 37%;
+    background: white;
+    border: none;
+    background: transparent;
+}
+
+.top input[type=text] {
+    width: 60%;
+    text-align: center;
+    border: none;
+    background: transparent;
+}
+
+@media screen and (min-width: 754px) {
+
+    .card {
+        width: 23%;
+        height: 100%;
+        max-height: none;
+    }
+
+    input[type=checkbox]:hover {
+        cursor: pointer;
+    }
+}
