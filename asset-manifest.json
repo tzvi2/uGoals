@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/ugoals/static/css/main.65cfd93d.chunk.css",
-    "main.js": "/ugoals/static/js/main.eab9da6b.chunk.js",
-    "main.js.map": "/ugoals/static/js/main.eab9da6b.chunk.js.map",
-    "runtime-main.js": "/ugoals/static/js/runtime-main.2cf5d8a0.js",
-    "runtime-main.js.map": "/ugoals/static/js/runtime-main.2cf5d8a0.js.map",
-    "static/js/2.c254dac2.chunk.js": "/ugoals/static/js/2.c254dac2.chunk.js",
-    "static/js/2.c254dac2.chunk.js.map": "/ugoals/static/js/2.c254dac2.chunk.js.map",
-    "index.html": "/ugoals/index.html",
-    "static/css/main.65cfd93d.chunk.css.map": "/ugoals/static/css/main.65cfd93d.chunk.css.map",
-    "static/js/2.c254dac2.chunk.js.LICENSE.txt": "/ugoals/static/js/2.c254dac2.chunk.js.LICENSE.txt"
+    "main.css": "/uGoals/static/css/main.65cfd93d.chunk.css",
+    "main.js": "/uGoals/static/js/main.eab9da6b.chunk.js",
+    "main.js.map": "/uGoals/static/js/main.eab9da6b.chunk.js.map",
+    "runtime-main.js": "/uGoals/static/js/runtime-main.e98b5305.js",
+    "runtime-main.js.map": "/uGoals/static/js/runtime-main.e98b5305.js.map",
+    "static/js/2.259194fd.chunk.js": "/uGoals/static/js/2.259194fd.chunk.js",
+    "static/js/2.259194fd.chunk.js.map": "/uGoals/static/js/2.259194fd.chunk.js.map",
+    "index.html": "/uGoals/index.html",
+    "static/css/main.65cfd93d.chunk.css.map": "/uGoals/static/css/main.65cfd93d.chunk.css.map",
+    "static/js/2.259194fd.chunk.js.LICENSE.txt": "/uGoals/static/js/2.259194fd.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.2cf5d8a0.js",
-    "static/js/2.c254dac2.chunk.js",
+    "static/js/runtime-main.e98b5305.js",
+    "static/js/2.259194fd.chunk.js",
     "static/css/main.65cfd93d.chunk.css",
     "static/js/main.eab9da6b.chunk.js"
   ]
