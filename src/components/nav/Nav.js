@@ -44,7 +44,7 @@ function Nav() {
             <div className={`middle ${bluredState}`}>
             {/* <div className='crossbar'></div> */}
             <Routes>
-                <Route path="/ugoals" element={<App />} />
+                <Route path="/uGoals" element={<App />} />
                 <Route path="/account" element={<Account />} />
                 <Route path="/newgoal" element={<NewGoal />} />
                 <Route path="/goalconfirm" element={<GoalConfirmation />} />
