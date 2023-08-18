@@ -10,7 +10,7 @@ import Footer from './components/Footer';
 ReactDOM.render(
   <AuthProvider>
     <GoalProvider>
-      <BrowserRouter>
+      <BrowserRouter forceRefresh={true}>
         <React.StrictMode>
           <Nav />
         </React.StrictMode>
